@@ -1,0 +1,159 @@
+<template>
+  <!-- Navbar -->
+  <div class="relative">
+    <header class="inset-x-0">
+      <nav class="flex items-center justify-between lg:justify-around gap-20 p-2">
+        <!-- Company Logo -->
+        <div>
+          <RouterLink to="/"
+            ><img
+              src="@/assets/images/logo.svg"
+              class="w-[200px] h-[30px] md:w-[300px] md:h-[55px]"
+              alt="company-logo"
+          /></RouterLink>
+        </div>
+        <!-- Open mobile navbar -->
+        <button
+          type="button"
+          class="-m-2.5 lg:hidden inline-flex items-center justify-center rounded-md p-2.5"
+          @click="toggleNavbar"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="h-10 w-10"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="black"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </button>
+        <!-- Nav links -->
+        <div class="hidden lg:flex lg:gap-x-8">
+          <ul class="flex gap-10 text-xl font-Montserrat">
+            <li class="inline-block cursor-pointer">
+              <RouterLink to="/">Home</RouterLink>
+            </li>
+            <li class="inline-block cursor-pointer">
+              <RouterLink to="/">Our Fleet</RouterLink>
+            </li>
+            <li class="inline-block cursor-pointer">
+              <RouterLink to="/">Contact</RouterLink>
+            </li>
+            <li class="inline-block cursor-pointer">
+              <RouterLink to="/">About Us</RouterLink>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+
+      <div :class="{ hidden: !isNavbarOpen, block: isNavbarOpen }">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="absolute inset-0 z-50"></div>
+
+        <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-linen px-6 py-6">
+          <!-- Mobile company logo -->
+          <div class="flex items-center justify-between">
+            <RouterLink to="/"
+              ><img src="@/assets/images/logo.svg" class="w-[200px] h-[30px]" alt="company-logo"
+            /></RouterLink>
+            <!-- Mobile close button navbar -->
+            <button @click="closeNavbar" type="button" class="-m-2.5 rounded-md p-2.5">
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="h-10 w-10"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="black"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <!-- Mobile links -->
+          <Transition name="mobileNav">
+            <div v-show="isNavbarOpen" class="mt-6 flow-root">
+              <div class="-my-6 divide-y divide-gray-500/10">
+                <div class="py-6">
+                  <ul class="flex flex-col gap-2 font-Montserrat text-xl">
+                    <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
+                      <RouterLink to="/" @click="handleLinkClick">Home</RouterLink>
+                    </li>
+                    <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
+                      <RouterLink to="/" @click="handleLinkClick">Our Fleet</RouterLink>
+                    </li>
+                    <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
+                      <RouterLink to="/" @click="handleLinkClick">Contact</RouterLink>
+                    </li>
+                    <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
+                      <RouterLink to="/" @click="handleLinkClick">About Us</RouterLink>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Transition>
+        </div>
+      </div>
+    </header>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const isNavbarOpen = ref(false)
+
+const closeNavbar = () => {
+  isNavbarOpen.value = false
+}
+const toggleNavbar = () => {
+  isNavbarOpen.value = !isNavbarOpen.value
+}
+const handleLinkClick = () => {
+  closeNavbar()
+}
+
+const handleResize = () => {
+  if (window.innerWidth >= 1024) {
+    isNavbarOpen.value = false
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
+</script>
+
+<style scoped>
+.mobileNav-enter-from,
+.mobileNav-leave-to {
+  transform: translateX(80px);
+  opacity: 0;
+}
+.mobileNav-enter-active {
+  transition: all 0.4s ease-out;
+}
+.mobileNav-enter-to,
+.mobileNav-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.mobileNav-leave-active {
+  transition: all 0.4s ease-in;
+}
+</style>
