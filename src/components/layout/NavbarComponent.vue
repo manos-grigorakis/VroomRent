@@ -2,7 +2,7 @@
   <!-- Navbar -->
   <div class="relative">
     <header class="inset-x-0">
-      <nav class="flex items-center justify-between lg:justify-around gap-20 p-2">
+      <nav class="flex items-center justify-between xl:justify-evenly gap-10 px-2">
         <!-- Company Logo -->
         <div>
           <RouterLink to="/"
@@ -15,7 +15,7 @@
         <!-- Open mobile navbar -->
         <button
           type="button"
-          class="-m-2.5 lg:hidden inline-flex items-center justify-center rounded-md p-2.5"
+          class="-m-2.5 xl:hidden inline-flex items-center justify-center rounded-md p-2.5"
           @click="toggleNavbar"
         >
           <span class="sr-only">Open main menu</span>
@@ -35,7 +35,7 @@
           </svg>
         </button>
         <!-- Nav links -->
-        <div class="hidden lg:flex lg:gap-x-8">
+        <div class="hidden xl:flex xl:gap-x-20">
           <ul class="flex gap-10 text-xl font-Montserrat">
             <li class="inline-block cursor-pointer">
               <RouterLink to="/">Home</RouterLink>
@@ -50,6 +50,10 @@
               <RouterLink to="/">About Us</RouterLink>
             </li>
           </ul>
+        </div>
+        <div class="hidden xl:flex xl:gap-x-4">
+          <BaseButton outline>Register</BaseButton>
+          <BaseButton>Log In</BaseButton>
         </div>
       </nav>
       <!-- Mobile menu, show/hide based on menu open state. -->
@@ -82,9 +86,9 @@
           <!-- Mobile links -->
           <Transition name="mobileNav">
             <div v-show="isNavbarOpen" class="mt-6 flow-root">
-              <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="-my-6">
                 <div class="py-6">
-                  <ul class="flex flex-col gap-2 font-Montserrat text-xl">
+                  <ul class="flex flex-col gap-2 font-Montserrat text-xl items-center">
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
                       <RouterLink to="/" @click="handleLinkClick">Home</RouterLink>
                     </li>
@@ -99,6 +103,10 @@
                     </li>
                   </ul>
                 </div>
+                <div class="flex flex-col w-40 gap-4 justify-center mx-auto">
+                  <BaseButton outline>Register</BaseButton>
+                  <BaseButton>Log In</BaseButton>
+                </div>
               </div>
             </div>
           </Transition>
@@ -110,6 +118,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
 
 const isNavbarOpen = ref(false)
 
@@ -124,7 +133,7 @@ const handleLinkClick = () => {
 }
 
 const handleResize = () => {
-  if (window.innerWidth >= 1024) {
+  if (window.innerWidth >= 1280) {
     isNavbarOpen.value = false
   }
 }
@@ -141,7 +150,7 @@ onUnmounted(() => {
 <style scoped>
 .mobileNav-enter-from,
 .mobileNav-leave-to {
-  transform: translateX(80px);
+  transform: translateY(-80px);
   opacity: 0;
 }
 .mobileNav-enter-active {
@@ -149,7 +158,7 @@ onUnmounted(() => {
 }
 .mobileNav-enter-to,
 .mobileNav-leave-from {
-  transform: translateX(0);
+  transform: translateY(0);
   opacity: 1;
 }
 

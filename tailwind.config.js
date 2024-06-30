@@ -7,16 +7,44 @@ export default {
       Montserrat: ['Montserrat', 'sans-serif']
     },
     colors: {
-      vibrantOrange: '#FFA500',
-      goldenYellow: '#FFD700',
-      customBlue: '#007BFF',
+      vibrantOrange: {
+        default: '#FFA500',
+        700: '#CC8400'
+      },
+      goldenYellow: {
+        DEFAULT: '#FFD700',
+        700: '#CCAA00'
+      },
+      customBlue: {
+        DEFAULT: '#007BFF',
+        700: '#0056B3'
+      },
       charcoalGray: '#424242',
       charcoal: '#333333',
       linen: '#FAF9F6', // background-color
       offWhite: '#F5F5F5',
-      lightGray: '#E0E0E0'
+      lightGray: '#E0E0E0',
+      white: '#FFFFFF'
     },
     extend: {}
   },
-  plugins: []
+  plugins: [],
+  // declared for the basebutton component had some issues retrieving the color prop!!!
+  safelist: [
+    'border-vibrantOrange',
+    'text-vibrantOrange',
+    'hover:bg-vibrantOrange',
+    'border-goldenYellow',
+    'text-goldenYellow',
+    'hover:bg-goldenYellow',
+    'border-customBlue',
+    'text-customBlue',
+    'hover:bg-customBlue',
+    'bg-vibrantOrange',
+    'bg-goldenYellow',
+    'bg-customBlue',
+    'hover:bg-vibrantOrange-700',
+    'hover:bg-goldenYellow-700',
+    'hover:bg-customBlue-700'
+  ]
 }
