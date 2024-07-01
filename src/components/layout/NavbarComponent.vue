@@ -37,16 +37,16 @@
         <!-- Nav links -->
         <div class="hidden xl:flex xl:gap-x-20">
           <ul class="flex gap-10 text-xl font-Montserrat">
-            <li class="inline-block cursor-pointer">
+            <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
               <RouterLink to="/">Home</RouterLink>
             </li>
-            <li class="inline-block cursor-pointer">
+            <li class="inline-block cursor-pointer  hover:text-vibrantOrange-default">
               <RouterLink to="/">Our Fleet</RouterLink>
             </li>
-            <li class="inline-block cursor-pointer">
+            <li class="inline-block cursor-pointer  hover:text-vibrantOrange-default">
               <RouterLink to="/">Contact</RouterLink>
             </li>
-            <li class="inline-block cursor-pointer">
+            <li class="inline-block cursor-pointer  hover:text-vibrantOrange-default">
               <RouterLink to="/">About Us</RouterLink>
             </li>
           </ul>
@@ -88,7 +88,7 @@
             <div v-show="isNavbarOpen" class="mt-6 flow-root">
               <div class="-my-6">
                 <div class="py-6">
-                  <ul class="flex flex-col gap-2 font-Montserrat text-xl items-center">
+                  <ul class="flex flex-col gap-2 font-Montserrat text-xl text-center sm:items-center">
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
                       <RouterLink to="/" @click="handleLinkClick">Home</RouterLink>
                     </li>
