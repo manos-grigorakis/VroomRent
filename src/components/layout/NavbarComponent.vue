@@ -1,6 +1,6 @@
 <template>
   <!-- Navbar -->
-  <div class="relative">
+  <div class="relative p-2 z-50">
     <header class="inset-x-0">
       <nav class="flex items-center justify-between xl:justify-evenly gap-10 px-2">
         <!-- Company Logo -->
@@ -8,7 +8,7 @@
           <RouterLink to="/"
             ><img
               src="@/assets/images/logo.svg"
-              class="w-[200px] h-[30px] md:w-[300px] md:h-[55px]"
+              class="w-[250px] sm:w-[300px] h-[55px]"
               alt="company-logo"
           /></RouterLink>
         </div>
@@ -66,7 +66,7 @@
           <!-- Mobile company logo -->
           <div class="flex items-center justify-between">
             <RouterLink to="/"
-              ><img src="@/assets/images/logo.svg" class="w-[200px] h-[30px]" alt="company-logo"
+              ><img src="@/assets/images/logo.svg" class="w-[200px] h-[40px]" alt="company-logo"
             /></RouterLink>
             <!-- Mobile close button navbar -->
             <button @click="closeNavbar" type="button" class="-m-2.5 rounded-md p-2.5">

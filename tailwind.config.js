@@ -9,7 +9,7 @@ export default {
     colors: {
       vibrantOrange: {
         default: '#FFA500',
-        700: '#CC8400'
+        700: '#DE8F00'
       },
       goldenYellow: {
         DEFAULT: '#FFD700',
@@ -26,7 +26,11 @@ export default {
       lightGray: '#E0E0E0',
       white: '#FFFFFF'
     },
-    extend: {}
+    extend: {
+      backgroundImage: {
+        'hero-image': "url('./src/assets/images/maksim-tarasov-bFTVxTo266E-unsplash.jpg')"
+      }
+    }
   },
   plugins: [],
   // declared for the basebutton component had some issues retrieving the color prop!!!
