@@ -26,7 +26,3 @@ app.listen(port, () => {
     console.log(`Server listening on: http://localhost:${port}`)
 })
 
-// MongoDB Atlas Credentials
-// username: manosgrigorakis03
-// password: hVs52KkcpFvV4ZqC
-
