@@ -12,11 +12,11 @@ export default {
         700: '#DE8F00'
       },
       goldenYellow: {
-        DEFAULT: '#FFD700',
+        default: '#FFD700',
         700: '#CCAA00'
       },
       customBlue: {
-        DEFAULT: '#007BFF',
+        default: '#007BFF',
         700: '#0056B3'
       },
       charcoalGray: '#424242',
@@ -35,20 +35,17 @@ export default {
   plugins: [],
   // declared for the basebutton component had some issues retrieving the color prop!!!
   safelist: [
-    'border-vibrantOrange',
-    'text-vibrantOrange',
-    'hover:bg-vibrantOrange',
-    'border-goldenYellow',
-    'text-goldenYellow',
-    'hover:bg-goldenYellow',
-    'border-customBlue',
-    'text-customBlue',
-    'hover:bg-customBlue',
-    'bg-vibrantOrange',
-    'bg-goldenYellow',
-    'bg-customBlue',
+    'bg-vibrantOrange-default',
+    'bg-goldenYellow-default',
+    'bg-customBlue-default',
+    'border-vibrantOrange-default',
+    'border-goldenYellow-default',
+    'border-customBlue-default',
     'hover:bg-vibrantOrange-700',
     'hover:bg-goldenYellow-700',
-    'hover:bg-customBlue-700'
+    'hover:bg-customBlue-700',
+    'hover:border-vibrantOrange-700',
+    'hover:border-goldenYellow-700',
+    'hover:border-customBlue-700'
   ]
 }

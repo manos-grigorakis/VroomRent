@@ -52,9 +52,8 @@
           </ul>
         </div>
         <div class="hidden xl:flex xl:gap-x-4">
-          <BaseButton>Log In</BaseButton>
-          <BaseButton outline><RouterLink to="/register">Register</RouterLink>
-            </BaseButton>
+          <BaseButton link="/login">Login</BaseButton>
+          <BaseButton outline link="/register">Register</BaseButton>
         </div>
       </nav>
       <!-- Mobile menu, show/hide based on menu open state. -->
