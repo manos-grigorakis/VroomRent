@@ -40,13 +40,13 @@
             <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
               <RouterLink to="/">Home</RouterLink>
             </li>
-            <li class="inline-block cursor-pointer  hover:text-vibrantOrange-default">
+            <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
               <RouterLink to="/">Our Fleet</RouterLink>
             </li>
-            <li class="inline-block cursor-pointer  hover:text-vibrantOrange-default">
+            <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
               <RouterLink to="/">Contact</RouterLink>
             </li>
-            <li class="inline-block cursor-pointer  hover:text-vibrantOrange-default">
+            <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
               <RouterLink to="/">About Us</RouterLink>
             </li>
           </ul>
@@ -88,24 +88,26 @@
             <div v-show="isNavbarOpen" class="mt-6 flow-root">
               <div class="-my-6">
                 <div class="py-6">
-                  <ul class="flex flex-col gap-2 font-Montserrat text-xl text-center sm:items-center">
+                  <ul
+                    class="flex flex-col gap-2 font-Montserrat text-xl text-center sm:items-center"
+                  >
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="handleLinkClick">Home</RouterLink>
+                      <RouterLink to="/" @click="closeNavbar">Home</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="handleLinkClick">Our Fleet</RouterLink>
+                      <RouterLink to="/" @click="closeNavbar">Our Fleet</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="handleLinkClick">Contact</RouterLink>
+                      <RouterLink to="/" @click="closeNavbar">Contact</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="handleLinkClick">About Us</RouterLink>
+                      <RouterLink to="/" @click="closeNavbar">About Us</RouterLink>
                     </li>
                   </ul>
                 </div>
-                <div class="flex flex-col w-40 gap-4 justify-center mx-auto">
-                  <BaseButton outline>Register</BaseButton>
-                  <BaseButton>Log In</BaseButton>
+                <div class="flex flex-col w-40 gap-4 justify-center items-center mx-auto">
+                  <BaseButton @click="closeNavbar" link="/login">Login</BaseButton>
+                  <BaseButton @click="closeNavbar" outline link="/register">Register</BaseButton>
                 </div>
               </div>
             </div>
@@ -127,9 +129,6 @@ const closeNavbar = () => {
 }
 const toggleNavbar = () => {
   isNavbarOpen.value = !isNavbarOpen.value
-}
-const handleLinkClick = () => {
-  closeNavbar()
 }
 
 const handleResize = () => {

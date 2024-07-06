@@ -10,7 +10,6 @@ const userModel = require("./models/user");
 const app = express();
 const port = 3000;
 
-
 app.use(express.json());
 app.use(cors());
 
@@ -28,7 +27,13 @@ app.post("/register", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    console.log("Received data:", req.body);
+    const user = await userModel.findOne({ email: email });
+
+    if (user) {
+      return res
+        .status(409)
+        .send({ message: "User with this email already exists" });
+    }
 
     // Hashing password
     const saltRounds = 10;
@@ -50,18 +55,17 @@ app.post("/register", async (req, res) => {
       .send({ message: "User registered sucessfully!", user: newUser });
   } catch (error) {
     console.error("Error during registration:", error);
-    res.status(500).send({ message: "User registration failed!", error });
+    res.status(500).send({ message: "User registration failed.", error });
   }
 });
 
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('Received data for login: ', req.body)
     const user = await userModel.findOne({ email: email });
 
     if (!user) {
-      return res.status(404).send({ message: "User not found!" });
+      return res.status(404).send({ message: "User not found" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -70,7 +74,7 @@ app.post("/login", async (req, res) => {
       console.log("Wrong password for user:", email);
       return res.status(400).send({ message: "Wrong Passoword" });
     }
-    console.log("User logged in:", email);
+
     res.status(200).send({ message: "You are now logged in", user: user });
   } catch (error) {
     console.error("Error during login:", error);

@@ -36,16 +36,16 @@ const store = createStore({
         console.log('Response:', response.data)
       } catch (error) {
         console.error('Error during registration:', error)
+        throw error
       }
-    },    
+    },
     async loginUser({ commit, state }) {
       try {
         const response = await axios.post('http://localhost:3000/login', {
           email: state.email,
           password: state.password
         })
-        // console.log('Response:', response.data)
-        console.log('You are now logged in!')
+
         commit('setUserDataLogin', response.data.user)
         commit('setLoginStatus', true)
       } catch (error) {
