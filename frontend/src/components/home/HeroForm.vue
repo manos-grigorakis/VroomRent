@@ -7,12 +7,23 @@
     <div class="flex flex-col lg:flex-row items-strech lg:items-center gap-6 lg:gap-10">
       <div class="flex flex-col">
         <label for="pickup-location">Pick Up:</label>
-        <input
-          type="text"
+        <multiselect
           id="pickup-location"
-          placeholder="Location"
-          class="border-2 rounded-md px-2 py-1 border-lightGray w-72"
-        />
+          v-model="selectedPickupAirport"
+          :options="filteredAirports"
+          :custom-label="nameWithLang"
+          placeholder="Select airport"
+          searchable="true"
+          selectLabel=""
+          deselectLabel=""
+          selectedLabel=""
+          label="name"
+          track-by="name"
+          open-direction="bottom"
+          optionsLimit="100"
+          maxHeight="900"
+          class="border-2 border-lightGray rounded-md multiselect-custom"
+        ></multiselect>
       </div>
       <Transition>
         <div
@@ -21,12 +32,23 @@
           :class="{ hidden: !isCheckboxActive, flex: isCheckboxActive }"
         >
           <label for="dropoff-location">Drop Off:</label>
-          <input
-            type="text"
+          <multiselect
             id="dropoff-location"
-            placeholder="Location"
-            class="border-2 rounded-md px-2 py-1 border-lightGray w-72"
-          />
+            v-model="selectedDropoffAirport"
+            :options="filteredAirports"
+            :custom-label="nameWithLang"
+            placeholder="Select airport"
+            searchable="true"
+            selectLabel=""
+            deselectLabel=""
+            selectedLabel=""
+            label="name"
+            track-by="name"
+            open-direction="bottom"
+            optionsLimit="100"
+            maxHeight="300"
+            class="border-2 border-lightGray rounded-md"
+          ></multiselect>
         </div>
       </Transition>
       <div class="flex flex-col">
@@ -34,7 +56,9 @@
         <input
           type="date"
           id="pickup-date"
-          class="border-2 rounded-md px-2 py-1 border-lightGray text-[#ccc] focus:text-[#000000]"
+          v-model="pickupDate"
+          class="border-2 rounded-md px-2 py-2 border-lightGray"
+          :class="pickupDate ? 'text-black' : 'text-lightGray'"
         />
       </div>
       <div class="flex flex-col">
@@ -42,30 +66,81 @@
         <input
           type="date"
           id="dropoff-date"
-          class="border-2 rounded-md px-2 py-1 border-lightGray text-[#ccc] focus:text-[#000000]"
+          v-model="dropoffDate"
+          class="border-2 rounded-md px-2 py-2 border-lightGray"
+          :class="dropoffDate ? 'text-black' : 'text-lightGray'"
         />
       </div>
 
-      <button
-        class="bg-vibrantOrange-default text-white font-medium md:mt-4 px-4 py-2 rounded-md drop-shadow-sm hover:bg-vibrantOrange-700 hover:drop-shadow-md"
-      >
-        Find Car
-      </button>
+      <div class="flex items-center mt-2">
+        <!-- <button> -->
+        <router-link
+          class="bg-vibrantOrange-default text-white font-medium md:mt-4 px-4 py-2 rounded-md drop-shadow-sm hover:bg-vibrantOrange-700 hover:drop-shadow-md w-full lg:w-auto"
+          to="/fleet"
+          >Find Car</router-link
+        >
+        <!-- </button> -->
+      </div>
     </div>
   </form>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.css'
+import airportsData from '@/assets/filtered_airports.json'
 
 const isCheckboxActive = ref(false)
+const airports = ref([])
+const selectedPickupAirport = ref(null)
+const selectedDropoffAirport = ref(null)
+const pickupDate = ref('')
+const dropoffDate = ref('')
 
 const handleCheckbox = () => {
   isCheckboxActive.value = !isCheckboxActive.value
 }
+
+const filteredAirports = computed(() => {
+  return airports.value
+})
+
+const nameWithLang = ({ name, iso_country, municipality }) => {
+  return `${iso_country}, ${name}, ${municipality}`
+}
+
+onMounted(() => {
+  airports.value = airportsData
+})
 </script>
 
-<style scoped>
+<style>
+.multiselect-custom {
+  width: 200px !important;
+}
+.multiselect {
+  width: 300px !important;
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+.multiselect__option--highlight {
+  background: #e9a402 !important;
+}
+
+/* Προσαρμογή του στυλ για επιλεγμένα στοιχεία */
+.multiselect__option--selected {
+  background-color: #ccaa00 !important;
+  color: white !important;
+}
+
+/* Προσαρμογή του dropdown */
+.multiselect__content {
+  /* max-height: 500px !important; */
+  overflow-y: auto !important;
+}
+
 .v-enter-from,
 .v-leave-to {
   transform: translateX(-300px) scale(0.5);

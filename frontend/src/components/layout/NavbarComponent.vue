@@ -41,7 +41,7 @@
               <RouterLink to="/">Home</RouterLink>
             </li>
             <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
-              <RouterLink to="/">Our Fleet</RouterLink>
+              <RouterLink to="/fleet">Our Fleet</RouterLink>
             </li>
             <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
               <RouterLink to="/">Contact</RouterLink>
@@ -95,7 +95,7 @@
                       <RouterLink to="/" @click="closeNavbar">Home</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="closeNavbar">Our Fleet</RouterLink>
+                      <RouterLink to="/fleet" @click="closeNavbar">Our Fleet</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
                       <RouterLink to="/" @click="closeNavbar">Contact</RouterLink>
@@ -105,7 +105,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="flex flex-col w-40 gap-4 justify-center items-center mx-auto">
+                <div class="flex flex-col w-40 gap-8 justify-center items-center mx-auto">
                   <BaseButton @click="closeNavbar" link="/login">Login</BaseButton>
                   <BaseButton @click="closeNavbar" outline link="/register">Register</BaseButton>
                 </div>

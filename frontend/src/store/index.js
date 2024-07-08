@@ -1,7 +1,12 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
+import vehicleModule from './modules/vehicle'
+
 const store = createStore({
+  modules: {
+    vehicles: vehicleModule
+  },
   state: {
     firstName: '',
     lastName: '',

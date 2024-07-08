@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 
 const userModel = require("./models/user");
+const vehicleModel = require("./models/vehicle");
 
 const app = express();
 const port = 3000;
@@ -79,6 +80,15 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).send({ message: "Login Failed", error });
+  }
+});
+
+app.get("/vehicles", async (req, res) => {
+  try {
+    const vehicle = await vehicleModel.find({});
+    res.status(200).send(vehicle);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
   }
 });
 
