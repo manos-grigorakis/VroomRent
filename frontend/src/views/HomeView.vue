@@ -1,11 +1,17 @@
 <template>
-  <TheHero />
-  <BaseWrapper class="mb-[200px] mt-[100px]" />
-  <WhyChooseUs />
+  <section>
+    <TheHero />
+    <FeaturedVehicles class="mb-[200px] mt-[100px]" />
+    <WhyChooseUs />
+  </section>
 </template>
 
 <script setup>
+import { defineAsyncComponent } from 'vue'
 import TheHero from '@/components/home/TheHero.vue'
-import BaseWrapper from '../components/ui/BaseWrapper.vue'
-import WhyChooseUs from '@/components/home/WhyChooseUs.vue'
+
+const FeaturedVehicles = defineAsyncComponent(
+  () => import('@/components/home/FeaturedVehicles.vue')
+)
+const WhyChooseUs = defineAsyncComponent(() => import('@/components/home/WhyChooseUs.vue'))
 </script>

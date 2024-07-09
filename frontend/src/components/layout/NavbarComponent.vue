@@ -1,5 +1,4 @@
 <template>
-  <!-- Navbar -->
   <div class="relative p-2 z-50">
     <header class="inset-x-0">
       <nav class="flex items-center justify-between xl:justify-evenly gap-10 px-2">
@@ -56,8 +55,8 @@
           <BaseButton outline link="/register">Register</BaseButton>
         </div>
       </nav>
-      <!-- Mobile menu, show/hide based on menu open state. -->
 
+      <!-- Mobile menu, show/hide based on menu open state. -->
       <div :class="{ hidden: !isNavbarOpen, block: isNavbarOpen }">
         <!-- Background backdrop, show/hide based on slide-over state. -->
         <div class="absolute inset-0 z-50"></div>
@@ -127,6 +126,7 @@ const isNavbarOpen = ref(false)
 const closeNavbar = () => {
   isNavbarOpen.value = false
 }
+
 const toggleNavbar = () => {
   isNavbarOpen.value = !isNavbarOpen.value
 }

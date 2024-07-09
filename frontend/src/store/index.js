@@ -2,10 +2,12 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 
 import vehicleModule from './modules/vehicle'
+import bookingsModule from './modules/bookings'
 
 const store = createStore({
   modules: {
-    vehicles: vehicleModule
+    vehicles: vehicleModule,
+    bookings: bookingsModule
   },
   state: {
     firstName: '',

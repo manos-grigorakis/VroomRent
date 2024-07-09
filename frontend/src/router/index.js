@@ -17,22 +17,26 @@ const router = createRouter({
       component: () => import('@/views/FleetView.vue')
     },
     {
+      path: '/choose-vehicle',
+      component: () => import('@/views/booking/ChooseVehicleView.vue')
+    },
+    {
+      path: '/choose-extras',
+      component: () => import('@/views/booking/ChooseExtrasView.vue')
+    },
+    {
       path: '/register',
-      component: () => import('@/views/RegisterView.vue')
+      component: () => import('@/views/auth/RegisterView.vue')
     },
     {
       path: '/login',
-      component: () => import('@/views/LoginView.vue')
+      component: () => import('@/views/auth/LoginView.vue')
     }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('@/views/AboutView.vue')
-    // }
-  ]
+  ],
+  scrollBehavior() {
+    // always scroll to top
+    return { top: 0 }
+  }
 })
 
 export default router
