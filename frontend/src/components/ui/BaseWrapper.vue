@@ -1,5 +1,5 @@
 <template>
-  <section class="mb-20 flex flex-col items-center gap-10 tracking-wide">
+  <section class="flex flex-col items-center gap-10 mb-20 tracking-wide px-6">
     <h2 class="text-2xl font-Montserrat font-semibold">{{ heading }}</h2>
     <slot></slot>
   </section>

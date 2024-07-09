@@ -1,5 +1,5 @@
 <template>
-  <section class="flex items-center w-full h-screen py-6">
+  <section class="flex items-center w-full h-screen py-6 -mt-[26px] md:mt-0">
     <!-- Background Image -->
     <div
       class="absolute bg-hero-image bg-center bg-no-repeat bg-cover w-full h-full top-0 pointer-events-none z-0"

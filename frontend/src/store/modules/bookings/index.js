@@ -12,7 +12,22 @@ export default {
         pickupDate: '',
         dropoffDate: ''
       },
-      vehicleId: ''
+      vehicleId: '',
+      selectedVehicle: {
+        name: '',
+        image: '',
+        category: [''],
+        price: 0,
+        details: {
+          passengers: 0,
+          transmission: '',
+          fuel: '',
+          storage: {
+            bigCase: 0,
+            smallCase: 0
+          }
+        }
+      }
     }
   },
   mutations,

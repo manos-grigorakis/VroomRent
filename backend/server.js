@@ -92,6 +92,16 @@ app.get("/vehicles", async (req, res) => {
   }
 });
 
+app.get("/vehicle/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const foundedVehicle = await vehicleModel.findById(id);
+    res.status(200).send(foundedVehicle);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server listening on: http://localhost:${port}`);
 });

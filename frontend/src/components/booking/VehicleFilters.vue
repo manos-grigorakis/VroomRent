@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col justify-around mb-8 md:flex-row">
-    <div class="flex gap-10">
+  <div class="flex flex-col justify-around mb-8 md:flex-row px-8 gap-4">
+    <div class="flex flex-col gap-4 md:gap-10 md:flex-row">
       <!-- Category -->
       <select name="" id="">
         <option selected disabled>Category</option>

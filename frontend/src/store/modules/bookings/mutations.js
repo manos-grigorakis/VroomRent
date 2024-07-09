@@ -10,5 +10,19 @@ export default {
   // Updates vehicle id
   setVehicleId(state, id) {
     state.vehicleId = id
+  },
+
+  // Updates pickup date
+  setPickupDate(state, date) {
+    state.pickupFormDetails.pickupDate = date
+  },
+
+  // Updates dropoff date
+  setDropoffDate(state, date) {
+    state.pickupFormDetails.dropoffDate = date
+  },
+
+  setSelectedVehicle(state, payload) {
+    state.selectedVehicle = payload
   }
 }
