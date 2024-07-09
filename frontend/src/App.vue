@@ -1,6 +1,8 @@
 <template>
-  <NavbarComponent />
-  <RouterView />
+  <section>
+    <NavbarComponent />
+    <RouterView />
+  </section>
 </template>
 
 <script setup>
