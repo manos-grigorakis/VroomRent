@@ -19,7 +19,8 @@
         />
         <!-- Card price -->
         <p class="text-center my-4">
-          <span class="font-Montserrat font-bold text-lg">$ {{ vehicle.price }} </span> /day
+          <span class="font-Montserrat font-bold text-lg">$ {{ vehicle.price.toFixed(2) }} </span>
+          /day
         </p>
         <!-- Card Button -->
         <div class="justify-center flex">

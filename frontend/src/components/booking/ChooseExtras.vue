@@ -2,7 +2,9 @@
   <section class="flex flex-col gap-20 mb-20 tracking-wide px-8">
     <BaseSpinner v-if="isLoading" />
     <h2 class="text-3xl font-Montserrat font-semibold text-center">Choose Your Extras</h2>
-    <div class="flex flex-col gap-8 items-center md:items-start justify-around md:flex-row">
+    <div
+      class="flex flex-col gap-8 items-center lg:items-start justify-center md:gap-40 lg:flex-row"
+    >
       <!-- Div for divider! -->
       <div class="flex gap-10">
         <div class="flex flex-col gap-4 bg-white px-4 py-8 rounded-lg drop-shadow-md">
@@ -30,19 +32,43 @@
           <RentalDetails />
           <hr class="text-[#ccc] w-[60%] mx-auto" />
           <!-- Extras -->
+          <div>
+            <h2 class="text-xl font-Montserrat font-semibold mb-2">Extras</h2>
+            <transition-group name="selected-extra" tag="ul" class="flex flex-col gap-2">
+              <li v-for="extra in selectedExtras" :key="extra._id">
+                <p v-if="extra.title === 'Prepaid Fuel'" class="flex justify-between">
+                  - {{ extra.title }} <span>$ {{ extra.price.toFixed(2) }}</span>
+                </p>
+                <p
+                  v-else-if="extra.title === 'Child Safety Seats'"
+                  class="flex justify-between items-center"
+                >
+                  <span>
+                    - {{ extra.title }}
+                    <small>({{ numberOfDays }} days, {{ childSeatCount }} seats)</small>
+                  </span>
+                  <span>$ {{ (extra.price * numberOfDays * childSeatCount).toFixed(2) }}</span>
+                </p>
+                <p v-else class="flex justify-between">
+                  <span>
+                    - {{ extra.title }} <small>({{ numberOfDays }} days)</small>
+                  </span>
+                  <span>$ {{ (extra.price * numberOfDays).toFixed(2) }}</span>
+                </p>
+              </li>
+            </transition-group>
+          </div>
+          <hr class="text-goldenYellow-default" />
           <div class="">
-            <div class="">
-              <h2 class="text-xl font-Montserrat font-semibold mb-2">Extras</h2>
-              <ul class="flex flex-col gap-2">
-                <li class="flex justify-between">- Toll Pass <span>$ 10.00</span></li>
-              </ul>
-            </div>
+            <h4 class="flex justify-between">
+              Reservation Cost <span>$ {{ calculateVehiclePrice(vehicle.price) }}</span>
+            </h4>
           </div>
           <hr class="text-vibrantOrange-default" />
           <!-- Total -->
           <div class="mb-4">
             <p class="flex justify-between text-xl font-bold">
-              Total <span class="text-xl font-bold">$ 330.00</span>
+              Total <span class="text-xl font-bold">$ {{ calculateTotalPrice }}</span>
             </p>
           </div>
 
@@ -52,27 +78,10 @@
             Continue
           </button>
         </div>
-        <div class="hidden w-0.5 h-screen bg-lightGray rounded-lg md:block"></div>
+        <div class="hidden w-0.5 h-screen bg-lightGray rounded-lg lg:block"></div>
       </div>
       <!-- Extras -->
-      <div class="flex flex-col gap-10">
-        <div
-          class="flex flex-col gap-4 px-6 py-8 bg-white border-2 border-lightGray rounded-lg drop-shadow-sm"
-        >
-          <div class="flex justify-between gap-20">
-            <div class="flex sm:items-center gap-1">
-              <box-icon name="shield-quarter" class="w-8"></box-icon>
-              <h4 class="text-lg font-Montserrat font-bold">Additional insurance Coverage</h4>
-            </div>
-            <span class="text-md font-Montserrat font-semibold">$ 10.00 /day</span>
-          </div>
-          <p class="max-w-md">
-            Enhance your peace of mind with additional coverage options like collision damage
-            waiver, personal accident insurance, or supplemental liability protection.
-          </p>
-          <BaseButton>Select</BaseButton>
-        </div>
-      </div>
+      <ExtrasDetails />
     </div>
   </section>
 </template>
@@ -82,10 +91,9 @@ import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 import BaseSpinner from '../ui/BaseSpinner.vue'
-import BaseButton from '../ui/BaseButton.vue'
-
 import VehicleDetails from '@/components/booking/VehicleDetails.vue'
 import RentalDetails from '@/components/booking/RentalDetails.vue'
+import ExtrasDetails from '@/components/booking/ExtrasDetails.vue'
 
 const store = useStore()
 const isLoading = ref(false)
@@ -102,16 +110,41 @@ const fetchSelectedVehicle = async () => {
 
 const vehicle = computed(() => store.getters['bookings/selectedVehicle'])
 
-// const pickupLocation = computed(() => store.getters['bookings/pickupLocation'])
-// const dropoffLocation = computed(() => store.getters['bookings/dropoffLocation'])
-// const pickupDate = computed(() => store.getters['bookings/pickupDate'])
-// const dropoffDate = computed(() => store.getters['bookings/dropoffDate'])
+const numberOfDays = computed(() => store.getters['bookings/numberOfDays'])
+const childSeatCount = computed(() => store.getters['bookings/childSeatCount'])
 
-// const getImageUrl = (imageName) => {
-//   return new URL(`../../assets/images/vehicles/${imageName}`, import.meta.url).href
-// }
-
-onMounted(() => {
-  fetchSelectedVehicle()
+// const selectedExtras = computed(() => store.state.bookings.selectedExtras)
+const selectedExtras = computed(() => {
+  return [...store.state.bookings.selectedExtras, ...store.state.bookings.fuelExtraCharge]
 })
+const calculateTotalPrice = computed(() => store.getters['bookings/calculateTotalPrice'])
+
+// Calcuates price of vehicle with the selected days number user has selected
+const calculateVehiclePrice = (price) => {
+  const numberOfDays = store.getters['bookings/numberOfDays']
+  const sum = price * numberOfDays
+  return sum.toFixed(2)
+}
+
+onMounted(() => fetchSelectedVehicle())
 </script>
+
+<style scoped>
+.selected-extra-enter-from,
+.selected-extra-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.selected-extra-enter-active {
+  transition: all 0.4s ease-out;
+}
+.selected-extra-enter-to,
+.selected-extra-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.selected-extra-leave-active {
+  transition: all 0.3s ease-in;
+}
+</style>

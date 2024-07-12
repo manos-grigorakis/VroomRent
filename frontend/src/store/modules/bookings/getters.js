@@ -17,5 +17,33 @@ export default {
     return 0
   },
 
-  selectedVehicle: (state) => state.selectedVehicle
+  selectedVehicle: (state) => state.selectedVehicle,
+  bookingExtras: (state) => state.bookingExtras,
+  selectedExtras: (state) => state.selectedExtras,
+  fuelExtraCharge: (state) => state.fuelExtraCharge,
+  childSeatCount: (state) => state.childSeatCount,
+  childSeatExtra: (state) => state.childSeatExtra,
+
+  // Calculates final price of booking
+  calculateTotalPrice: (state, getters) => {
+    const numberOfDays = getters.numberOfDays
+    const vehiclePrice = state.selectedVehicle.price * numberOfDays
+
+    const extrasPrice = state.selectedExtras.reduce((total, extra) => {
+      if (extra.title === 'Child Safety Seats') {
+        return total
+      }
+      return total + extra.price * numberOfDays
+    }, 0)
+
+    const fuelCharge = state.fuelExtraCharge.reduce((total, extra) => total + extra.price, 0)
+
+    // Calculates the total of the child seats
+    const childSeatCharge = state.childSeatExtra
+      ? state.childSeatExtra.price * state.childSeatCount * numberOfDays
+      : 0
+
+    const totalPrice = (vehiclePrice + extrasPrice + fuelCharge + childSeatCharge).toFixed(2)
+    return totalPrice
+  }
 }

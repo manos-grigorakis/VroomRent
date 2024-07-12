@@ -6,6 +6,7 @@
       <li class="relative mb-6 flex-1">
         <div class="flex items-center">
           <div
+            v-if="isLoaded"
             class="z-10 flex items-center justify-center w-6 h-6 bg-goldenYellow-default rounded-full ring-4 ring-white drop-shadow-md shrink-0"
           >
             <svg

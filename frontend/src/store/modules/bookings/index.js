@@ -27,7 +27,13 @@ export default {
             smallCase: 0
           }
         }
-      }
+      },
+      bookingExtras: [],
+      selectedExtras: [],
+      fuelExtraCharge: [],
+      childSeatExtra: null,
+      childSeatCount: 0,
+      total: 0
     }
   },
   mutations,

@@ -20,7 +20,10 @@ export default {
         700: '#0056B3'
       },
       green: '#84cc16',
-      red: '#ef4444',
+      red: {
+        default: '#ef4444',
+        700: '#cc3939'
+      },
       charcoalGray: '#424242',
       charcoal: '#333333',
       linen: '#FAF9F6', // background-color

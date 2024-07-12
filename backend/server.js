@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const userModel = require("./models/user");
 const vehicleModel = require("./models/vehicle");
+const bookingExtrasModel = require("./models/bookingExtras");
 
 const app = express();
 const port = 3000;
@@ -80,6 +81,15 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).send({ message: "Login Failed", error });
+  }
+});
+
+app.get("/bookingExtras", async (req, res) => {
+  try {
+    const bookingExtras = await bookingExtrasModel.find({});
+    res.status(200).send(bookingExtras);
+  } catch (error) {
+    console.error(error);
   }
 });
 

@@ -70,9 +70,11 @@ const chooseVehicle = (id) => {
   router.push('/choose-extras')
 }
 
+// Calcuates price of vehicle with the selected days number user has selected
 const calculateTotalPrice = (price) => {
   const numberOfDays = store.getters['bookings/numberOfDays']
-  return price * numberOfDays
+  const sum = price * numberOfDays
+  return sum.toFixed(2)
 }
 
 // Check this before removing them!!!!
