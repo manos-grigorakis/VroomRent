@@ -1,5 +1,5 @@
 <template>
-  <section class="flex flex-col gap-20 mb-20 tracking-wide px-8">
+  <section class="flex flex-col gap-20 mb-20 tracking-wide px-4 md:px-8">
     <BaseSpinner v-if="isLoading" />
     <h2 class="text-3xl font-Montserrat font-semibold text-center">Choose Your Extras</h2>
     <div

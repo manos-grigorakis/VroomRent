@@ -9,7 +9,7 @@
       v-if="errorMessage"
       :class="[
         'text-center mt-8 rounded bg-transparent text-white font-medium py-2 sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm',
-        isSuccess ? 'bg-green' : 'bg-red'
+        isSuccess ? 'bg-green' : 'bg-red-default'
       ]"
       >{{ errorMessage }}</span
     >
@@ -29,7 +29,7 @@
                 autocomplete="current-firstName"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
                 :class="{
-                  'border-2 border-red': errorFnameInput,
+                  'border-2 border-red-default': errorFnameInput,
                   'border-2 border-green': fNameValidated
                 }"
               />
@@ -47,7 +47,7 @@
                 autocomplete="current-lastName"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
                 :class="{
-                  'border-2 border-red': errorLnameInput,
+                  'border-2 border-red-default': errorLnameInput,
                   'border-2 border-green': lNameValidated
                 }"
               />
@@ -67,7 +67,7 @@
               autocomplete="email"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
               :class="{
-                'border-2 border-red': errorEmailInput,
+                'border-2 border-red-default': errorEmailInput,
                 'border-2 border-green': emailValidated
               }"
             />
@@ -87,7 +87,7 @@
                 autocomplete="current-password"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
                 :class="{
-                  'border-2 border-red': errorPasswordInput,
+                  'border-2 border-red-default': errorPasswordInput,
                   'border-2 border-green': passwordValidated
                 }"
               />

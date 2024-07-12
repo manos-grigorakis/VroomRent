@@ -9,7 +9,7 @@
       v-if="errorMessage"
       :class="[
         'text-center mt-8 rounded bg-transparent text-white font-medium py-2 sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm',
-        isSuccess ? 'bg-green' : 'bg-red'
+        isSuccess ? 'bg-green' : 'bg-red-default'
       ]"
       >{{ errorMessage }}</span
     >
@@ -26,7 +26,7 @@
               autocomplete="email"
               class="block w-full rounded border-1 py-1.5 shadow-sm ring-1 ring-[#ccc] sm:text-sm sm:leading-6 pl-2"
               :class="{
-                'border-2 border-red': errorEmailInput,
+                'border-2 border-red-default': errorEmailInput,
                 'border-2 border-green': emailValidated
               }"
             />
@@ -48,7 +48,7 @@
               autocomplete="current-password"
               class="block w-full rounded border-0 py-1.5 shadow-sm ring-1 ring-[#ccc] sm:text-sm sm:leading-6 pl-2"
               :class="{
-                'border-2 border-red': errorPasswordInput,
+                'border-2 border-red-default': errorPasswordInput,
                 'border-2 border-green': passwordValidated
               }"
             />

@@ -1,6 +1,8 @@
 <template>
-  <section class="flex flex-col gap-8 justify-center items-center px-8 mt-12 mb-20">
-    <h2 class="text-xl font-Montserrat font-semibold">Get Behind The Wheels in 4 Easy Steps</h2>
+  <section class="flex flex-col gap-8 px-5 sm:justify-center items-center sm:px-8 mt-12 mb-20">
+    <h2 class="text-lg sm:text-xl font-Montserrat font-semibold">
+      Get Behind The Wheels in 4 Easy Steps
+    </h2>
     <ol class="flex justify-between items-center max-w-4xl w-full mx-auto">
       <!-- Step 1 -->
       <li class="relative mb-6 flex-1">
@@ -30,7 +32,7 @@
         </div>
         <div class="mt-3">
           <h3 class="font-medium">Step 1</h3>
-          <h4 class="font-light">Choose Dates</h4>
+          <h4 class="font-light text-sm md:text-base">Choose Dates</h4>
         </div>
       </li>
       <!-- Step 2 -->
@@ -43,7 +45,7 @@
         </div>
         <div class="mt-3">
           <h3 class="font-medium">Step 2</h3>
-          <h4 class="font-light">Choose Vehicle</h4>
+          <h4 class="font-light text-sm md:text-base">Choose Vehicle</h4>
         </div>
       </li>
       <!-- Step 3 -->
@@ -56,7 +58,7 @@
         </div>
         <div class="mt-3">
           <h3 class="font-medium">Step 3</h3>
-          <h4 class="font-light">Choose Extras</h4>
+          <h4 class="font-light text-sm md:text-base">Choose Extras</h4>
         </div>
       </li>
       <!-- Step 4 -->
@@ -68,7 +70,7 @@
         </div>
         <div class="mt-3">
           <h3 class="font-medium">Step 4</h3>
-          <h4 class="font-light">Payment</h4>
+          <h4 class="font-light text-sm md:text-base">Payment</h4>
         </div>
       </li>
     </ol>

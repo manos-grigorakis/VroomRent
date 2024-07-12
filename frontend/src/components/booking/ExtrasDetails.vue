@@ -11,7 +11,7 @@
           class="absolute inset-0 bg-lightGray opacity-70"
         ></div>
       </transition>
-      <div class="flex justify-between gap-20">
+      <div class="flex justify-between gap-2 md:gap-20">
         <div class="flex sm:items-center gap-1">
           <img :src="getImageUrl(extra.icon)" :alt="extra.icon" class="w-5 h-5" />
           <h4 class="text-lg font-Montserrat font-bold">{{ extra.title }}</h4>

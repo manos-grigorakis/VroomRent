@@ -5,7 +5,7 @@
 
     <h2 class="text-lg font-medium">{{ name }} or similar</h2>
     <small class="text-sm font-light">{{ category.join(' | ') }}</small>
-    <div class="flex justify-between">
+    <div class="flex justify-between gap-8">
       <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
           <box-icon name="user"></box-icon>
