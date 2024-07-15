@@ -59,5 +59,10 @@ export default {
 
   setChildSeatExtra(state, extra) {
     state.childSeatExtra = extra
+  },
+
+  // Billing form
+  UPDATE_FIELD(state, { field, value }) {
+    state.billingFormData[field] = value
   }
 }

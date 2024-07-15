@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
@@ -40,12 +40,3 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
-
-// Users Collection:
-// - _id: auto generated from mongoDB*,
-// - email: user@mail.com,
-// - password: encrypted,
-// - role: enum[client, admin, otherRoles... ]
-// - resetToken: using jws library*,
-// - createdAt: currentDatetime
-// - bookings: [bookingid1, bookingid2] - reference to booking collection

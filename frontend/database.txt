@@ -56,4 +56,4 @@ Booking Collection:
         - pickUpDate: datetime from form,
         - dropOffDate: datetime from form,
     }
-    // Payment will be implemented with stripe payment, nothing to store
+    stripePaymentId: id retrived from stripe transcaction

@@ -45,5 +45,7 @@ export default {
 
     const totalPrice = (vehiclePrice + extrasPrice + fuelCharge + childSeatCharge).toFixed(2)
     return totalPrice
-  }
+  },
+
+  billingFormData: (state) => state.billingFormData
 }

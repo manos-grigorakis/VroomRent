@@ -34,7 +34,7 @@ const store = createStore({
   actions: {
     async registerUser({ state }) {
       try {
-        const response = await axios.post('http://localhost:3000/register', {
+        const response = await axios.post('http://localhost:3000/auth/register', {
           firstName: state.firstName,
           lastName: state.lastName,
           email: state.email,
@@ -48,7 +48,7 @@ const store = createStore({
     },
     async loginUser({ commit, state }) {
       try {
-        const response = await axios.post('http://localhost:3000/login', {
+        const response = await axios.post('http://localhost:3000/auth/login', {
           email: state.email,
           password: state.password
         })

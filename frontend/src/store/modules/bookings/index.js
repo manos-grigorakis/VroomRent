@@ -33,7 +33,19 @@ export default {
       fuelExtraCharge: [],
       childSeatExtra: null,
       childSeatCount: 0,
-      total: 0
+      total: 0,
+      billingFormData: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNumber: '',
+        address: '',
+        country: '',
+        city: '',
+        postalCode: ''
+      }
     }
   },
   mutations,

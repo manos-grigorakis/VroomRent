@@ -1,9 +1,11 @@
 <template>
   <section class="flex flex-col gap-20 mb-20 tracking-wide px-4 md:px-8">
     <BaseSpinner v-if="isLoading" />
-    <h2 class="text-3xl font-Montserrat font-semibold text-center">Choose Your Extras</h2>
+    <h2 class="block lg:hidden text-3xl font-Montserrat font-semibold text-center">
+      Choose Your Extras
+    </h2>
     <div
-      class="flex flex-col gap-8 items-center lg:items-start justify-center md:gap-40 lg:flex-row"
+      class="flex flex-col gap-8 items-center lg:items-start justify-center md:gap-20 lg:flex-row"
     >
       <!-- Div for divider! -->
       <div class="flex gap-10">
@@ -73,6 +75,7 @@
           </div>
 
           <button
+            @click="handleContinueButton"
             class="flex w-full justify-center rounded bg-customBlue-default hover:bg-customBlue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Continue
@@ -81,7 +84,10 @@
         <div class="hidden w-0.5 h-screen bg-lightGray rounded-lg lg:block"></div>
       </div>
       <!-- Extras -->
-      <ExtrasDetails />
+      <section class="flex flex-col gap-8">
+        <h2 class="hidden lg:block text-3xl font-Montserrat font-semibold">Choose Your Extras</h2>
+        <ExtrasDetails />
+      </section>
     </div>
   </section>
 </template>
@@ -89,6 +95,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 import BaseSpinner from '../ui/BaseSpinner.vue'
 import VehicleDetails from '@/components/booking/VehicleDetails.vue'
@@ -96,6 +103,7 @@ import RentalDetails from '@/components/booking/RentalDetails.vue'
 import ExtrasDetails from '@/components/booking/ExtrasDetails.vue'
 
 const store = useStore()
+const router = useRouter()
 const isLoading = ref(false)
 
 const fetchSelectedVehicle = async () => {
@@ -124,6 +132,10 @@ const calculateVehiclePrice = (price) => {
   const numberOfDays = store.getters['bookings/numberOfDays']
   const sum = price * numberOfDays
   return sum.toFixed(2)
+}
+
+const handleContinueButton = () => {
+  router.push('/details-payment')
 }
 
 onMounted(() => fetchSelectedVehicle())

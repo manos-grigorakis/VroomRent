@@ -25,6 +25,10 @@ const router = createRouter({
       component: () => import('@/views/booking/ChooseExtrasView.vue')
     },
     {
+      path: '/details-payment',
+      component: () => import('@/views/booking/DetailsAndPaymentView.vue')
+    },
+    {
       path: '/register',
       component: () => import('@/views/auth/RegisterView.vue')
     },
@@ -34,7 +38,7 @@ const router = createRouter({
     }
   ],
   scrollBehavior() {
-    // always scroll to top
+    // always scroll on top
     return { top: 0 }
   }
 })
