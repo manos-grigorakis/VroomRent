@@ -47,5 +47,6 @@ export default {
     return totalPrice
   },
 
+  // Retrieves all billing data from checkout form
   billingFormData: (state) => state.billingFormData
 }

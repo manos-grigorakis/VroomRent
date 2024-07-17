@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <h2 class="text-base font-semibold leading-7 mb-10">Payment Information</h2>
     <div id="payment-element" />
   </div>
@@ -23,6 +23,7 @@ const stripe = ref(null)
 const clientSecret = ref(null)
 const paymentIntentId = ref(null)
 
+// Customizing stripe form
 const appearance = {
   variables: { colorPrimary: '#000', fontWeightNormal: '500', borderRadius: '6px' }
 }

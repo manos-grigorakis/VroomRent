@@ -13,7 +13,11 @@
             autocomplete="given-name"
             v-model.trim="firstName"
             class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.firstName }"
           />
+          <span v-if="errorMsg.firstName" class="text-red-default text-sm">{{
+            errorMsg.firstName
+          }}</span>
         </div>
       </div>
 
@@ -26,7 +30,11 @@
             id="last-name"
             v-model.trim="lastName"
             class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.lastName }"
           />
+          <span v-if="errorMsg.lastName" class="text-red-default text-sm">{{
+            errorMsg.lastName
+          }}</span>
         </div>
       </div>
 
@@ -40,7 +48,9 @@
             autocomplete="email"
             v-model="email"
             class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.email }"
           />
+          <span v-if="errorMsg.email" class="text-red-default text-sm">{{ errorMsg.email }}</span>
         </div>
       </div>
 
@@ -54,7 +64,11 @@
               id="password"
               v-model="password"
               class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
+              :class="{ 'border-2 border-red-default': invalidInput.password }"
             />
+            <span v-if="errorMsg.password" class="text-red-default text-sm">
+              {{ errorMsg.password }}</span
+            >
           </div>
         </div>
       </transition>
@@ -71,7 +85,11 @@
               id="confirm-password"
               v-model="confirmPassword"
               class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+              :class="{ 'border-2 border-red-default': invalidInput.confirmPassword }"
             />
+            <span v-if="errorMsg.confirmPassword" class="text-red-default text-sm">
+              {{ errorMsg.confirmPassword }}</span
+            >
           </div>
         </div>
       </transition>
@@ -86,7 +104,11 @@
             autocomplete="tel"
             v-model="phoneNumber"
             class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.phoneNumber }"
           />
+          <span v-if="errorMsg.phoneNumber" class="text-red-default text-sm">{{
+            errorMsg.phoneNumber
+          }}</span>
         </div>
       </div>
 
@@ -110,7 +132,11 @@
             autocomplete="street-address"
             v-model="address"
             class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.address }"
           />
+          <span v-if="errorMsg.address" class="text-red-default text-sm">{{
+            errorMsg.address
+          }}</span>
         </div>
       </div>
 
@@ -124,7 +150,11 @@
             autocomplete="country-name"
             v-model.trim="country"
             class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.country }"
           />
+          <span v-if="errorMsg.country" class="text-red-default text-sm">{{
+            errorMsg.country
+          }}</span>
         </div>
       </div>
 
@@ -138,7 +168,9 @@
             autocomplete="address-level1"
             v-model.trim="city"
             class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.city }"
           />
+          <span v-if="errorMsg.city" class="text-red-default text-sm">{{ errorMsg.city }}</span>
         </div>
       </div>
 
@@ -154,7 +186,11 @@
             autocomplete="postal-code"
             v-model="postalCode"
             class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
+            :class="{ 'border-2 border-red-default': invalidInput.postalCode }"
           />
+          <span v-if="errorMsg.postalCode" class="text-red-default text-sm">{{
+            errorMsg.postalCode
+          }}</span>
         </div>
       </div>
     </div>
@@ -166,6 +202,15 @@ import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
+
+const emit = defineEmits(['handleCheckbox', 'validationResult'])
+
+defineProps({
+  errorMsg: Object,
+  invalidInput: Object
+})
+
+const isCheckbox = ref(false)
 
 const createComputedProperty = (field) => {
   return computed({
@@ -189,10 +234,9 @@ const country = createComputedProperty('country')
 const city = createComputedProperty('city')
 const postalCode = createComputedProperty('postalCode')
 
-const isCheckbox = ref(false)
-
 const handleCheckBox = () => {
   isCheckbox.value = !isCheckbox.value
+  emit('handleCheckbox', isCheckbox.value)
 }
 </script>
 

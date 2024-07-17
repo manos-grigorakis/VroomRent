@@ -1,6 +1,10 @@
 <template>
   <form @submit.prevent="handleForm">
-    <PersonalDetailForm />
+    <PersonalDetailForm
+      @handleCheckbox="handleCheckbox"
+      :errorMsg="errorMessage"
+      :invalidInput="invalidInput"
+    />
     <StripeForm @stripeLoaded="onStripeLoaded" />
     <button
       id="submit"
@@ -14,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
@@ -24,28 +28,145 @@ import StripeForm from '@/components/booking/StripeForm.vue'
 
 const store = useStore()
 const router = useRouter()
+
 const isLoading = ref(false)
+const isCheckbox = ref(false)
+const errorMessage = reactive({
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  phoneNumber: '',
+  address: '',
+  country: '',
+  city: '',
+  postalCode: ''
+})
+const invalidInput = reactive({
+  firstName: false,
+  lastName: false,
+  email: false,
+  password: false,
+  confirmPassword: false,
+  phoneNumber: false,
+  address: false,
+  country: false,
+  city: false,
+  postalCode: false
+})
+
+let elements = null
+let stripe = null
 
 const billingFormData = computed(() => store.getters['bookings/billingFormData'])
-
-// Getters from Vuex store
 const pickupLocation = computed(() => store.getters['bookings/pickupLocation'])
-// const dropoffLocation = computed(() => store.getters['dropoffLocation'])
+const dropoffLocation = computed(() => store.getters['bookings/dropoffLocation'])
 const pickupDate = computed(() => store.getters['bookings/pickupDate'])
 const dropoffDate = computed(() => store.getters['bookings/dropoffDate'])
 const vehicleId = computed(() => store.getters['bookings/vehicleId'])
 const totalPrice = computed(() => store.getters['bookings/calculateTotalPrice'])
-
-let elements = null
-let stripe = null
+const selectedExtras = computed(() => store.getters['bookings/selectedExtras'])
+const fuelExtraCharge = computed(() => store.getters['bookings/fuelExtraCharge'])
+const childSeatCount = computed(() => store.getters['bookings/childSeatCount'])
 
 const onStripeLoaded = ({ stripe: loadedStripe, elements: loadedElements }) => {
   stripe = loadedStripe
   elements = loadedElements
 }
 
+const handleCheckbox = (value) => {
+  isCheckbox.value = value
+}
+
+// Validation for personal details form
+const formValidation = () => {
+  let isValid = true
+  // Looping through object and initiallizing its values
+  Object.keys(errorMessage).forEach((key) => {
+    errorMessage[key] = ''
+  })
+
+  Object.keys(invalidInput).forEach((key) => {
+    invalidInput[key] = false
+  })
+
+  if (!billingFormData.value.firstName) {
+    errorMessage.firstName = 'First name is required'
+    invalidInput.firstName = true
+    isValid = false
+  }
+  if (!billingFormData.value.lastName) {
+    errorMessage.lastName = 'Last name is required'
+    invalidInput.lastName = true
+    isValid = false
+  }
+  if (!billingFormData.value.email) {
+    errorMessage.email = 'Email is required'
+    invalidInput.email = true
+    isValid = false
+  }
+  if (!billingFormData.value.phoneNumber) {
+    errorMessage.phoneNumber = 'Phone number is required'
+    invalidInput.phoneNumber = true
+    isValid = false
+  }
+  if (!billingFormData.value.address) {
+    errorMessage.address = 'Streer address is required'
+    invalidInput.address = true
+    isValid = false
+  }
+  if (!billingFormData.value.country) {
+    errorMessage.country = 'Country is required'
+    invalidInput.country = true
+    isValid = false
+  }
+  if (!billingFormData.value.city) {
+    errorMessage.city = 'City is required'
+    invalidInput.city = true
+    isValid = false
+  }
+  if (!billingFormData.value.postalCode) {
+    errorMessage.postalCode = 'Postal code is required'
+    invalidInput.postalCode = true
+    isValid = false
+  }
+
+  // Password validation only if checkbox is checked
+  if (isCheckbox.value) {
+    console.log('Checkbox is checked. Validating passwords...')
+    if (!billingFormData.value.password) {
+      errorMessage.password = 'Password is required'
+      invalidInput.password = true
+      isValid = false
+    }
+    if (!billingFormData.value.confirmPassword) {
+      errorMessage.confirmPassword = 'Password confirmation is required'
+      invalidInput.confirmPassword = true
+      isValid = false
+    }
+    if (
+      billingFormData.value.password &&
+      billingFormData.value.confirmPassword &&
+      billingFormData.value.password !== billingFormData.value.confirmPassword
+    ) {
+      errorMessage.password = 'Passwords are not the same'
+      errorMessage.confirmPassword = 'Passwords are not the same'
+      invalidInput.password = true
+      invalidInput.confirmPassword = true
+      isValid = false
+    }
+  }
+
+  return isValid
+}
+
 const handleForm = async () => {
   const formData = billingFormData.value
+
+  if (!formValidation()) {
+    return
+  }
 
   if (!stripe || !elements) {
     isLoading.value = true
@@ -54,6 +175,38 @@ const handleForm = async () => {
 
   isLoading.value = false
   try {
+    // if user hasn't select a different dropofflocation set it to null
+    if (!dropoffLocation.value) {
+      dropoffLocation.value = null
+    }
+
+    // If user wants to create an account too, but the passwords are incorent
+    if (isCheckbox.value && formData.password !== formData.confirmPassword) {
+      console.log('Passwords dont match')
+      return
+    }
+
+    isLoading.value = true
+
+    let foundedUserId = null
+
+    if (isCheckbox.value) {
+      try {
+        const response = await axios.post('http://localhost:3000/auth/register', {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password
+        })
+        console.log('User registration response: ', response.data)
+        foundedUserId = response.data.user._id
+      } catch (error) {
+        console.error('Error registering user: ', error)
+        isLoading.value = false
+        return
+      }
+    }
+
     // Create booking data
     const bookingData = {
       firstName: formData.firstName,
@@ -69,11 +222,18 @@ const handleForm = async () => {
       },
       bookDetails: {
         pickupLocation: `${pickupLocation.value.iso_country}, ${pickupLocation.value.name}, ${pickupLocation.value.municipality}`,
+        dropoffLocation: `${dropoffLocation.value.iso_country}, ${dropoffLocation.value.name}, ${dropoffLocation.value.municipality}`,
         pickupDate: pickupDate.value,
         dropoffDate: dropoffDate.value
       },
       stripeTranscactionId: 'temp-id',
-      vehicleId: vehicleId.value
+      userId: foundedUserId,
+      vehicleId: vehicleId.value,
+      bookingExtras: {
+        selectedExtrasId: selectedExtras.value.map((extra) => extra._id),
+        fuelExtra: fuelExtraCharge.value.length > 0,
+        childSeatCount: childSeatCount.value
+      }
     }
 
     const { error, paymentIntent } = await stripe.confirmPayment({
@@ -99,6 +259,7 @@ const handleForm = async () => {
 
     if (error) {
       console.error('Error confirming payment:', error)
+      isLoading.value = false
     } else {
       console.log('Payment confirmed!')
 
@@ -106,6 +267,7 @@ const handleForm = async () => {
       bookingData.stripeTranscactionId = paymentIntent.id
 
       try {
+        // Creates booking document in the database
         const response = await axios.post('http://localhost:3000/api/create-booking', bookingData)
         console.log('Booking response:', response.data)
 
@@ -118,7 +280,7 @@ const handleForm = async () => {
     isLoading.value = false
   } catch (error) {
     console.error('Error crating payment:', error)
-    isLoading.value = true
+    isLoading.value = false
   }
 }
 </script>

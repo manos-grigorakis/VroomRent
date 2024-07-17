@@ -1,2 +1,2 @@
-stripe listen --forward-to localhost:3000/webhook
+stripe listen --forward-to localhost:3000/stripe_webhooks
 run the above on powershell (admin) 
