@@ -28,6 +28,7 @@ export default {
     commit('UPDATE_FIELD', { field, value })
   },
 
+  // Sends receipt to customer after successfuly places a booking, with all informations
   async sendReceipt({ getters }) {
     const pickUpLocation = getters.pickupLocation
     const dropoffLocation = getters.dropoffLocation
@@ -39,9 +40,9 @@ export default {
     const selectedExtras = getters.selectedExtras
     const childSeatCount = getters.childSeatCount
     const fuelCharge = getters.fuelExtraCharge
+    const formData = getters.billingFormData
 
     let extrasList = ''
-
     if (selectedExtras.length > 0) {
       extrasList = selectedExtras
         .map((extra) => {
@@ -49,13 +50,15 @@ export default {
           if (extra.title === 'Child Safety Seats') {
             extraDetail += ` (${childSeatCount} seats): $${extra.price} / day`
           } else {
-            extraDetail += `: $${extra.price}`
+            extraDetail += `: $${extra.price} / day`
           }
           extraDetail += '</li>'
           return extraDetail
         })
         .join('')
     }
+
+    // If there is fuelCharge as extra
     if (fuelCharge.length > 0) {
       fuelCharge.forEach((fuel) => {
         let fuelDetail = `<li><strong>${fuel.title}</strong>: $${fuel.price} / once </li>`
@@ -75,7 +78,12 @@ export default {
           dropoffDate: dropoffDate,
           total: total,
           selectedExtras: extrasList,
-          fuelCharge: fuelCharge
+          fuelCharge: fuelCharge,
+          address: formData.address,
+          city: formData.city,
+          postalCode: formData.postalCode,
+          country: formData.country,
+          phone: formData.phoneNumber
         }
       })
       console.log('Data: ', response.data)

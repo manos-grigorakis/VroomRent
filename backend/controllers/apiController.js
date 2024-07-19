@@ -105,7 +105,7 @@ exports.sendReceiptEmail = async (req, res) => {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to: email,
-    subject: "Booking Receipt",
+    subject: "✔️ Booking Receipt",
     html: `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -180,12 +180,31 @@ exports.sendReceiptEmail = async (req, res) => {
             : ""
         }
         <p><strong>Total: $</strong> ${bookingData.total}</p>
+
+        <hr>
+        <h3>Customer Information: </h3>
+        <p><strong>Address</strong>: ${bookingData.address}, ${
+      bookingData.city
+    }, ${bookingData.postalCode}, ${bookingData.country}</p>
+        <p><strong>Phone: </strong> ${bookingData.phone}</p>
+        <p><strong>Email: </strong> ${email}</p>
+
+        <hr>
+        <h3>Payment Details: </h3>
+        <p><strong>Payment Method: </strong> Card</p>
       </div>
       <div class="footer">
+        <p>
+          Thank you for choosing VroomRent! We hope you enjoy your experience
+          with us.
+        </p>
         <p>
           If you have any questions, feel free to
           <a href="mailto:vroomrent.comp@gmail.com">contact us</a>.
         </p>
+
+        <p>Best regards,</p>
+        <p>The VroomRent Team</p>
       </div>
     </div>
   </body>

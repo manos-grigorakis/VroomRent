@@ -32,7 +32,7 @@ const store = createStore({
     }
   },
   actions: {
-    async registerUser({ state }) {
+    async registerUser({ state, dispatch }) {
       try {
         const response = await axios.post('http://localhost:3000/auth/register', {
           firstName: state.firstName,
@@ -41,6 +41,8 @@ const store = createStore({
           password: state.password
         })
         console.log('Response:', response.data)
+        // sends an email after user registered
+        await dispatch('sendRegistrationEmail')
       } catch (error) {
         console.error('Error during registration:', error)
         throw error
@@ -58,6 +60,23 @@ const store = createStore({
       } catch (error) {
         console.log('Error during login: ', error)
         throw error
+      }
+    },
+
+    async sendRegistrationEmail({ getters }) {
+      const firstName = getters.firstName
+      const lastName = getters.lastName
+      const email = getters.email
+
+      try {
+        const response = await axios.post('http://localhost:3000/auth/registration-email', {
+          firstName: firstName,
+          lastName: lastName,
+          email: email
+        })
+        console.log(response.data)
+      } catch (error) {
+        console.error(error.message)
       }
     }
   },
