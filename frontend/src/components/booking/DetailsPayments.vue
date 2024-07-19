@@ -29,6 +29,7 @@
         />
 
         <hr class="text-[#ccc] w-[60%] mx-auto" />
+
         <!-- Rental Details -->
         <RentalDetails />
         <hr class="text-[#ccc] w-[60%] mx-auto" />
@@ -93,7 +94,7 @@ import { useStore } from 'vuex'
 import BaseSpinner from '../ui/BaseSpinner.vue'
 import VehicleDetails from '@/components/booking/VehicleDetails.vue'
 import RentalDetails from '@/components/booking/RentalDetails.vue'
-import BillingPaymentForms from '@/components/booking/BillingPaymentForms.vue'
+import BillingPaymentForms from '@/components/booking/CheckoutForms.vue'
 
 const store = useStore()
 const isLoading = ref(false)

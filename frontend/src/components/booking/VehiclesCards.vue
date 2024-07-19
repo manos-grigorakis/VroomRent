@@ -1,13 +1,21 @@
 <template>
   <BaseWrapper>
     <BaseSpinnerVue v-if="isLoading" />
-    <div class="flex flex-col justify-center gap-20 md:flex-row">
+    <!-- <div class="flex flex-col justify-center gap-20 md:flex-row"> -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
       <!-- Card -->
+
       <div
         v-for="vehicle in vehicles"
         :key="vehicle._id"
-        class="bg-white max-w-sm drop-shadow-md rounded-md pt-14 pb-8 px-8"
+        class="relative bg-white max-w-sm drop-shadow-md rounded-md pt-14 pb-8"
       >
+        <div
+          v-if="vehicle.premiumDelivery"
+          class="absolute text-lg font-Montserrat font-bold tracking-wide flex justify-center items-center text-center w-full h-12 rounded-t-md top-0 bg-charcoalGray text-goldenYellow-default"
+        >
+          Premium Delivery
+        </div>
         <!-- Car details -->
         <VehicleDetails
           :image="vehicle.image"
@@ -18,6 +26,7 @@
           :small-case="vehicle.details.storage.smallCase"
           :transmission="vehicle.details.transmission"
           :fuel="vehicle.details.fuel"
+          class="px-8"
         />
         <!-- Card price -->
         <p class="text-center my-4">

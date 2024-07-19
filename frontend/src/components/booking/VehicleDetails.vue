@@ -1,6 +1,6 @@
 <template>
   <!-- Car details -->
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 tracking-wide">
     <img :src="getImageUrl(image)" :alt="image" />
 
     <h2 class="text-lg font-medium">{{ name }} or similar</h2>

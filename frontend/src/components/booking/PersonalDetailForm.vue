@@ -15,6 +15,7 @@
             class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
             :class="{ 'border-2 border-red-default': invalidInput.firstName }"
           />
+
           <span v-if="errorMsg.firstName" class="text-red-default text-sm">{{
             errorMsg.firstName
           }}</span>

@@ -25,8 +25,20 @@ const router = createRouter({
       component: () => import('@/views/booking/ChooseExtrasView.vue')
     },
     {
-      path: '/details-payment',
-      component: () => import('@/views/booking/DetailsAndPaymentView.vue')
+      path: '/checkout',
+      component: () => import('@/views/booking/CheckoutView.vue')
+    },
+    {
+      path: '/receipt',
+      component: () => import('@/views/booking/ReceiptView.vue')
+    },
+    {
+      path: '/contact',
+      component: () => import('@/views/ContactView.vue')
+    },
+    {
+      path: '/about-us',
+      component: () => import('@/views/AboutUsView.vue')
     },
     {
       path: '/register',

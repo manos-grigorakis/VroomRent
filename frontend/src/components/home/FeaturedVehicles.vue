@@ -1,11 +1,11 @@
 <template>
   <BaseWrapper heading="Featured Vehicles">
-    <div class="flex flex-col justify-center gap-20 md:flex-row">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
       <!-- Card -->
       <div
         v-for="vehicle in vehicles"
         :key="vehicle._id"
-        class="bg-white max-w-sm drop-shadow-md rounded-md pt-14 pb-8 px-8"
+        class="bg-white max-w-sm drop-shadow-md rounded-md pt-14 pb-8"
       >
         <VehicleDetails
           :image="vehicle.image"
@@ -16,6 +16,7 @@
           :small-case="vehicle.details.storage.smallCase"
           :transmission="vehicle.details.transmission"
           :fuel="vehicle.details.fuel"
+          class="px-8"
         />
         <!-- Card price -->
         <p class="text-center my-4">

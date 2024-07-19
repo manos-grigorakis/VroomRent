@@ -43,10 +43,10 @@
               <RouterLink to="/fleet">Our Fleet</RouterLink>
             </li>
             <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
-              <RouterLink to="/">Contact</RouterLink>
+              <RouterLink to="/contact">Contact</RouterLink>
             </li>
             <li class="inline-block cursor-pointer hover:text-vibrantOrange-default">
-              <RouterLink to="/">About Us</RouterLink>
+              <RouterLink to="/about-us">About Us</RouterLink>
             </li>
           </ul>
         </div>
@@ -97,10 +97,10 @@
                       <RouterLink to="/fleet" @click="closeNavbar">Our Fleet</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="closeNavbar">Contact</RouterLink>
+                      <RouterLink to="/contact" @click="closeNavbar">Contact</RouterLink>
                     </li>
                     <li class="px-6 py-2 cursor-pointer rounded-lg hover:bg-lightGray">
-                      <RouterLink to="/" @click="closeNavbar">About Us</RouterLink>
+                      <RouterLink to="/about-us" @click="closeNavbar">About Us</RouterLink>
                     </li>
                   </ul>
                 </div>

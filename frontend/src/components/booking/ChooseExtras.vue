@@ -9,7 +9,7 @@
     >
       <!-- Div for divider! -->
       <div class="flex gap-10">
-        <div class="flex flex-col gap-4 bg-white px-4 py-8 rounded-lg drop-shadow-md">
+        <div class="flex flex-col gap-4 bg-white px-8 py-8 rounded-lg drop-shadow-md">
           <!-- Header -->
           <div class="flex justify-between">
             <h2 class="text-2xl font-Montserrat font-semibold">My Vehicle</h2>
@@ -135,7 +135,7 @@ const calculateVehiclePrice = (price) => {
 }
 
 const handleContinueButton = () => {
-  router.push('/details-payment')
+  router.push('/checkout')
 }
 
 onMounted(() => fetchSelectedVehicle())

@@ -1,6 +1,8 @@
 <template>
-  <Stepper3 />
-  <DetailsPayment />
+  <section>
+    <Stepper3 />
+    <DetailsPayment />
+  </section>
 </template>
 
 <script setup>

@@ -2,18 +2,18 @@
   <div class="flex flex-col gap-4">
     <div class="flex justify-between">
       <h2 class="text-xl font-Montserrat font-semibold">Rental Details</h2>
-      <router-link class="flex items-center text-xs font-light hover:underline"
+      <router-link v-if="!noLink" class="flex items-center text-xs font-light hover:underline"
         ><box-icon name="edit-alt" class="w-5 h-5"></box-icon>Change Dates</router-link
       >
     </div>
-    <!-- Dates -->
+
     <div class="flex flex-col gap-4">
       <div>
         <p class="mb-2">Pick Up:</p>
         <p
           class="flex items-center justify-between px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
         >
-          {{ pickupLocation.name
+          {{ pickupLocation
           }}<box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon>
         </p>
       </div>
@@ -22,8 +22,8 @@
         <p
           class="flex items-center justify-between px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
         >
-          {{ dropoffLocation.name
-          }}<box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon>
+          {{ dropoffLocation }}
+          <box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon>
         </p>
       </div>
       <div class="flex justify-between gap-4">
@@ -53,6 +53,13 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
+
+defineProps({
+  noLink: {
+    type: Boolean,
+    default: false
+  }
+})
 
 const pickupLocation = computed(() => store.getters['bookings/pickupLocation'])
 const dropoffLocation = computed(() => store.getters['bookings/dropoffLocation'])

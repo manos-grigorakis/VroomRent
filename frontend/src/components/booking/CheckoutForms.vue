@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="handleForm">
+    <BaseSpinner v-if="isLoading" />
     <PersonalDetailForm
       @handleCheckbox="handleCheckbox"
       :errorMsg="errorMessage"
@@ -25,11 +26,12 @@ import axios from 'axios'
 
 import PersonalDetailForm from '@/components/booking/PersonalDetailForm.vue'
 import StripeForm from '@/components/booking/StripeForm.vue'
+import BaseSpinner from '../ui/BaseSpinner.vue'
 
 const store = useStore()
 const router = useRouter()
 
-const isLoading = ref(false)
+const isLoading = ref(true)
 const isCheckbox = ref(false)
 const errorMessage = reactive({
   firstName: '',
@@ -73,6 +75,7 @@ const childSeatCount = computed(() => store.getters['bookings/childSeatCount'])
 const onStripeLoaded = ({ stripe: loadedStripe, elements: loadedElements }) => {
   stripe = loadedStripe
   elements = loadedElements
+  isLoading.value = false
 }
 
 const handleCheckbox = (value) => {
@@ -180,12 +183,6 @@ const handleForm = async () => {
       dropoffLocation.value = null
     }
 
-    // If user wants to create an account too, but the passwords are incorent
-    if (isCheckbox.value && formData.password !== formData.confirmPassword) {
-      console.log('Passwords dont match')
-      return
-    }
-
     isLoading.value = true
 
     let foundedUserId = null
@@ -252,7 +249,7 @@ const handleForm = async () => {
             }
           }
         },
-        return_url: 'http://localhost:5173/home'
+        return_url: 'http://localhost:5173/receipt'
       },
       redirect: 'if_required'
     })
@@ -272,7 +269,7 @@ const handleForm = async () => {
         console.log('Booking response:', response.data)
 
         // Redirect manually after successful booking creation
-        router.push('/home')
+        router.push('/receipt')
       } catch (postError) {
         console.error('Error posting booking data to database', postError)
       }

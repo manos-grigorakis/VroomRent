@@ -49,6 +49,10 @@ const vehicleSchema = new mongoose.Schema({
       },
     },
   },
+  premiumDelivery: {
+    type: Boolean,
+    default: false,
+  },
   onSale: {
     type: Boolean,
     default: false,

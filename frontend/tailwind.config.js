@@ -33,7 +33,7 @@ export default {
     },
     extend: {
       backgroundImage: {
-        'hero-image': "url('./src/assets/images/maksim-tarasov-bFTVxTo266E-unsplash.jpg')"
+        'hero-image': "url('./src/assets/images/maksim-tarasov-bFTVxTo266E-unsplash2.png')"
       }
     }
   },

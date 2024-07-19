@@ -1,6 +1,14 @@
 export default {
-  pickupLocation: (state) => state.pickupFormDetails.pickupLocation,
-  dropoffLocation: (state) => state.pickupFormDetails.dropoffLocation,
+  // Returns pickupLocation formated
+  pickupLocation: (state) => {
+    const location = state.pickupFormDetails.pickupLocation
+    return location ? `${location.iso_country}, ${location.name}, ${location.municipality}` : ''
+  },
+  // // Returns dropoffLocation formated
+  dropoffLocation: (state) => {
+    const location = state.pickupFormDetails.dropoffLocation
+    return location ? `${location.iso_country}, ${location.name}, ${location.municipality}` : ''
+  },
   pickupDate: (state) => state.pickupFormDetails.pickupDate,
   dropoffDate: (state) => state.pickupFormDetails.dropoffDate,
   vehicleId: (state) => state.vehicleId,
