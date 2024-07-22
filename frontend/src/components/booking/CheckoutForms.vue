@@ -200,18 +200,20 @@ const handleForm = async () => {
 
     // If user wants to create an account, register him and retrieve its id
     if (isCheckbox.value) {
+      const userData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password
+      }
+
       try {
-        const response = await axios.post('http://localhost:3000/auth/register', {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          password: formData.password
-        })
-        foundedUserId = response.data.user._id
+        store.commit('setUserData', userData)
+        foundedUserId = await store.dispatch('registerUser')
       } catch (error) {
         // If email already exists in the database show error in user
-        if (error.response && error.response.status === 409) {
-          errorMessage.email = 'Email already exists'
+        if (error.message === 'Email already exists') {
+          errorMessage.email = error.message
           invalidInput.email = true
         }
         console.error('Error registering user: ', error)
@@ -241,7 +243,7 @@ const handleForm = async () => {
       redirect: 'if_required'
     })
 
-    // If there is
+    // If there is an error with the payment
     if (error) {
       console.error('Error confirming payment:', error)
       showPaymentError.value = true

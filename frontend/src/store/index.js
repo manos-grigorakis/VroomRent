@@ -40,10 +40,16 @@ const store = createStore({
           email: state.email,
           password: state.password
         })
-        console.log('Response:', response.data)
+
         // sends an email after user registered
         await dispatch('sendRegistrationEmail')
+
+        // Returns user's id
+        return response.data.user._id
       } catch (error) {
+        if (error.response && error.response.status === 409) {
+          throw new Error('Email already exists')
+        }
         console.error('Error during registration:', error)
         throw error
       }
