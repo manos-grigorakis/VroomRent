@@ -53,6 +53,7 @@ onMounted(async () => {
 // Fix the cancel, because it tries to cancel every payment even if its successfully
 onBeforeUnmount(async () => {
   if (paymentIntentId.value) {
+    // Έλεγχος αν η πληρωμή ολοκληρώθηκε
     try {
       await axios.post('http://localhost:3000/api/cancel-payment-intent', {
         paymentIntentId: paymentIntentId.value

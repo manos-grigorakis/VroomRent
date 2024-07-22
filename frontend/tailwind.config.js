@@ -1,6 +1,16 @@
+const animate = require('tailwindcss-animate')
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: [
+    './pages/**/*.{js,jsx,vue}',
+    './components/**/*.{js,jsx,vue}',
+    './app/**/*.{js,jsx,vue}',
+    './src/**/*.{js,jsx,vue}',
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}'
+  ],
+  prefix: '',
   theme: {
     fontFamily: {
       Roboto: ['Roboto', 'sans-serif'],
@@ -31,13 +41,38 @@ export default {
       lightGray: '#E0E0E0',
       white: '#FFFFFF'
     },
+    // shadcn-vue
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px'
+      }
+    },
     extend: {
       backgroundImage: {
         'hero-image': "url('./src/assets/images/maksim-tarasov-bFTVxTo266E-unsplash2.png')"
+      },
+
+      // shacn-vue
+      keyframes: {
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' }
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 }
+        }
+      },
+
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out'
       }
     }
   },
-  plugins: [],
+  plugins: [animate],
   // declared for the basebutton component had some issues retrieving the color prop!!!
   safelist: [
     'bg-vibrantOrange-default',

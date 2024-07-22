@@ -47,6 +47,10 @@ const router = createRouter({
     {
       path: '/login',
       component: () => import('@/views/auth/LoginView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/views/NotFound.vue')
     }
   ],
   scrollBehavior() {

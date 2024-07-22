@@ -1,5 +1,11 @@
 <template>
   <form @submit.prevent="handleForm">
+    <BaseModal
+      v-if="showPaymentError"
+      title="Payment Failed"
+      :message="paymentError"
+      singleButton
+    />
     <BaseSpinner v-if="isLoading" />
     <PersonalDetailForm
       @handleCheckbox="handleCheckbox"
@@ -27,6 +33,7 @@ import axios from 'axios'
 import PersonalDetailForm from '@/components/booking/PersonalDetailForm.vue'
 import StripeForm from '@/components/booking/StripeForm.vue'
 import BaseSpinner from '../ui/BaseSpinner.vue'
+import BaseModal from '@/components/ui/BaseModal.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -57,6 +64,8 @@ const invalidInput = reactive({
   city: false,
   postalCode: false
 })
+const showPaymentError = ref(false)
+const paymentError = ref('')
 
 let elements = null
 let stripe = null
@@ -166,6 +175,8 @@ const formValidation = () => {
 
 const handleForm = async () => {
   const formData = billingFormData.value
+  showPaymentError.value = false
+  paymentError.value = ''
 
   if (!formValidation()) {
     return
@@ -187,6 +198,7 @@ const handleForm = async () => {
 
     let foundedUserId = null
 
+    // If user wants to create an account, register him and retrieve its id
     if (isCheckbox.value) {
       try {
         const response = await axios.post('http://localhost:3000/auth/register', {
@@ -195,41 +207,16 @@ const handleForm = async () => {
           email: formData.email,
           password: formData.password
         })
-        console.log('User registration response: ', response.data)
         foundedUserId = response.data.user._id
       } catch (error) {
+        // If email already exists in the database show error in user
+        if (error.response && error.response.status === 409) {
+          errorMessage.email = 'Email already exists'
+          invalidInput.email = true
+        }
         console.error('Error registering user: ', error)
         isLoading.value = false
         return
-      }
-    }
-
-    // Create booking data
-    const bookingData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      phoneNumber: formData.phoneNumber,
-      total: totalPrice.value,
-      billingDetails: {
-        address: formData.address,
-        country: formData.country,
-        city: formData.city,
-        zipCode: formData.postalCode
-      },
-      bookDetails: {
-        pickupLocation: `${pickupLocation.value.iso_country}, ${pickupLocation.value.name}, ${pickupLocation.value.municipality}`,
-        dropoffLocation: `${dropoffLocation.value.iso_country}, ${dropoffLocation.value.name}, ${dropoffLocation.value.municipality}`,
-        pickupDate: pickupDate.value,
-        dropoffDate: dropoffDate.value
-      },
-      stripeTranscactionId: 'temp-id',
-      userId: foundedUserId,
-      vehicleId: vehicleId.value,
-      bookingExtras: {
-        selectedExtrasId: selectedExtras.value.map((extra) => extra._id),
-        fuelExtra: fuelExtraCharge.value.length > 0,
-        childSeatCount: childSeatCount.value
       }
     }
 
@@ -254,29 +241,72 @@ const handleForm = async () => {
       redirect: 'if_required'
     })
 
+    // If there is
     if (error) {
       console.error('Error confirming payment:', error)
+      showPaymentError.value = true
+      paymentError.value = error.message
       isLoading.value = false
-    } else {
-      console.log('Payment confirmed!')
+      return
+    }
 
-      // Update booking data with real transaction ID
-      bookingData.stripeTranscactionId = paymentIntent.id
+    console.log('Payment confirmed!')
 
-      try {
-        // Creates booking document in the database
-        const response = await axios.post('http://localhost:3000/api/create-booking', bookingData)
-        console.log('Booking response:', response.data)
-
-        // Redirect manually after successful booking creation
-        router.push('/receipt')
-      } catch (postError) {
-        console.error('Error posting booking data to database', postError)
+    // Data that will be added in the database
+    const bookingData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phoneNumber: formData.phoneNumber,
+      total: totalPrice.value,
+      billingDetails: {
+        address: formData.address,
+        country: formData.country,
+        city: formData.city,
+        zipCode: formData.postalCode
+      },
+      bookDetails: {
+        pickupLocation: `${pickupLocation.value.iso_country}, ${pickupLocation.value.name}, ${pickupLocation.value.municipality}`,
+        dropoffLocation: `${dropoffLocation.value.iso_country}, ${dropoffLocation.value.name}, ${dropoffLocation.value.municipality}`,
+        pickupDate: pickupDate.value,
+        dropoffDate: dropoffDate.value
+      },
+      stripeTranscactionId: paymentIntent.id,
+      userId: foundedUserId,
+      vehicleId: vehicleId.value,
+      bookingExtras: {
+        selectedExtrasId: selectedExtras.value.map((extra) => extra._id),
+        fuelExtra: fuelExtraCharge.value.length > 0,
+        childSeatCount: childSeatCount.value
       }
     }
+
+    // Adds data to database
+    try {
+      const response = await axios.post('http://localhost:3000/api/create-booking', bookingData)
+      console.log('Booking response:', response.data)
+
+      // Redirect manually after successful booking creation
+      router.push('/receipt')
+    } catch (postError) {
+      console.error('Error posting booking data to database', postError)
+      showPaymentError.value = true
+      paymentError.value = 'There was an error creating your booking. Please try again.'
+
+      // If data cant be written in the database cancel the payment too
+      try {
+        await stripe.paymentIntents.cancel(paymentIntent.id)
+        console.log('Payment canceled due to booking creation failure')
+      } catch (cancelError) {
+        console.error('Error canceling payment:', cancelError)
+      }
+    }
+
     isLoading.value = false
   } catch (error) {
-    console.error('Error crating payment:', error)
+    console.error('Error creating payment:', error)
+    showPaymentError.value = true
+    paymentError.value = 'There was an error processing your payment. Please try again.'
     isLoading.value = false
   }
 }

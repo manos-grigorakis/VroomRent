@@ -4,11 +4,13 @@ export default {
     const location = state.pickupFormDetails.pickupLocation
     return location ? `${location.iso_country}, ${location.name}, ${location.municipality}` : ''
   },
-  // // Returns dropoffLocation formated
+  // Returns dropoffLocation formated
   dropoffLocation: (state) => {
     const location = state.pickupFormDetails.dropoffLocation
     return location ? `${location.iso_country}, ${location.name}, ${location.municipality}` : ''
   },
+
+  // Returns values of state
   pickupDate: (state) => state.pickupFormDetails.pickupDate,
   dropoffDate: (state) => state.pickupFormDetails.dropoffDate,
   vehicleId: (state) => state.vehicleId,
@@ -25,6 +27,7 @@ export default {
     return 0
   },
 
+  // Returns values of state
   selectedVehicle: (state) => state.selectedVehicle,
   bookingExtras: (state) => state.bookingExtras,
   selectedExtras: (state) => state.selectedExtras,
