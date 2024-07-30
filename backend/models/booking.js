@@ -72,18 +72,18 @@ const bookingSchema = mongoose.Schema({
   },
   vehicleId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "vehicles",
+    ref: "Vehicle",
     required: true,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
   },
   bookingExtras: {
     selectedExtrasId: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "bookingextras",
+        ref: "bookingExtras",
       },
     ],
     fuelExtra: {

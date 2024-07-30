@@ -17,93 +17,43 @@
       <BaseSpinner v-if="isLoading" />
       <form @submit.prevent="handleForm" class="space-y-6">
         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-          <div>
-            <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900"
-              >First Name</label
-            >
-            <div class="mt-2">
-              <input
-                id="firstName"
-                v-model.trim="userData.firstName"
-                type="text"
-                autocomplete="current-firstName"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
-                :class="{
-                  'border-2 border-red-default': errorFnameInput,
-                  'border-2 border-green': fNameValidated
-                }"
-              />
-            </div>
-          </div>
-          <div>
-            <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900"
-              >Last Name</label
-            >
-            <div class="mt-2">
-              <input
-                id="lastName"
-                v-model.trim="userData.lastName"
-                type="text"
-                autocomplete="current-lastName"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
-                :class="{
-                  'border-2 border-red-default': errorLnameInput,
-                  'border-2 border-green': lNameValidated
-                }"
-              />
-            </div>
-          </div>
+          <BaseInput
+            labelValue="First Name"
+            inputType="text"
+            inputId="firstName"
+            v-model.trim="userData.firstName"
+            :errorInput="errorFnameInput"
+            :inputValidated="fNameValidated"
+          />
+          <BaseInput
+            labelValue="Last Name"
+            inputType="text"
+            inputId="lastName"
+            v-model.trim="userData.lastName"
+            :errorInput="errorLnameInput"
+            :inputValidated="lNameValidated"
+          />
         </div>
 
-        <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-            >Email address</label
-          >
-          <div class="mt-2">
-            <input
-              id="email"
-              v-model.trim="userData.email"
-              type="email"
-              autocomplete="email"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
-              :class="{
-                'border-2 border-red-default': errorEmailInput,
-                'border-2 border-green': emailValidated
-              }"
-            />
-          </div>
-        </div>
+        <BaseInput
+          labelValue="Email Address"
+          inputType="email"
+          inputId="email"
+          v-model.trim="userData.email"
+          :errorInput="errorEmailInput"
+          :inputValidated="emailValidated"
+        />
 
-        <div>
-          <div>
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
-            >
-            <div class="mt-2">
-              <input
-                id="password"
-                v-model.trim="userData.password"
-                type="password"
-                autocomplete="current-password"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-[#ccc] placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2"
-                :class="{
-                  'border-2 border-red-default': errorPasswordInput,
-                  'border-2 border-green': passwordValidated
-                }"
-              />
-            </div>
-          </div>
-        </div>
+        <BaseInput
+          labelValue="Password"
+          inputType="password"
+          inputId="password"
+          v-model.trim="userData.password"
+          :errorInput="errorPasswordInput"
+          :inputValidated="passwordValidated"
+        />
 
-        <div>
-          <button
-            type="submit"
-            class="flex w-full justify-center rounded-md bg-vibrantOrange-default hover:bg-vibrantOrange-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-            :disabled="isLoading"
-          >
-            Register
-          </button>
-        </div>
+        <AccentButton widthClass="w-full" :disabled="isLoading">Register</AccentButton>
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">
@@ -119,7 +69,7 @@ import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
-import BaseSpinner from '@/components/ui/BaseSpinner.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -189,7 +139,7 @@ const handleForm = async () => {
   isLoading.value = true
   try {
     store.commit('setUserData', userData)
-    await store.dispatch('registerUser')
+    await store.dispatch('registerUser', { password: userData.password }) // // passing password with payload, so we dont have to save it in our state
 
     errorMessage.value = 'Registration successfull!'
     isSuccess.value = true

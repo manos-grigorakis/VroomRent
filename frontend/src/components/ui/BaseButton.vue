@@ -17,10 +17,6 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  color: {
-    type: String,
-    default: 'customBlue'
-  },
   link: {
     type: String,
     default: null
@@ -28,17 +24,24 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  widthClass: {
+    type: String,
+    default: 'w-auto'
   }
 })
 
 const buttonClasses = computed(() => {
   const baseClasses =
-    'py-2 px-8 font-semibold rounded-md transition duration-200 drop-shadow-md hover:hover:drop-shadow-lg hover:cursor-pointer '
-  const outlineClasses = props.outline
-    ? `border-2 border-${props.color}-default bg-transparent  hover:bg-${props.color}-700 hover:border-${props.color}-700 hover:text-white `
-    : `bg-${props.color}-default text-white hover:bg-${props.color}-700`
-  const disabledClasses = props.disabled ? 'bg-gray-400 cursor-not-allowed opacity-50 ' : ''
+    'py-2 px-8 font-semibold rounded-md transition duration-200 drop-shadow-md hover:hover:drop-shadow-lg hover:cursor-pointer'
 
-  return `${baseClasses} ${outlineClasses} ${disabledClasses}`
+  const outlineClasses = props.outline
+    ? `border-2 border-customBlue-default bg-transparent  hover:bg-customBlue-700 hover:border-customBlue-700 hover:text-white `
+    : `bg-customBlue-default text-white hover:bg-customBlue-700`
+
+  const disabledClasses = props.disabled ? 'bg-gray-400 cursor-not-allowed opacity-50 ' : ''
+  const widthClasses = props.widthClass
+
+  return `${baseClasses} ${outlineClasses} ${disabledClasses} ${widthClasses}`
 })
 </script>

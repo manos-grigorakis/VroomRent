@@ -13,14 +13,10 @@
       :invalidInput="invalidInput"
     />
     <StripeForm @stripeLoaded="onStripeLoaded" />
-    <button
-      id="submit"
-      type="submit"
-      :disabled="isLoading"
-      class="flex justify-center rounded w-full bg-customBlue-default hover:cursor-pointer hover:bg-customBlue-700 px-3 py-3 mt-6 font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+
+    <BaseButton id="submit" type="submit" :disabled="isLoading" widthClass="w-full"
+      >Complete Reservation</BaseButton
     >
-      Complete Reservation
-    </button>
   </form>
 </template>
 
@@ -32,8 +28,6 @@ import axios from 'axios'
 
 import PersonalDetailForm from '@/components/booking/PersonalDetailForm.vue'
 import StripeForm from '@/components/booking/StripeForm.vue'
-import BaseSpinner from '../ui/BaseSpinner.vue'
-import BaseModal from '@/components/ui/BaseModal.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -66,6 +60,7 @@ const invalidInput = reactive({
 })
 const showPaymentError = ref(false)
 const paymentError = ref('')
+const user = sessionStorage.getItem('user')
 
 let elements = null
 let stripe = null
@@ -196,20 +191,21 @@ const handleForm = async () => {
 
     isLoading.value = true
 
-    let foundedUserId = null
+    // if user is logged in retrieve his id,
+    // otherwise it will be changed if user creates an account in the code below
+    let foundedUserId = user
 
     // If user wants to create an account, register him and retrieve its id
     if (isCheckbox.value) {
       const userData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password
+        email: formData.email
       }
 
       try {
         store.commit('setUserData', userData)
-        foundedUserId = await store.dispatch('registerUser')
+        foundedUserId = await store.dispatch('registerUser', { password: formData.password })
       } catch (error) {
         // If email already exists in the database show error in user
         if (error.message === 'Email already exists') {
@@ -238,7 +234,7 @@ const handleForm = async () => {
             }
           }
         },
-        return_url: 'http://localhost:5173/receipt'
+        return_url: 'http://localhost:5173/booking/receipt'
       },
       redirect: 'if_required'
     })
@@ -268,8 +264,8 @@ const handleForm = async () => {
         zipCode: formData.postalCode
       },
       bookDetails: {
-        pickupLocation: `${pickupLocation.value.iso_country}, ${pickupLocation.value.name}, ${pickupLocation.value.municipality}`,
-        dropoffLocation: `${dropoffLocation.value.iso_country}, ${dropoffLocation.value.name}, ${dropoffLocation.value.municipality}`,
+        pickupLocation: pickupLocation.value,
+        dropoffLocation: dropoffLocation.value,
         pickupDate: pickupDate.value,
         dropoffDate: dropoffDate.value
       },
@@ -289,7 +285,7 @@ const handleForm = async () => {
       console.log('Booking response:', response.data)
 
       // Redirect manually after successful booking creation
-      router.push('/receipt')
+      router.push('/booking/receipt')
     } catch (postError) {
       console.error('Error posting booking data to database', postError)
       showPaymentError.value = true

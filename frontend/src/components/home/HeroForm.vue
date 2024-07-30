@@ -84,12 +84,8 @@
           />
         </div>
 
-        <div class="flex items-center mt-2">
-          <button
-            class="bg-vibrantOrange-default text-center text-white font-medium md:mt-4 px-4 py-2 rounded-md drop-shadow-sm hover:bg-vibrantOrange-700 hover:drop-shadow-md w-full lg:w-auto"
-          >
-            Find Car
-          </button>
+        <div class="flex items-center mt-6">
+          <AccentButton widthClass="w-full sm:w-auto">Find Car</AccentButton>
         </div>
       </div>
     </form>
@@ -102,14 +98,21 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.css'
-import BaseModal from '../ui/BaseModal.vue'
-
 import airportsData from '@/assets/data/filtered_airports.json'
+
+const store = useStore()
+const router = useRouter()
 
 const isCheckboxActive = ref(false)
 const airports = ref([])
 const open = ref(false)
 const errorMessage = ref('')
+const userData = reactive({
+  selectedPickupAirport: '',
+  selectedDropoffAirport: '',
+  selectedPickupDate: '',
+  selectedDropoffDate: ''
+})
 
 const handleCheckbox = () => {
   isCheckboxActive.value = !isCheckboxActive.value
@@ -125,17 +128,6 @@ const nameWithLang = ({ name, iso_country, municipality }) => {
 
 onMounted(() => {
   airports.value = airportsData
-})
-
-// Form
-const store = useStore()
-const router = useRouter()
-
-const userData = reactive({
-  selectedPickupAirport: '',
-  selectedDropoffAirport: '',
-  selectedPickupDate: '',
-  selectedDropoffDate: ''
 })
 
 const formValidation = () => {
@@ -173,7 +165,7 @@ const handleForm = () => {
     return
   }
   store.commit('bookings/setPickUpForm', userData)
-  router.push('/choose-vehicle')
+  router.push('/booking/choose-vehicle')
 }
 </script>
 

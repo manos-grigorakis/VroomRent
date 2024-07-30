@@ -1,6 +1,8 @@
 <template>
-  <StepperComponent2 />
-  <ChooseExtras />
+  <section>
+    <StepperComponent2 />
+    <ChooseExtras />
+  </section>
 </template>
 
 <script setup>

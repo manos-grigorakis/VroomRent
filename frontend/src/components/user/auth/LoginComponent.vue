@@ -16,53 +16,24 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
       <BaseSpinner v-if="isLoading" />
       <form @submit.prevent="handleForm" class="space-y-6">
-        <div>
-          <label for="email" class="block text-sm font-medium leading-6"> Email address </label>
-          <div class="mt-2">
-            <input
-              id="email"
-              v-model.trim="userData.email"
-              type="email"
-              autocomplete="email"
-              class="block w-full rounded border-1 py-1.5 shadow-sm ring-1 ring-[#ccc] sm:text-sm sm:leading-6 pl-2"
-              :class="{
-                'border-2 border-red-default': errorEmailInput,
-                'border-2 border-green': emailValidated
-              }"
-            />
-          </div>
-        </div>
-
-        <div>
-          <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6"> Password </label>
-            <div class="text-sm">
-              <a href="#" class="font-light hover:underline">Forgot password?</a>
-            </div>
-          </div>
-          <div class="mt-2">
-            <input
-              id="password"
-              v-model.trim="userData.password"
-              type="password"
-              autocomplete="current-password"
-              class="block w-full rounded border-0 py-1.5 shadow-sm ring-1 ring-[#ccc] sm:text-sm sm:leading-6 pl-2"
-              :class="{
-                'border-2 border-red-default': errorPasswordInput,
-                'border-2 border-green': passwordValidated
-              }"
-            />
-          </div>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            class="flex w-full justify-center rounded bg-vibrantOrange-default hover:bg-vibrantOrange-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
-            Login
-          </button>
-        </div>
+        <BaseInput
+          labelValue="Email Address"
+          inputType="email"
+          inputId="email"
+          v-model.trim="userData.email"
+          :errorInput="errorEmailInput"
+          :inputValidated="emailValidated"
+        />
+        <BaseInput
+          labelValue="Password"
+          inputType="password"
+          inputId="password"
+          v-model.trim="userData.password"
+          :errorInput="errorPasswordInput"
+          :inputValidated="passwordValidated"
+          forgotPassword
+        />
+        <AccentButton widthClass="w-full" :disabled="isLoading">Login</AccentButton>
       </form>
       <p class="mt-10 text-center text-sm">
         Don't have an account?
@@ -77,12 +48,10 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 
-import BaseSpinner from '@/components/ui/BaseSpinner.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
 
 const store = useStore()
-const router = useRouter()
 
 const userData = reactive({
   email: '',
@@ -128,7 +97,6 @@ const handleForm = async () => {
   }
   isLoading.value = true
   try {
-    store.commit('setUserDataLogin', userData)
     await store.dispatch('loginUser', userData)
 
     errorMessage.value = 'Login successful!'
@@ -137,8 +105,8 @@ const handleForm = async () => {
     passwordValidated.value = true
 
     setTimeout(() => {
-      router.push('/')
-    }, 1500)
+      window.location.href = '/home'
+    }, 200)
   } catch (error) {
     isSuccess.value = false
     emailValidated.value = false

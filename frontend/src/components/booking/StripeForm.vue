@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-3">
     <h2 class="text-base font-semibold leading-7 mb-10">Payment Information</h2>
     <div id="payment-element" />
   </div>

@@ -83,8 +83,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
-import BaseButton from '../ui/BaseButton.vue'
-
 const store = useStore()
 
 const fetchBookingExtras = async () => {

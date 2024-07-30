@@ -96,8 +96,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
-import BaseSpinner from '../ui/BaseSpinner.vue'
-import VehicleDetails from '@/components/booking/VehicleDetails.vue'
+import VehicleDetails from '@/components/shared/VehicleDetails.vue'
 import RentalDetails from '@/components/booking/RentalDetails.vue'
 
 const store = useStore()

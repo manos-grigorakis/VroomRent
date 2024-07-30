@@ -19,7 +19,7 @@ export default {
     colors: {
       vibrantOrange: {
         default: '#FFA500',
-        700: '#DE8F00'
+        700: '#e69500'
       },
       goldenYellow: {
         default: '#FFD700',
@@ -72,20 +72,5 @@ export default {
       }
     }
   },
-  plugins: [animate],
-  // declared for the basebutton component had some issues retrieving the color prop!!!
-  safelist: [
-    'bg-vibrantOrange-default',
-    'bg-goldenYellow-default',
-    'bg-customBlue-default',
-    'border-vibrantOrange-default',
-    'border-goldenYellow-default',
-    'border-customBlue-default',
-    'hover:bg-vibrantOrange-700',
-    'hover:bg-goldenYellow-700',
-    'hover:bg-customBlue-700',
-    'hover:border-vibrantOrange-700',
-    'hover:border-goldenYellow-700',
-    'hover:border-customBlue-700'
-  ]
+  plugins: [animate]
 }

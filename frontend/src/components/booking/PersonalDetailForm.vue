@@ -4,117 +4,88 @@
 
     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
       <div class="sm:col-span-3">
-        <label for="first-name" class="block text-sm font-medium leading-6">First name</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            name="first-name"
-            id="first-name"
-            autocomplete="given-name"
-            v-model.trim="firstName"
-            class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.firstName }"
-          />
-
-          <span v-if="errorMsg.firstName" class="text-red-default text-sm">{{
-            errorMsg.firstName
-          }}</span>
-        </div>
+        <BaseInput
+          labelValue="First Name"
+          inputType="text"
+          inputId="first-name"
+          v-model.trim="firstName"
+          :errorInput="invalidInput.firstName"
+        />
+        <span v-if="errorMsg.firstName" class="text-red-default text-sm">{{
+          errorMsg.firstName
+        }}</span>
       </div>
 
       <div class="sm:col-span-3">
-        <label for="last-name" class="block text-sm font-medium leading-6">Last name</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            name="last-name"
-            id="last-name"
-            v-model.trim="lastName"
-            class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.lastName }"
-          />
-          <span v-if="errorMsg.lastName" class="text-red-default text-sm">{{
-            errorMsg.lastName
-          }}</span>
-        </div>
+        <BaseInput
+          labelValue="Last Name"
+          inputType="text"
+          inputId="last-name"
+          v-model.trim="lastName"
+          :errorInput="invalidInput.lastName"
+        />
+        <span v-if="errorMsg.lastName" class="text-red-default text-sm">{{
+          errorMsg.lastName
+        }}</span>
       </div>
 
       <div class="col-span-full">
-        <label for="email" class="block text-sm font-medium leading-6">Email address</label>
-        <div class="mt-2">
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            v-model="email"
-            class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.email }"
-          />
-          <span v-if="errorMsg.email" class="text-red-default text-sm">{{ errorMsg.email }}</span>
-        </div>
+        <BaseInput
+          labelValue="Email Address"
+          inputType="email"
+          inputId="email"
+          v-model.trim="email"
+          :errorInput="invalidInput.email"
+        />
+        <span v-if="errorMsg.email" class="text-red-default text-sm">{{ errorMsg.email }}</span>
       </div>
 
       <transition name="password-reveal">
         <div v-if="isCheckbox" class="sm:col-span-3">
-          <label for="password" class="block text-sm font-medium leading-6">Password</label>
-          <div class="mt-2">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              v-model="password"
-              class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
-              :class="{ 'border-2 border-red-default': invalidInput.password }"
-            />
-            <span v-if="errorMsg.password" class="text-red-default text-sm">
-              {{ errorMsg.password }}</span
-            >
-          </div>
+          <BaseInput
+            labelValue="Password"
+            inputType="password"
+            inputId="password"
+            v-model.trim="password"
+            :errorInput="invalidInput.password"
+          />
+          <span v-if="errorMsg.password" class="text-red-default text-sm">
+            {{ errorMsg.password }}</span
+          >
         </div>
       </transition>
 
       <transition name="confirm-password-reveal">
         <div v-if="isCheckbox" class="sm:col-span-3">
-          <label for="confirm-password" class="block text-sm font-medium leading-6"
-            >Confirm Password</label
+          <BaseInput
+            labelValue="Confirm Password"
+            inputType="password"
+            inputId="confirm-password"
+            v-model.trim="confirmPassword"
+            :errorInput="invalidInput.confirmPassword"
+          />
+          <span v-if="errorMsg.confirmPassword" class="text-red-default text-sm">
+            {{ errorMsg.confirmPassword }}</span
           >
-          <div class="mt-2">
-            <input
-              type="password"
-              name="confirm-password"
-              id="confirm-password"
-              v-model="confirmPassword"
-              class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-              :class="{ 'border-2 border-red-default': invalidInput.confirmPassword }"
-            />
-            <span v-if="errorMsg.confirmPassword" class="text-red-default text-sm">
-              {{ errorMsg.confirmPassword }}</span
-            >
-          </div>
         </div>
       </transition>
 
       <div class="sm:col-span-3">
-        <label for="phone-number" class="block text-sm font-medium leading-6">Phone Number</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            name="phone-number"
-            id="phone-number"
-            autocomplete="tel"
-            v-model="phoneNumber"
-            class="block w-full rounded-md border-0 border-lightGray py-1.5 px-2 ring-1 ring-inset ring-lightGray shadow-sm sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.phoneNumber }"
-          />
-          <span v-if="errorMsg.phoneNumber" class="text-red-default text-sm">{{
-            errorMsg.phoneNumber
-          }}</span>
-        </div>
+        <BaseInput
+          labelValue="Phone Number"
+          inputType="text"
+          inputId="phone-number"
+          v-model.trim="phoneNumber"
+          :errorInput="invalidInput.phoneNumber"
+        />
+        <span v-if="errorMsg.phoneNumber" class="text-red-default text-sm">{{
+          errorMsg.phoneNumber
+        }}</span>
       </div>
 
       <!-- Checkbox -->
-      <div class="col-span-full">
+      <!-- If there is a session with a user it wont be shown -->
+      <div v-if="!user" class="col-span-full">
         <input type="checkbox" id="create-account" class="mr-2" @click="handleCheckBox" />
         <label for="create-account" class="text-sm leading-6"
           >Create an account for faster bookings in the future.</label
@@ -122,77 +93,49 @@
       </div>
 
       <div class="col-span-full">
-        <label for="street-address" class="block text-sm font-medium leading-6"
-          >Street address</label
-        >
-        <div class="mt-2">
-          <input
-            type="text"
-            name="street-address"
-            id="street-address"
-            autocomplete="street-address"
-            v-model="address"
-            class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.address }"
-          />
-          <span v-if="errorMsg.address" class="text-red-default text-sm">{{
-            errorMsg.address
-          }}</span>
-        </div>
+        <BaseInput
+          labelValue="Street Address"
+          inputType="text"
+          inputId="street-address"
+          v-model.trim="address"
+          :errorInput="invalidInput.address"
+        />
+        <span v-if="errorMsg.address" class="text-red-default text-sm">{{ errorMsg.address }}</span>
       </div>
 
       <div class="sm:col-span-2 sm:col-start-1">
-        <label for="country" class="block text-sm font-medium leading-6">Country</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            name="country"
-            id="country"
-            autocomplete="country-name"
-            v-model.trim="country"
-            class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.country }"
-          />
-          <span v-if="errorMsg.country" class="text-red-default text-sm">{{
-            errorMsg.country
-          }}</span>
-        </div>
+        <BaseInput
+          labelValue="Country"
+          inputType="text"
+          inputId="country"
+          v-model.trim="country"
+          :errorInput="invalidInput.country"
+        />
+        <span v-if="errorMsg.country" class="text-red-default text-sm">{{ errorMsg.country }}</span>
       </div>
 
       <div class="sm:col-span-2">
-        <label for="city" class="block text-sm font-medium leading-6">City</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            name="city"
-            id="city"
-            autocomplete="address-level1"
-            v-model.trim="city"
-            class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.city }"
-          />
-          <span v-if="errorMsg.city" class="text-red-default text-sm">{{ errorMsg.city }}</span>
-        </div>
+        <BaseInput
+          labelValue="City"
+          inputType="text"
+          inputId="city"
+          v-model.trim="city"
+          :errorInput="invalidInput.city"
+        />
+        <span v-if="errorMsg.city" class="text-red-default text-sm">{{ errorMsg.city }}</span>
       </div>
 
       <div class="sm:col-span-2">
-        <label for="postal-code" class="block text-sm font-medium leading-6"
-          >ZIP / Postal code</label
-        >
-        <div class="mt-2">
-          <input
-            type="text"
-            name="postal-code"
-            id="postal-code"
-            autocomplete="postal-code"
-            v-model="postalCode"
-            class="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-lightGray sm:text-sm sm:leading-6"
-            :class="{ 'border-2 border-red-default': invalidInput.postalCode }"
-          />
-          <span v-if="errorMsg.postalCode" class="text-red-default text-sm">{{
-            errorMsg.postalCode
-          }}</span>
-        </div>
+        <BaseInput
+          labelValue="ZIP / Postal Code"
+          inputType="text"
+          inputId="postal-code"
+          v-model.trim="postalCode"
+          :errorInput="invalidInput.postalCode"
+        />
+        <span v-if="errorMsg.postalCode" class="text-red-default text-sm">{{
+          errorMsg.postalCode
+        }}</span>
       </div>
     </div>
   </div>
@@ -201,6 +144,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
+
+import BaseInput from '@/components/ui/BaseInput.vue'
 
 const store = useStore()
 
@@ -212,6 +157,7 @@ defineProps({
 })
 
 const isCheckbox = ref(false)
+const user = sessionStorage.getItem('user')
 
 const createComputedProperty = (field) => {
   return computed({
