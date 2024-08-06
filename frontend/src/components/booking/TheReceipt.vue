@@ -118,8 +118,14 @@ const numberOfDays = computed(() => store.getters['bookings/numberOfDays'])
 const childSeatCount = computed(() => store.getters['bookings/childSeatCount'])
 const formData = computed(() => store.getters['bookings/billingFormData'])
 
+// const selectedExtras = computed(() => {
+//   return [...store.state.bookings.selectedExtras, ...store.state.bookings.fuelExtraCharge]
+// })
 const selectedExtras = computed(() => {
-  return [...store.state.bookings.selectedExtras, ...store.state.bookings.fuelExtraCharge]
+  const fuelCharge = store.state.bookings.fuelExtraCharge
+    ? [store.state.bookings.fuelExtraCharge]
+    : []
+  return [...store.state.bookings.selectedExtras, ...fuelCharge]
 })
 const calculateTotalPrice = computed(() => store.getters['bookings/calculateTotalPrice'])
 

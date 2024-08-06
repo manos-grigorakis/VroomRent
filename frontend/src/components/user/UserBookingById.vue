@@ -1,5 +1,5 @@
 <template>
-  <section class="">
+  <section>
     <BaseSpinner v-if="isLoading" />
     <h2 class="text-xl font-semibold font-Montserrat mb-6 tracking-wide">
       Booking Number: {{ id }}

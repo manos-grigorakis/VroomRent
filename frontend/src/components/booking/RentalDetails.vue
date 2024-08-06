@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <section class="flex flex-col gap-4">
     <div class="flex justify-between">
       <h2 class="text-xl font-Montserrat font-semibold">Rental Details</h2>
       <router-link v-if="!noLink" class="flex items-center text-xs font-light hover:underline"
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>

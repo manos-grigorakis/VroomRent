@@ -1,12 +1,12 @@
 <template>
-  <div class="mb-3">
+  <section class="mb-3">
     <h2 class="text-base font-semibold leading-7 mb-10">Payment Information</h2>
     <div id="payment-element" />
-  </div>
+  </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { loadStripe } from '@stripe/stripe-js'
 import { useStore } from 'vuex'
 import axios from 'axios'
@@ -47,20 +47,6 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error(error)
-  }
-})
-
-// Fix the cancel, because it tries to cancel every payment even if its successfully
-onBeforeUnmount(async () => {
-  if (paymentIntentId.value) {
-    // Έλεγχος αν η πληρωμή ολοκληρώθηκε
-    try {
-      await axios.post('http://localhost:3000/api/cancel-payment-intent', {
-        paymentIntentId: paymentIntentId.value
-      })
-    } catch (error) {
-      console.error('Error cancelling payment intent:', error)
-    }
   }
 })
 </script>

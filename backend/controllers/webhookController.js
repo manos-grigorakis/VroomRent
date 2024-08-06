@@ -21,23 +21,11 @@ exports.handleStripeWebhook = (request, response) => {
     case "payment_intent.payment_failed":
       const paymentIntentFailed = event.data.object;
       console.log(`PaymentIntent failed: ${paymentIntentFailed.id}`);
-      // Update your database to mark the payment as failed
       break;
     case "payment_intent.canceled":
       const paymentIntentCanceled = event.data.object;
       console.log(`PaymentIntent was canceled: ${paymentIntentCanceled.id}`);
-      // Update your database to mark the payment as canceled
       break;
-    // case "customer.created":
-    //   const customer = event.data.object;
-    //   console.log(`Customer was created: ${customer.id}`);
-    //   // Update your database to mark the customer as created
-    //   break;
-    // case "payment_intent.created":
-    //   const paymentIntentCreated = event.data.object;
-    //   console.log(`PaymentIntent was created: ${paymentIntentCreated.id}`);
-    //   // Update your database to mark the payment intent as created
-    //   break;
     default:
       console.log(`Unhandled event type ${event.type}`);
   }

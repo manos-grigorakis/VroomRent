@@ -47,7 +47,11 @@ export default {
       return total + extra.price * numberOfDays
     }, 0)
 
-    const fuelCharge = state.fuelExtraCharge.reduce((total, extra) => total + extra.price, 0)
+    // old
+    // const fuelCharge = state.fuelExtraCharge.reduce((total, extra) => total + extra.price, 0)
+
+    // new
+    const fuelCharge = state.fuelExtraCharge ? state.fuelExtraCharge.price : 0
 
     // Calculates the total of the child seats
     const childSeatCharge = state.childSeatExtra

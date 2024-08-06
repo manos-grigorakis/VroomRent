@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-16 lg:px-8 bg-white drop-shadow-md rounded-lg max-w-sm md:max-w-lg mx-auto"
-  >
+  <FormWrapper>
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 class="text-center text-2xl font-semibold">Forgot Password</h2>
     </div>
@@ -19,7 +17,7 @@
         <AccentButton widthClass="w-full" :disabled="isLoading">Register</AccentButton>
       </form>
     </div>
-  </div>
+  </FormWrapper>
 </template>
 
 <script setup>
@@ -27,8 +25,8 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
-import BaseSpinner from '@/components/ui/BaseSpinner.vue'
 
+import FormWrapper from '@/components/ui/FormWrapper.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 
 const toast = useToast()

@@ -1,9 +1,6 @@
 <template>
   <BaseSpinner v-if="isLoadingToken" />
-  <div
-    v-else-if="isTokenValid"
-    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-16 lg:px-8 bg-white drop-shadow-md rounded-lg max-w-sm md:max-w-lg mx-auto"
-  >
+  <FormWrapper v-else-if="isTokenValid">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 class="text-center text-2xl font-semibold">Change Password</h2>
     </div>
@@ -27,7 +24,7 @@
         <AccentButton widthClass="w-full" :disabled="isLoading">Change Password</AccentButton>
       </form>
     </div>
-  </div>
+  </FormWrapper>
   <div
     v-else
     class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-16 lg:px-8 bg-white drop-shadow-md rounded-lg max-w-sm md:max-w-lg mx-auto text-center"
@@ -42,6 +39,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import axios from 'axios'
 
+import FormWrapper from '@/components/ui/FormWrapper.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 
 const route = useRoute()

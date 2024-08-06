@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mt-8 bg-white drop-shadow-md rounded-lg max-w-sm md:max-w-lg mx-auto"
-  >
+  <FormWrapper>
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 class="text-center text-2xl font-bold leading-9 text-gray-900">Create a new Account</h2>
     </div>
@@ -61,7 +59,7 @@
         <RouterLink class="font-medium leading-6 hover:underline" to="/login">Login</RouterLink>
       </p>
     </div>
-  </div>
+  </FormWrapper>
 </template>
 
 <script setup>
@@ -69,6 +67,7 @@ import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
+import FormWrapper from '@/components/ui/FormWrapper.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 
 const store = useStore()

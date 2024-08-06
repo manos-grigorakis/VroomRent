@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user");
 const transporter = require("../config/nodemailer");
+const fs = require("fs"); // read files
+const path = require("path");
 
 require("dotenv").config();
 const secretKey = process.env.SECRET_KEY;
@@ -67,108 +69,23 @@ exports.login = async (req, res) => {
 exports.registrationEmail = async (req, res) => {
   const { firstName, lastName, email } = req.body;
 
-  const mailOptions = {
-    from: process.env.GMAIL_USER,
-    to: email,
-    subject: "🎉  Welcome to VroomRent!",
-    html: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <style>
-      .container {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        padding: 20px;
-        border-radius: 20px;
-      }
-      .header {
-        background-color: #ffffff;
-        padding: 20px;
-        text-align: center;
-        border-bottom: 1px solid #dddddd;
-        border-radius: 20px;
-      }
-      .header img {
-        max-width: 400px;
-      }
-      .body {
-        background-color: #ffffff;
-        padding: 20px;
-        margin-top: 10px;
-        border: 1px solid #dddddd;
-        border-radius: 20px;
-      }
-      .body h1 {
-        color: #333333;
-      }
-      .body p {
-        color: #555555;
-      }
-      .footer {
-        background-color: #ffffff;
-        padding: 20px;
-        text-align: center;
-        border-top: 1px solid #dddddd;
-        margin-top: 10px;
-        border-radius: 20px;
-      }
-      .footer p {
-        color: #555555;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <img src="https://i.imgur.com/ZTiZ59o.jpg" alt="VroomRent Logo" />
-        <p>
-          Thank you for signing up with VroomRent! We are excited to have you
-          with us.
-        </p>
-      </div>
-      <div class="body">
-        <h1>Hello ${firstName} ${lastName}</h1>
-        <h2>Account Details:</h2>
-        <p><strong>First name:</strong> ${firstName}</p>
-        <p><strong>Last name:</strong> ${lastName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <hr />
-        <h3>How to Get Starded:</h3>
-        <ol>
-          <li>
-            <strong>Log In: </strong>You can log in to your account using the
-            email and password you chose during registration.
-          </li>
-          <li>
-            <strong>Explore: </strong>Browse our platform and discover the
-            services we offer.
-          </li>
-          <li>
-            <strong>Make a Reservation: </strong>Choose the vehicle you want and
-            make your first reservation with just a few clicks!
-          </li>
-        </ol>
-      </div>
-      <div class="footer">
-        <p>
-          Thank you for choosing VroomRent! We hope you enjoy your experience
-          with us.
-        </p>
-        <p>
-          If you have any questions, feel free to
-          <a href="mailto:vroomrent.comp@gmail.com">contact us</a>.
-        </p>
-
-        <p>Best regards,</p>
-        <p>The VroomRent Team</p>
-      </div>
-    </div>
-  </body>
-</html>
-`,
-  };
-
   try {
+    // Read HTML file
+    const filePath = path.join(__dirname, "../config/welcomeMail.html");
+    let htmlContent = fs.readFileSync(filePath, "utf-8");
+
+    // Replace placeholders with actual values using a global regular expression
+    htmlContent = htmlContent.replace(/{{firstName}}/g, firstName);
+    htmlContent = htmlContent.replace(/{{lastName}}/g, lastName);
+    htmlContent = htmlContent.replace(/{{email}}/g, email);
+
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: email,
+      subject: "🎉  Welcome to VroomRent!",
+      html: htmlContent,
+    };
+
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
@@ -199,95 +116,21 @@ exports.requestResetPassword = async (req, res) => {
 
     const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
 
+    // Read HTML file
+    const filePath = path.join(__dirname, "../config/resetPasswordMail.html");
+    let htmlContent = fs.readFileSync(filePath, "utf-8");
+
+    // Replace placeholders with actual values
+    htmlContent = htmlContent.replace("{{firstName}}", user.firstName);
+    htmlContent = htmlContent.replace("{{lastName}}", user.lastName);
+    htmlContent = htmlContent.replace("{{resetUrl}}", resetUrl);
+
     // Configuration of email
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: user.email,
       subject: "Password Reset Request",
-      html: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <style>
-      .container {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        padding: 20px;
-        border-radius: 20px;
-      }
-      .header {
-        background-color: #ffffff;
-        padding: 20px;
-        text-align: center;
-        border-bottom: 1px solid #dddddd;
-        border-radius: 20px;
-      }
-      .header img {
-        max-width: 400px;
-      }
-      .body {
-        background-color: #ffffff;
-        padding: 20px;
-        margin-top: 10px;
-        border: 1px solid #dddddd;
-        border-radius: 20px;
-      }
-      .body h1 {
-        color: #333333;
-      }
-      .body p {
-        color: #555555;
-      }
-      .footer {
-        background-color: #ffffff;
-        padding: 20px;
-        text-align: center;
-        border-top: 1px solid #dddddd;
-        margin-top: 10px;
-        border-radius: 20px;
-      }
-      .footer p {
-        color: #555555;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <img src="https://i.imgur.com/ZTiZ59o.jpg" alt="VroomRent Logo" />
-        <p>
-          You have requested to reset your password. Please click the link below to reset your password:
-        </p>
-      </div>
-      <div class="body">
-        <h1>Hello ${user.firstName} ${user.lastName}</h1>
-        <p>
-          Click the link below to reset your password:
-        </p>
-        <p>
-          <a href="${resetUrl}">Reset Password</a>
-        </p>
-        <p>This link will expire in one hour</p>
-        <p>
-          If you did not request this, please ignore this email.
-        </p>
-      </div>
-      <div class="footer">
-        <p>
-          Thank you for choosing VroomRent! We hope you enjoy your experience
-          with us.
-        </p>
-        <p>
-          If you have any questions, feel free to
-          <a href="mailto:vroomrent.comp@gmail.com">contact us</a>.
-        </p>
-
-        <p>Best regards,</p>
-        <p>The VroomRent Team</p>
-      </div>
-    </div>
-  </body>
-</html>
-`,
+      html: htmlContent,
     };
 
     await transporter.sendMail(mailOptions);

@@ -48,21 +48,46 @@
     <div class="container">
       <div class="header">
         <img src="https://i.imgur.com/ZTiZ59o.jpg" alt="VroomRent Logo" />
-        <p>Thank you for your booking on <strong>VroomRent</strong>.</p>
+        <p>
+          Thank you for signing up with VroomRent! We are excited to have you
+          with us.
+        </p>
       </div>
       <div class="body">
-        <h1>Hello ${name},</h1>
-        <p><strong>Vehicle:</strong> ${bookingData.vehicle}</p>
-        <p><strong>Pickup Location:</strong> ${bookingData.pickUpLocation}</p>
-        <p><strong>Pickup Date:</strong> ${bookingData.pickupDate}</p>
-        <p><strong>Dropoff Date:</strong> ${bookingData.dropoffDate}</p>
-        <p><strong>Total:</strong> ${bookingData.total}</p>
+        <h1>Hello {{firstName}} {{lastName}}</h1>
+        <h2>Account Details:</h2>
+        <p><strong>First name:</strong> {{firstName}}</p>
+        <p><strong>Last name:</strong> {{lastName}}</p>
+        <p><strong>Email:</strong> {{email}}</p>
+        <hr />
+        <h3>How to Get Starded:</h3>
+        <ol>
+          <li>
+            <strong>Log In: </strong>You can log in to your account using the
+            email and password you chose during registration.
+          </li>
+          <li>
+            <strong>Explore: </strong>Browse our platform and discover the
+            services we offer.
+          </li>
+          <li>
+            <strong>Make a Reservation: </strong>Choose the vehicle you want and
+            make your first reservation with just a few clicks!
+          </li>
+        </ol>
       </div>
       <div class="footer">
         <p>
-          If you have any questions, feel free to
-          <a href="mailto:support@vroomrent.com">contact us</a>.
+          Thank you for choosing VroomRent! We hope you enjoy your experience
+          with us.
         </p>
+        <p>
+          If you have any questions, feel free to
+          <a href="mailto:vroomrent.comp@gmail.com">contact us</a>.
+        </p>
+
+        <p>Best regards,</p>
+        <p>The VroomRent Team</p>
       </div>
     </div>
   </body>

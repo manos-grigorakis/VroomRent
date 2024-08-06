@@ -30,7 +30,7 @@ export default {
       },
       bookingExtras: [],
       selectedExtras: [],
-      fuelExtraCharge: [],
+      fuelExtraCharge: null,
       childSeatExtra: null,
       childSeatCount: 0,
       total: 0,

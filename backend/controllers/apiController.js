@@ -86,27 +86,15 @@ exports.createPaymentIntent = async (req, res) => {
   }
 };
 
-exports.cancelPaymentIntent = async (req, res) => {
-  const { paymentIntentId } = req.body;
-  try {
-    const canceledPaymentIntent = await stripe.paymentIntents.cancel(
-      paymentIntentId
-    );
-    res.send({ canceledPaymentIntent });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
-
 exports.sendReceiptEmail = async (req, res) => {
   const { email, name, bookingData } = req.body;
 
-  const mailOptions = {
-    from: process.env.GMAIL_USER,
-    to: email,
-    subject: "✔️ Booking Receipt",
-    html: `<!DOCTYPE html>
+  try {
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: email,
+      subject: "✔️ Booking Receipt",
+      html: `<!DOCTYPE html>
 <html lang="en">
   <head>
     <style>
@@ -184,8 +172,8 @@ exports.sendReceiptEmail = async (req, res) => {
         <hr>
         <h3>Customer Information: </h3>
         <p><strong>Address</strong>: ${bookingData.address}, ${
-      bookingData.city
-    }, ${bookingData.postalCode}, ${bookingData.country}</p>
+        bookingData.city
+      }, ${bookingData.postalCode}, ${bookingData.country}</p>
         <p><strong>Phone: </strong> ${bookingData.phone}</p>
         <p><strong>Email: </strong> ${email}</p>
 
@@ -210,9 +198,8 @@ exports.sendReceiptEmail = async (req, res) => {
   </body>
 </html>
 `,
-  };
+    };
 
-  try {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {

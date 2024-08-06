@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section>
     <h2 class="text-xl font-Montserrat font-semibold mb-2">Extras</h2>
     <transition-group name="selected-extra" tag="ul" class="flex flex-col gap-2">
       <li v-for="extra in selectedExtras" :key="extra._id">
@@ -24,7 +24,7 @@
         </p>
       </li>
     </transition-group>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -36,7 +36,10 @@ const store = useStore()
 const numberOfDays = computed(() => store.getters['bookings/numberOfDays'])
 const childSeatCount = computed(() => store.getters['bookings/childSeatCount'])
 const selectedExtras = computed(() => {
-  return [...store.state.bookings.selectedExtras, ...store.state.bookings.fuelExtraCharge]
+  const fuelCharge = store.state.bookings.fuelExtraCharge
+    ? [store.state.bookings.fuelExtraCharge]
+    : []
+  return [...store.state.bookings.selectedExtras, ...fuelCharge]
 })
 </script>
 
