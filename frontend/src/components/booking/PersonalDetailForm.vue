@@ -2,7 +2,7 @@
   <section class="pb-12">
     <h2 class="text-base font-semibold leading-7">Personal Information</h2>
 
-    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
       <div class="sm:col-span-3">
         <BaseInput
           labelValue="First Name"

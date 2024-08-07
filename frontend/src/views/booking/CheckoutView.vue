@@ -1,7 +1,10 @@
 <template>
   <section>
     <Stepper3 />
-    <div class="flex justify-center gap-20 my-4">
+    <!-- <div class="flex flex-col-reverse lg:flex-row justify-center gap-20 my-4 px-6"> -->
+    <div
+      class="flex flex-col-reverse justify-center gap-20 my-4 px-6 md:items-center lg:items-start lg:flex-row"
+    >
       <BillingPaymentForms />
       <MyVehicle :show-continue-button="false" />
     </div>
