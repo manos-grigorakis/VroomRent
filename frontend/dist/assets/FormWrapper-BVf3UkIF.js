@@ -1,0 +1,1 @@
+import{_ as o,a as r,b as s,v as t}from"./index-dlVRCVJv.js";const a={},l={class:"flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-16 lg:px-8 bg-white drop-shadow-md rounded-lg max-w-sm md:max-w-lg mx-auto"};function c(e,n){return r(),s("div",l,[t(e.$slots,"default")])}const d=o(a,[["render",c]]);export{d as F};
