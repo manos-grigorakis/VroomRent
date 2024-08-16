@@ -289,7 +289,10 @@ const handleForm = async () => {
 
     // Adds data to database
     try {
-      const response = await axios.post('http://localhost:3000/api/create-booking', bookingData)
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/create-booking`,
+        bookingData
+      )
       console.log('Booking response:', response.data)
 
       // Redirect manually after successful booking creation
