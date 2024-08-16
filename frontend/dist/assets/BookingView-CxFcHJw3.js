@@ -1,1 +1,0 @@
-import{_ as o,e as n,a as t,b as c,f as r}from"./index-dlVRCVJv.js";const s={};function a(_,i){const e=n("RouterView");return t(),c("section",null,[r(e)])}const l=o(s,[["render",a]]);export{l as default};
