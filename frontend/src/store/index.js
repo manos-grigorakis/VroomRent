@@ -29,6 +29,21 @@ const store = createStore({
     },
     setUser(state, user) {
       state.user = user
+    },
+    updateUserProfile(state, updatedProfile) {
+      state.firstName = updatedProfile.firstName
+      state.lastName = updatedProfile.lastName
+      state.email = updatedProfile.email
+      if (state.user) {
+        state.user.firstName = updatedProfile.firstName
+        state.user.lastName = updatedProfile.lastName
+        state.user.email = updatedProfile.email
+      }
+    },
+    updateUserAvatar(state, avatar) {
+      if (state.user) {
+        state.user.avatar = avatar
+      }
     }
   },
   actions: {
@@ -38,7 +53,7 @@ const store = createStore({
           firstName: state.firstName,
           lastName: state.lastName,
           email: state.email,
-          password: payload.password // passing password with payload, so we dont have to save it in our state
+          password: payload.password // passing password with payload, instead of saving it in state
         })
 
         // sends an email after user registered
@@ -49,10 +64,10 @@ const store = createStore({
       } catch (error) {
         // If email already exists in the database
         if (error.response && error.response.status === 409) {
-          throw new Error('Email already exists')
+          throw new Error(error.response.data.message)
         }
-        console.error('Error during registration:', error)
-        throw error
+        console.error('An unexpected error occurred: ', error)
+        throw new Error('An unexpected error occurred')
       }
     },
     async loginUser({ commit }, payload) {
@@ -64,11 +79,16 @@ const store = createStore({
 
         commit('setLoginStatus', true)
 
-        // Creates a session for the user
+        // Creates a session for the user by only saving the user id
         sessionStorage.setItem('user', response.data.user._id)
       } catch (error) {
-        console.log('Error during login: ', error)
-        throw error
+        if (error.response && error.response.status === 404) {
+          throw new Error(error.response.data.message)
+        } else if (error.response && error.response.status === 400) {
+          throw new Error(error.response.data.message)
+        }
+        console.error('An unexpected error occurred: ', error)
+        throw new Error('An unexpected error occurred')
       }
     },
 
@@ -88,7 +108,8 @@ const store = createStore({
         console.error(error.message)
       }
     },
-
+    // Fetches user data based on userId which is being retrieved from the session that has been created,
+    // through log in
     async fetchUser({ commit }) {
       const userId = sessionStorage.getItem('user')
 
@@ -99,6 +120,52 @@ const store = createStore({
         } catch (error) {
           console.error('Error fetching user data', error)
         }
+      }
+    },
+    // Updates user profile when there are changes
+    async updateProfile({ commit }, updatedProfile) {
+      try {
+        await axios.patch(`http://localhost:3000/user/profile/${updatedProfile._id}`, {
+          firstName: updatedProfile.firstName,
+          lastName: updatedProfile.lastName,
+          email: updatedProfile.email
+        })
+
+        // Updates stores with the latest data
+        commit('updateUserProfile', updatedProfile)
+      } catch (error) {
+        console.error('Error updating profile changes', error)
+        throw new Error('Error updating profile changes')
+      }
+    },
+    async uploadAvatar({ commit }, formData) {
+      try {
+        const response = await axios.post(
+          'http://localhost:3000/user/profile/upload-avatar',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        const avatar = response.data.avatar
+        commit('updateUserAvatar', avatar)
+      } catch (error) {
+        console.error('Error uploading user avatar', error)
+        throw new Error('Error uploading user avatar')
+      }
+    },
+    async deleteUser({ commit }, userId) {
+      try {
+        await axios.delete(`http://localhost:3000/user/profile/${userId}`)
+        sessionStorage.removeItem('user')
+
+        commit('setUser', null)
+        commit('setLoginStatus', false)
+      } catch (error) {
+        console.error('Error deleting user account', error)
+        throw new Error('Error deleting user account')
       }
     }
   },

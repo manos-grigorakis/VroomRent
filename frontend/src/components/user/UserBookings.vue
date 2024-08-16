@@ -3,7 +3,7 @@
     <BaseSpinner v-if="isLoading" />
     <h2 class="text-2xl font-semibold font-Montserrat mb-6 tracking-wide">Bookings</h2>
 
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4" v-if="bookings.length > 0">
       <div
         v-for="booking in bookings"
         :key="booking._id"
@@ -30,6 +30,9 @@
           >View Details</RouterLink
         >
       </div>
+    </div>
+    <div v-else>
+      <h3>You don't have any bookings yet.</h3>
     </div>
   </section>
 </template>

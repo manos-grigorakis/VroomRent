@@ -23,7 +23,7 @@ const props = defineProps({
 })
 
 const buttonClasses = computed(() => {
-  const disabledClasses = props.disabled ? 'bg-gray-400 cursor-not-allowed opacity-50 ' : ''
+  const disabledClasses = props.disabled ? ' cursor-not-allowed opacity-50 ' : ''
   const widthClasses = props.widthClass
 
   return ` ${disabledClasses} ${widthClasses}`

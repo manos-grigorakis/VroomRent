@@ -3,9 +3,9 @@
     <!-- Header -->
     <div class="flex justify-between">
       <h2 class="text-2xl font-Montserrat font-semibold">My Vehicle</h2>
-      <router-link class="flex items-center text-xs font-light hover:underline"
+      <!-- <router-link class="flex items-center text-xs font-light hover:underline"
         ><box-icon name="edit-alt" class="w-5 h-5"></box-icon>Change Vehicle</router-link
-      >
+      > -->
     </div>
     <!-- Car details -->
     <VehicleDetails
@@ -21,7 +21,7 @@
 
     <hr class="text-[#ccc] w-[60%] mx-auto" />
     <!-- Rental Details -->
-    <RentalDetails />
+    <RentalDetails noLink />
 
     <hr class="text-[#ccc] w-[60%] mx-auto" />
     <!-- Selected Extras -->

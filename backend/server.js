@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const port = 3000;
@@ -27,6 +28,9 @@ app.use(express.json());
 
 app.use("/auth", require("./routes/auth"));
 app.use("/api", require("./routes/api"));
+
+// Makes /uploads available through 'http://localhost:3000/uploads' so it can be used in frontend
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/user", require("./routes/user"));
 
 app.listen(port, () => {

@@ -4,33 +4,43 @@
       <h2 class="text-center text-2xl font-semibold">Login to your account</h2>
     </div>
     <span
-      v-if="errorMessage"
+      v-if="message"
       :class="[
         'text-center mt-8 rounded bg-transparent text-white font-medium py-2 sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm',
         isSuccess ? 'bg-green' : 'bg-red-default'
       ]"
-      >{{ errorMessage }}</span
+      >{{ message }}</span
     >
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
       <BaseSpinner v-if="isLoading" />
       <form @submit.prevent="handleForm" class="space-y-6">
-        <BaseInput
-          labelValue="Email Address"
-          inputType="email"
-          inputId="email"
-          v-model.trim="userData.email"
-          :errorInput="errorEmailInput"
-          :inputValidated="emailValidated"
-        />
-        <BaseInput
-          labelValue="Password"
-          inputType="password"
-          inputId="password"
-          v-model.trim="userData.password"
-          :errorInput="errorPasswordInput"
-          :inputValidated="passwordValidated"
-          forgotPassword
-        />
+        <div class="">
+          <BaseInput
+            labelValue="Email Address"
+            inputType="email"
+            inputId="email"
+            v-model.trim="userData.email"
+            :errorInput="invalidInput.email"
+            :inputValidated="validInput.email"
+          />
+          <span v-if="errorMessage.email" class="text-red-default text-sm">{{
+            errorMessage.email
+          }}</span>
+        </div>
+        <div class="">
+          <BaseInput
+            labelValue="Password"
+            inputType="password"
+            inputId="password"
+            v-model.trim="userData.password"
+            :errorInput="invalidInput.password"
+            :inputValidated="validInput.password"
+            forgotPassword
+          />
+          <span v-if="errorMessage.password" class="text-red-default text-sm">{{
+            errorMessage.password
+          }}</span>
+        </div>
         <AccentButton widthClass="w-full" :disabled="isLoading">Login</AccentButton>
       </form>
       <p class="mt-10 text-center text-sm">
@@ -56,37 +66,44 @@ const userData = reactive({
   email: '',
   password: ''
 })
-
-const errorMessage = ref('')
-const errorEmailInput = ref(false)
-const errorPasswordInput = ref(false)
-const emailValidated = ref(false)
-const passwordValidated = ref(false)
+const errorMessage = reactive({
+  email: '',
+  password: ''
+})
+const invalidInput = reactive({
+  email: false,
+  password: false
+})
+const validInput = reactive({
+  email: false,
+  password: false
+})
+const message = ref('')
 const isSuccess = ref(false)
 const isLoading = ref(false)
 
 const validateForm = () => {
   let isValid = true
-  errorMessage.value = ''
-  errorEmailInput.value = false
-  errorPasswordInput.value = false
+
+  Object.keys(errorMessage).forEach((key) => {
+    errorMessage[key] = ''
+  })
+
+  Object.keys(invalidInput).forEach((key) => {
+    invalidInput[key] = false
+  })
 
   if (!userData.email) {
-    errorMessage.value = 'Email is required'
-    errorEmailInput.value = true
+    errorMessage.email = 'Email is required'
+    invalidInput.email = true
     isValid = false
   }
   if (!userData.password) {
-    errorMessage.value = 'Password is required'
-    errorPasswordInput.value = true
+    errorMessage.password = 'Password is required'
+    invalidInput.password = true
     isValid = false
   }
-  if (!userData.email && !userData.password) {
-    errorMessage.value = 'Both fields required'
-    errorEmailInput.value = true
-    errorPasswordInput.value = true
-    isValid = false
-  }
+
   return isValid
 }
 
@@ -98,40 +115,28 @@ const handleForm = async () => {
   try {
     await store.dispatch('loginUser', userData)
 
-    errorMessage.value = 'Login successful!'
+    message.value = 'Login successfully!'
     isSuccess.value = true
-    emailValidated.value = true
-    passwordValidated.value = true
+    Object.keys(validInput).forEach((key) => {
+      validInput[key] = true
+    })
 
     setTimeout(() => {
       window.location.href = '/home'
     }, 200)
   } catch (error) {
     isSuccess.value = false
-    emailValidated.value = false
-    passwordValidated.value = false
-
-    if (error.response && error.response.data && error.response.data.message) {
-      const message = error.response.data.message
-
-      if (message === 'User not found') {
-        errorMessage.value = message
-        errorEmailInput.value = true
-      } else if (message === 'Wrong Password') {
-        errorMessage.value = message
-        errorPasswordInput.value = true
-      } else {
-        errorMessage.value = 'Login failed, please check your credentials.'
-        errorEmailInput.value = true
-        errorPasswordInput.value = true
-      }
-    } else {
-      errorMessage.value = 'An unexpected error occurred. Please try again later.'
+    // message.value = error.message
+    if (error.message === 'User not found') {
+      message.value = error.message
+      invalidInput.email = true
+    } else if (error.message === 'Wrong Password') {
+      message.value = error.message
+      invalidInput.password = true
     }
+    message.value = error.message
   } finally {
     isLoading.value = false
   }
 }
-
-// const isLoggedIn = computed(() => store.getters.isLoggedIn)
 </script>

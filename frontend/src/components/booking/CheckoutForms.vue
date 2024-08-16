@@ -1,10 +1,11 @@
 <template>
   <form @submit.prevent="handleForm">
     <BaseModal
-      v-if="showPaymentError"
+      :show="open"
       title="Payment Failed"
       :message="paymentError"
       singleButton
+      @close="open = false"
     />
     <BaseSpinner v-if="isLoading" />
     <PersonalDetailForm
@@ -58,7 +59,8 @@ const invalidInput = reactive({
   city: false,
   postalCode: false
 })
-const showPaymentError = ref(false)
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const open = ref(false)
 const paymentError = ref('')
 const user = sessionStorage.getItem('user')
 
@@ -112,6 +114,10 @@ const formValidation = () => {
     errorMessage.email = 'Email is required'
     invalidInput.email = true
     isValid = false
+  } else if (!emailPattern.test(billingFormData.value.email)) {
+    errorMessage.email = 'Invalid email format'
+    invalidInput.email = true
+    return false
   }
   if (!billingFormData.value.phoneNumber) {
     errorMessage.phoneNumber = 'Phone number is required'
@@ -170,7 +176,7 @@ const formValidation = () => {
 
 const handleForm = async () => {
   const formData = billingFormData.value
-  showPaymentError.value = false
+  open.value = false
   paymentError.value = ''
 
   if (!formValidation()) {
@@ -183,6 +189,7 @@ const handleForm = async () => {
   }
 
   isLoading.value = false
+
   try {
     // if user hasn't select a different dropofflocation set it to null
     if (!dropoffLocation.value) {
@@ -242,7 +249,7 @@ const handleForm = async () => {
     // If there is an error with the payment
     if (error) {
       console.error('Error confirming payment:', error)
-      showPaymentError.value = true
+      open.value = true
       paymentError.value = error.message
       isLoading.value = false
       return
@@ -289,7 +296,7 @@ const handleForm = async () => {
       router.push('/booking/receipt')
     } catch (postError) {
       console.error('Error posting booking data to database', postError)
-      showPaymentError.value = true
+      open.value = true
       paymentError.value = 'There was an error creating your booking. Please try again.'
 
       // If data cant be written in the database cancel the payment too
@@ -304,7 +311,7 @@ const handleForm = async () => {
     isLoading.value = false
   } catch (error) {
     console.error('Error creating payment:', error)
-    showPaymentError.value = true
+    open.value = true
     paymentError.value = 'There was an error processing your payment. Please try again.'
     isLoading.value = false
   }

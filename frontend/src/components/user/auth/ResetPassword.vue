@@ -4,23 +4,37 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 class="text-center text-2xl font-semibold">Change Password</h2>
     </div>
-
+    <span
+      v-if="message"
+      class="text-center mt-8 rounded bg-transparent text-white font-medium py-2 sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm bg-red-default"
+      >{{ message }}</span
+    >
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
       <BaseSpinner v-if="isLoading" />
-      <span class="text-red-default flex justify-center mb-4">{{ errorMessage }}</span>
+
       <form @submit.prevent="changePassword" class="space-y-6">
-        <BaseInput
-          labelValue="Current Password"
-          inputType="password"
-          inputId="oldPassword"
-          v-model.trim="oldPassword"
-        />
-        <BaseInput
-          labelValue="New Password"
-          inputType="password"
-          inputId="newPassword"
-          v-model.trim="newPassword"
-        />
+        <div class="">
+          <BaseInput
+            labelValue="Current Password"
+            inputType="password"
+            inputId="oldPassword"
+            v-model.trim="oldPassword"
+            :errorInput="invalidInput.oldPassword"
+          /><span v-if="errorMessage.oldPassword" class="text-red-default text-sm">{{
+            errorMessage.oldPassword
+          }}</span>
+        </div>
+        <div class="">
+          <BaseInput
+            labelValue="New Password"
+            inputType="password"
+            inputId="newPassword"
+            v-model.trim="newPassword"
+            :errorInput="invalidInput.newPassword"
+          /><span v-if="errorMessage.newPassword" class="text-red-default text-sm">{{
+            errorMessage.newPassword
+          }}</span>
+        </div>
         <AccentButton widthClass="w-full" :disabled="isLoading">Change Password</AccentButton>
       </form>
     </div>
@@ -34,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import axios from 'axios'
@@ -48,27 +62,49 @@ const toast = useToast()
 
 const oldPassword = ref('')
 const newPassword = ref('')
-const errorMessage = ref('')
+
 const isLoading = ref(false)
 const isTokenValid = ref(false)
 const isLoadingToken = ref(true)
+const message = ref('')
+const errorMessage = reactive({
+  oldPassword: '',
+  newPassword: ''
+})
+const invalidInput = reactive({
+  oldPassword: false,
+  newPassword: false
+})
 
 const validation = () => {
-  errorMessage.value = ''
+  let isValid = true
+  message.value = ''
+
+  Object.keys(errorMessage).forEach((key) => {
+    errorMessage[key] = ''
+  })
+
+  Object.keys(invalidInput).forEach((key) => {
+    invalidInput[key] = false
+  })
 
   if (!oldPassword.value) {
-    errorMessage.value = 'Old password is being required'
-    return false
+    errorMessage.oldPassword = 'Old password is being required'
+    invalidInput.oldPassword = true
+    isValid = false
   }
   if (!newPassword.value) {
-    errorMessage.value = 'New password is being required'
-    return false
+    errorMessage.newPassword = 'New password is being required'
+    invalidInput.newPassword = true
+    isValid = false
   }
-  if (oldPassword.value === newPassword.value) {
-    errorMessage.value = 'You cant set the new password to the previous password'
-    return false
+  if (oldPassword.value && newPassword.value && oldPassword.value === newPassword.value) {
+    message.value = 'You cant set the new password to the previous password'
+    invalidInput.oldPassword = true
+    invalidInput.newPassword = true
+    isValid = false
   }
-  return true
+  return isValid
 }
 
 const changePassword = async () => {
@@ -77,7 +113,7 @@ const changePassword = async () => {
   }
 
   const token = route.query.token
-  errorMessage.value = ''
+  // errorMessage.value = ''
   isLoading.value = true
 
   try {
@@ -92,10 +128,10 @@ const changePassword = async () => {
   } catch (error) {
     if (error.response) {
       console.log('Error response from server: ', error.response.data)
-      errorMessage.value = error.response.data.message || 'Error resetting password'
+      message.value = error.response.data.message || 'Error resetting password'
     } else {
       console.error('Unexpected error occured', error)
-      errorMessage.value = 'Unexpected error occured'
+      message.value = 'Unexpected error occured'
     }
   } finally {
     isLoading.value = false

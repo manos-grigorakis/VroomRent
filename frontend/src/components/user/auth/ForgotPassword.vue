@@ -12,9 +12,10 @@
           inputType="email"
           inputId="email"
           v-model.trim="email"
+          :errorInput="invalidEmailInput"
         />
-
-        <AccentButton widthClass="w-full" :disabled="isLoading">Register</AccentButton>
+        <span v-if="errorMessage" class="text-red-default text-sm">{{ errorMessage }}</span>
+        <AccentButton widthClass="w-full" :disabled="isLoading">Request Email</AccentButton>
       </form>
     </div>
   </FormWrapper>
@@ -33,9 +34,32 @@ const toast = useToast()
 const router = useRouter()
 
 const email = ref('')
+const invalidEmailInput = ref(false)
+const errorMessage = ref('')
 const isLoading = ref(false)
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const formValidation = () => {
+  invalidEmailInput.value = false
+  errorMessage.value = ''
+
+  if (!email.value) {
+    errorMessage.value = 'Email is required'
+    invalidEmailInput.value = true
+    return false
+  } else if (!emailPattern.test(email.value)) {
+    errorMessage.value = 'Invalid email format'
+    invalidEmailInput.value = true
+    return false
+  }
+  return true
+}
 
 const forgotPassword = async () => {
+  if (!formValidation()) {
+    return
+  }
+
   isLoading.value = true
   try {
     await axios.post('http://localhost:3000/auth/request-reset-password', {
@@ -44,6 +68,9 @@ const forgotPassword = async () => {
     toast('Password reset email sent', { type: 'success' })
     router.push('/login')
   } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return toast("User with this email address doesn't exist", { type: 'error' })
+    }
     console.error('Error sending password reset email: ', error)
     toast('Error sending password reset email', { type: 'error' })
   } finally {

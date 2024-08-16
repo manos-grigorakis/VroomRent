@@ -15,6 +15,7 @@
         <input
           :id="inputId"
           :type="inputType"
+          :value="modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
           class="block w-full rounded border-1 py-1.5 shadow-sm ring-1 ring-[#ccc] sm:text-sm sm:leading-6 pl-2"
           :class="{

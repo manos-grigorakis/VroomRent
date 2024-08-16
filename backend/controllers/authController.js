@@ -38,8 +38,10 @@ exports.register = async (req, res) => {
       .status(201)
       .send({ message: "User registered successfully!", user: newUser });
   } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).send({ message: "User registration failed.", error });
+    console.error("Server Error: ", error);
+    res
+      .status(500)
+      .send({ message: "Registration failed, please try again later", error });
   }
 };
 
@@ -55,14 +57,15 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      console.log("Wrong password for user:", email);
       return res.status(400).send({ message: "Wrong Password" });
     }
 
     res.status(200).send({ message: "You are now logged in", user: user });
   } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).send({ message: "Login Failed", error });
+    console.error("Server error: ", error);
+    res
+      .status(500)
+      .send({ message: "Login failed, please try again later", error });
   }
 };
 
@@ -112,6 +115,7 @@ exports.requestResetPassword = async (req, res) => {
     // save token to db
     user.resetToken = token;
     user.resetTokenExpiration = Date.now() + 3600000; // 1 hour from now
+    // user.resetTokenExpiration = Date.now() + 60000; // 1 hour from now
     await user.save();
 
     const resetUrl = `http://localhost:5173/reset-password?token=${token}`;

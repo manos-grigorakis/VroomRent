@@ -1,7 +1,7 @@
 <template>
   <section>
     <BaseModal
-      v-if="open"
+      :show="open"
       :single-button="true"
       title="Required Fields"
       :message="errorMessage"

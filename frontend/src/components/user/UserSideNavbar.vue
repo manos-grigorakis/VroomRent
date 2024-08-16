@@ -59,8 +59,18 @@
       <div
         class="basis-1/2 max-w-[800px] min-h-[500px] bg-white rounded-md drop-shadow-sm shadow-md px-4 lg:px-8 py-6"
       >
-        <slot></slot>
+        <slot v-if="user"></slot>
+        <BaseSpinner v-else />
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const user = computed(() => store.getters.user)
+</script>

@@ -4,33 +4,43 @@
       <h2 class="text-center text-2xl font-bold leading-9 text-gray-900">Create a new Account</h2>
     </div>
     <span
-      v-if="errorMessage"
+      v-if="message"
       :class="[
         'text-center mt-8 rounded bg-transparent text-white font-medium py-2 sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm',
         isSuccess ? 'bg-green' : 'bg-red-default'
       ]"
-      >{{ errorMessage }}</span
+      >{{ message }}</span
     >
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <BaseSpinner v-if="isLoading" />
       <form @submit.prevent="handleForm" class="space-y-6">
         <div class="flex flex-col gap-6 sm:flex-row sm:justify-between">
-          <BaseInput
-            labelValue="First Name"
-            inputType="text"
-            inputId="firstName"
-            v-model.trim="userData.firstName"
-            :errorInput="errorFnameInput"
-            :inputValidated="fNameValidated"
-          />
-          <BaseInput
-            labelValue="Last Name"
-            inputType="text"
-            inputId="lastName"
-            v-model.trim="userData.lastName"
-            :errorInput="errorLnameInput"
-            :inputValidated="lNameValidated"
-          />
+          <div class="">
+            <BaseInput
+              labelValue="First Name"
+              inputType="text"
+              inputId="firstName"
+              v-model.trim="userData.firstName"
+              :errorInput="invalidInput.firstName"
+              :inputValidated="validInput.firstName"
+            />
+            <span v-if="errorMessage.firstName" class="text-red-default text-sm">{{
+              errorMessage.firstName
+            }}</span>
+          </div>
+          <div class="">
+            <BaseInput
+              labelValue="Last Name"
+              inputType="text"
+              inputId="lastName"
+              v-model.trim="userData.lastName"
+              :errorInput="invalidInput.lastName"
+              :inputValidated="validInput.lastName"
+            />
+            <span v-if="errorMessage.lastName" class="text-red-default text-sm">{{
+              errorMessage.lastName
+            }}</span>
+          </div>
         </div>
 
         <BaseInput
@@ -38,18 +48,24 @@
           inputType="email"
           inputId="email"
           v-model.trim="userData.email"
-          :errorInput="errorEmailInput"
-          :inputValidated="emailValidated"
+          :errorInput="invalidInput.email"
+          :inputValidated="validInput.email"
         />
+        <span v-if="errorMessage.email" class="text-red-default text-sm">{{
+          errorMessage.email
+        }}</span>
 
         <BaseInput
           labelValue="Password"
           inputType="password"
           inputId="password"
           v-model.trim="userData.password"
-          :errorInput="errorPasswordInput"
-          :inputValidated="passwordValidated"
+          :errorInput="invalidInput.password"
+          :inputValidated="validInput.password"
         />
+        <span v-if="errorMessage.password" class="text-red-default text-sm">{{
+          errorMessage.password
+        }}</span>
 
         <AccentButton widthClass="w-full" :disabled="isLoading">Register</AccentButton>
       </form>
@@ -79,55 +95,60 @@ const userData = reactive({
   email: '',
   password: ''
 })
-
-const errorMessage = ref('')
-const errorFnameInput = ref(false)
-const errorLnameInput = ref(false)
-const errorEmailInput = ref(false)
-const errorPasswordInput = ref(false)
-const fNameValidated = ref(false)
-const lNameValidated = ref(false)
-const emailValidated = ref(false)
-const passwordValidated = ref(false)
+const errorMessage = reactive({
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: ''
+})
+const invalidInput = reactive({
+  firstName: false,
+  lastName: false,
+  email: false,
+  password: false
+})
+const validInput = reactive({
+  firstName: false,
+  lastName: false,
+  email: false,
+  password: false
+})
 const isSuccess = ref(false)
 const isLoading = ref(false)
+const message = ref('')
 
 const validateForm = () => {
   let isValid = true
-  errorMessage.value = ''
-  errorFnameInput.value = false
-  errorLnameInput.value = false
-  errorEmailInput.value = false
-  errorPasswordInput.value = false
+
+  Object.keys(errorMessage).forEach((key) => {
+    errorMessage[key] = ''
+  })
+
+  Object.keys(invalidInput).forEach((key) => {
+    invalidInput[key] = false
+  })
 
   if (!userData.firstName) {
-    errorMessage.value = 'First name is required'
-    errorFnameInput.value = true
+    errorMessage.firstName = 'First name is required'
+    invalidInput.firstName = true
     isValid = false
   }
   if (!userData.lastName) {
-    errorMessage.value = 'Last name is required'
-    errorLnameInput.value = true
+    errorMessage.lastName = 'Last name is required'
+    invalidInput.lastName = true
     isValid = false
   }
   if (!userData.email) {
-    errorMessage.value = 'Email is required'
-    errorEmailInput.value = true
+    errorMessage.email = 'Email is required'
+    invalidInput.email = true
     isValid = false
   }
   if (!userData.password) {
-    errorMessage.value = 'Password is required'
-    errorPasswordInput.value = true
+    errorMessage.password = 'Password is required'
+    invalidInput.password = true
     isValid = false
   }
-  if (!userData.firstName && !userData.lastName && !userData.email && !userData.password) {
-    errorMessage.value = 'All fields are required'
-    errorFnameInput.value = true
-    errorLnameInput.value = true
-    errorEmailInput.value = true
-    errorPasswordInput.value = true
-    isValid = false
-  }
+
   return isValid
 }
 
@@ -135,29 +156,35 @@ const handleForm = async () => {
   if (!validateForm()) {
     return
   }
+
   isLoading.value = true
+  Object.keys(errorMessage).forEach((key) => {
+    errorMessage[key] = ''
+  })
+
   try {
     store.commit('setUserData', userData)
-    await store.dispatch('registerUser', { password: userData.password }) // // passing password with payload, so we dont have to save it in our state
 
-    errorMessage.value = 'Registration successfull!'
+    // passing password with payload, so we dont have to save it in our state
+    await store.dispatch('registerUser', { password: userData.password })
+
+    message.value = 'Registration successfull!'
     isSuccess.value = true
-    fNameValidated.value = true
-    lNameValidated.value = true
-    emailValidated.value = true
-    passwordValidated.value = true
+
+    Object.keys(validInput).forEach((key) => {
+      validInput[key] = true
+    })
 
     setTimeout(() => {
       router.push('/login')
     }, 1500)
   } catch (error) {
     isSuccess.value = false
-    if (error.response && error.response.status === 409) {
-      errorMessage.value = 'User with this email already exists'
-      errorEmailInput.value = true
-    } else {
-      errorMessage.value = 'Error during registration'
+
+    if (error.message === 'User with this email already exists') {
+      invalidInput.email = true
     }
+    message.value = error.message
   } finally {
     isLoading.value = false
   }
