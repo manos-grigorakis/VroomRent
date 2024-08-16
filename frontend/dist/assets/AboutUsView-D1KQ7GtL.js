@@ -1,1 +1,0 @@
-import{_ as e,a as t,b as o,g as s}from"./index-dlVRCVJv.js";const c={},n=s("h2",null,"About Us Page",-1),a=[n];function _(r,l){return t(),o("section",null,a)}const u=e(c,[["render",_]]);export{u as default};
