@@ -49,7 +49,7 @@ const store = createStore({
   actions: {
     async registerUser({ state, dispatch }, payload) {
       try {
-        const response = await axios.post('http://localhost:3000/auth/register', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
           firstName: state.firstName,
           lastName: state.lastName,
           email: state.email,
@@ -72,7 +72,7 @@ const store = createStore({
     },
     async loginUser({ commit }, payload) {
       try {
-        const response = await axios.post('http://localhost:3000/auth/login', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, {
           email: payload.email,
           password: payload.password
         })
@@ -98,11 +98,14 @@ const store = createStore({
       const email = getters.email
 
       try {
-        const response = await axios.post('http://localhost:3000/auth/registration-email', {
-          firstName: firstName,
-          lastName: lastName,
-          email: email
-        })
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/auth/registration-email`,
+          {
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+          }
+        )
         console.log(response.data)
       } catch (error) {
         console.error(error.message)
@@ -115,7 +118,7 @@ const store = createStore({
 
       if (userId) {
         try {
-          const response = await axios.get(`http://localhost:3000/user/profile/${userId}`)
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/profile/${userId}`)
           commit('setUser', response.data)
         } catch (error) {
           console.error('Error fetching user data', error)
@@ -125,7 +128,7 @@ const store = createStore({
     // Updates user profile when there are changes
     async updateProfile({ commit }, updatedProfile) {
       try {
-        await axios.patch(`http://localhost:3000/user/profile/${updatedProfile._id}`, {
+        await axios.patch(`${import.meta.env.VITE_API_URL}/user/profile/${updatedProfile._id}`, {
           firstName: updatedProfile.firstName,
           lastName: updatedProfile.lastName,
           email: updatedProfile.email
@@ -141,7 +144,7 @@ const store = createStore({
     async uploadAvatar({ commit }, formData) {
       try {
         const response = await axios.post(
-          'http://localhost:3000/user/profile/upload-avatar',
+          `${import.meta.env.VITE_API_URL}/user/profile/upload-avatar`,
           formData,
           {
             headers: {
@@ -158,7 +161,7 @@ const store = createStore({
     },
     async deleteUser({ commit }, userId) {
       try {
-        await axios.delete(`http://localhost:3000/user/profile/${userId}`)
+        await axios.delete(`${import.meta.env.VITE_API_URL}/user/profile/${userId}`)
         sessionStorage.removeItem('user')
 
         commit('setUser', null)

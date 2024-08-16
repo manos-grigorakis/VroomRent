@@ -141,7 +141,7 @@ const isLoading = ref(false)
 const fetchBookingDetails = async () => {
   try {
     isLoading.value = true
-    const response = await axios.get(`http://localhost:3000/user/bookings/booking/${id}`)
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/bookings/booking/${id}`)
     bookingDetails.value = response.data
   } catch (error) {
     console.error(error)

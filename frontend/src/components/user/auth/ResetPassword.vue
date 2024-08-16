@@ -117,7 +117,7 @@ const changePassword = async () => {
   isLoading.value = true
 
   try {
-    await axios.post('http://localhost:3000/auth/reset-password', {
+    await axios.post(`${import.meta.env.VITE_API_URL}/auth/reset-password`, {
       token: token,
       oldPassword: oldPassword.value,
       newPassword: newPassword.value
@@ -142,7 +142,9 @@ const checkTokenValidity = async () => {
   const token = route.query.token
 
   try {
-    const response = await axios.post('http://localhost:3000/auth/check-token', { token: token })
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/check-token`, {
+      token: token
+    })
     if (response.data.valid) {
       isTokenValid.value = true
     } else {
