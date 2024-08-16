@@ -51,7 +51,7 @@ export default {
     },
     extend: {
       backgroundImage: {
-        'hero-image': "url('./src/assets/images/maksim-tarasov-bFTVxTo266E-unsplash2.png')"
+        'hero-image': "url('/maksim-tarasov-bFTVxTo266E-unsplash2.png')"
       },
 
       // shacn-vue
