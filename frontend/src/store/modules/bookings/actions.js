@@ -5,7 +5,7 @@ export default {
   async fetchSelectedVehicle({ state, commit }) {
     try {
       const vehicleId = state.vehicleId
-      const response = await axios.get(`http://localhost:3000/api/vehicle/${vehicleId}`)
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/vehicle/${vehicleId}`)
       commit('setSelectedVehicle', response.data)
     } catch (error) {
       console.error('Error fetching vehicle:', error)
@@ -15,7 +15,7 @@ export default {
   // Fetches all extra
   async fetchBookingExtras({ commit }) {
     try {
-      const response = await axios.get('http://localhost:3000/api/bookingExtras')
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/bookingExtras`)
       commit('setBookingExtras', response.data)
     } catch (error) {
       console.error('Error fetching booking extras: ', error)
@@ -67,7 +67,7 @@ export default {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/send-receipt-email', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/send-receipt-email`, {
         name: billingData.firstName + ' ' + billingData.lastName,
         email: billingData.email,
         bookingData: {

@@ -59,8 +59,8 @@ const supportedImageFormats = ['image/jpeg', 'image/png']
 // otherwhise it shows a placeholder
 const currentAvatar = computed(() => {
   return user.value.avatar
-    ? `http://localhost:3000/uploads/${user.value.avatar}`
-    : 'http://localhost:3000/uploads/default-avatar.png'
+    ? `${import.meta.env.VITE_API_URL}/uploads/${user.value.avatar}`
+    : `${import.meta.env.VITE_API_URL}/uploads/default-avatar.png`
 })
 
 // Preview the image that user has selected from its device

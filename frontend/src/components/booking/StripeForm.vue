@@ -33,9 +33,12 @@ onMounted(async () => {
     if (!stripe.value) {
       stripe.value = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
 
-      const { data } = await axios.post('http://localhost:3000/api/create-payment-intent', {
-        amount: amount
-      })
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/create-payment-intent`,
+        {
+          amount: amount
+        }
+      )
       clientSecret.value = data.clientSecret
       paymentIntentId.value = data.paymentIntentId
 
