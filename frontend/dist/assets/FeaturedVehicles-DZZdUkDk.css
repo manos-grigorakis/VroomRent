@@ -1,0 +1,1 @@
+.embla__dots{display:flex;justify-content:center;padding-top:1rem}.embla__dot{width:15px;height:15px;margin:0 5px;background-color:#ccc;border-radius:50%;cursor:pointer;transition:background-color .3s}.embla__dot--selected{background-color:#000}.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);border:0}
