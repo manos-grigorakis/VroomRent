@@ -8,7 +8,12 @@ const path = require("path");
 const app = express();
 const port = process.env.port || 3000;
 
-app.use(cors({ origin: "https://vroomrent.netlify.app/home" }));
+const corsOptions = {
+  origin: "https://vroomrent.netlify.app",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.static("public"));
 
 // Connection with database
