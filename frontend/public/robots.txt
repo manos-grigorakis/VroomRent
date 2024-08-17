@@ -1,0 +1,4 @@
+# This website is in test mode. Payments are not processed.
+
+User-agent: *
+Disallow:
