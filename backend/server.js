@@ -24,7 +24,7 @@ mongoose
     console.log("Connected to MongoDB Atlas");
   })
   .catch((error) => {
-    console.error("Error connecting to MongoDB Atlas", error);
+    console.error("Error connecting to MongoDB Atlas", error.message);
   });
 
 // Routes
@@ -38,6 +38,11 @@ app.use("/api", require("./routes/api"));
 // Makes /uploads available through 'http://localhost:3000/uploads' so it can be used in frontend
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/user", require("./routes/user"));
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
 
 app.listen(port, () => {
   console.log(`Server listening on: http://localhost:${port}`);
