@@ -2,11 +2,44 @@
   <form @submit.prevent="handleForm">
     <BaseModal
       :show="open"
-      title="Payment Failed"
+      :title="modalTitle"
       :message="paymentError"
       singleButton
       @close="open = false"
     />
+    <!-- Custom modal, informing users that payments are in test mode -->
+    <BaseModal
+      :show="openCustomModal"
+      :title="modalTitle"
+      singleButton
+      customContent
+      isInformationIcon
+      @close="openCustomModal = false"
+    >
+      <p>
+        This website is currently operating in <strong>test mode</strong>. Any payment information
+        entered here will not be processed for real transactions, and no actual charges will occur.
+      </p>
+      <p>Please do not use your real card number information in the form below.</p>
+      <p>Instead, use the test card details provided by Stripe:</p>
+      <div class="my-1">
+        <p class="mb-1"><em>For example:</em></p>
+        <ul class="text-sm">
+          <li>Card Number: <strong>4242 4242 4242 4242</strong></li>
+          <li>Expiry Date: <strong>Any future date</strong></li>
+          <li>CVC: <strong>Any 3 digits</strong></li>
+        </ul>
+      </div>
+      <span class="pt-8"
+        >For more test cards, visit
+        <a
+          href="https://docs.stripe.com/testing"
+          target="_blank"
+          class="text-vibrantOrange-default hover:underline hover:text-vibrantOrange-700"
+          >Stripe Test Cards</a
+        >.
+      </span></BaseModal
+    >
     <BaseSpinner v-if="isLoading" />
     <PersonalDetailForm
       @handleCheckbox="handleCheckbox"
@@ -14,7 +47,25 @@
       :invalidInput="invalidInput"
     />
     <StripeForm @stripeLoaded="onStripeLoaded" />
-
+    <div class="mb-4">
+      <input type="checkbox" id="terms-checkbox" v-model="isTermsAccepted" />
+      <label for="terms-checkbox">
+        I have read and agree to
+        <a
+          href="/terms-of-service"
+          target="_blank"
+          class="text-vibrantOrange-default hover:underline hover:text-vibrantOrange-700"
+          >Terms of Service</a
+        >
+        and
+        <a
+          href="/privacy-policy"
+          target="_blank"
+          class="text-vibrantOrange-default hover:underline hover:text-vibrantOrange-700"
+          >Privacy Policy</a
+        >
+      </label>
+    </div>
     <BaseButton id="submit" type="submit" :disabled="isLoading" widthClass="w-full"
       >Complete Reservation</BaseButton
     >
@@ -22,7 +73,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
@@ -61,8 +112,11 @@ const invalidInput = reactive({
 })
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const open = ref(false)
+const modalTitle = ref('')
+const isTermsAccepted = ref(false)
 const paymentError = ref('')
 const user = sessionStorage.getItem('user')
+const openCustomModal = ref(false)
 
 let elements = null
 let stripe = null
@@ -177,6 +231,7 @@ const formValidation = () => {
 const handleForm = async () => {
   const formData = billingFormData.value
   open.value = false
+  modalTitle.value = 'Payment Failed'
   paymentError.value = ''
 
   if (!formValidation()) {
@@ -185,6 +240,14 @@ const handleForm = async () => {
 
   if (!stripe || !elements) {
     isLoading.value = true
+    return
+  }
+
+  if (!isTermsAccepted.value) {
+    open.value = true
+    modalTitle.value = 'Agreement Required'
+    paymentError.value =
+      'In order to proceed with the payment, you must agree to the Terms of Service and Privacy Policy.'
     return
   }
 
@@ -319,4 +382,11 @@ const handleForm = async () => {
     isLoading.value = false
   }
 }
+
+const warningDialog = () => {
+  openCustomModal.value = true
+  modalTitle.value = 'Important Notice'
+}
+
+onMounted(() => warningDialog())
 </script>

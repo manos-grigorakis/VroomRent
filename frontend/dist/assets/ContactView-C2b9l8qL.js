@@ -1,1 +1,0 @@
-import{_ as e,a as t,b as c,g as o}from"./index-dlVRCVJv.js";const n={},s=o("h2",null,"Contact Page",-1),a=[s];function _(r,l){return t(),c("section",null,a)}const d=e(n,[["render",_]]);export{d as default};

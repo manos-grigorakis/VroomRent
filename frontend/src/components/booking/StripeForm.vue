@@ -1,6 +1,7 @@
 <template>
   <section class="mb-4">
     <h2 class="text-base font-semibold leading-7 mb-10">Payment Information</h2>
+
     <div id="payment-element" />
   </section>
 </template>
