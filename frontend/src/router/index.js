@@ -29,21 +29,25 @@ const router = createRouter({
     },
     {
       path: '/register',
-      component: () => import('@/views/auth/RegisterView.vue')
+      component: () => import('@/views/auth/RegisterView.vue'),
+      meta: { hideFooter: true }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/auth/LoginView.vue')
+      component: () => import('@/views/auth/LoginView.vue'),
+      meta: { hideFooter: true }
     },
     {
       path: '/forgot-password',
-      component: () => import('@/views/auth/ForgotPasswordView.vue')
+      component: () => import('@/views/auth/ForgotPasswordView.vue'),
+      meta: { hideFooter: true }
     },
     {
       path: '/reset-password',
       component: () => import('@/components/user/auth/ResetPassword.vue'),
-      props: (route) => ({ token: route.query.token })
+      props: (route) => ({ token: route.query.token }),
+      meta: { hideFooter: true }
     },
     ...userRoutes,
     ...bookingRoutes,
