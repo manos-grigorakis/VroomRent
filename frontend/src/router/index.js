@@ -48,6 +48,14 @@ const router = createRouter({
     ...userRoutes,
     ...bookingRoutes,
     {
+      path: '/terms-of-service',
+      component: () => import('@/views/TermsofService.vue')
+    },
+    {
+      path: '/privacy-policy',
+      component: () => import('@/views/PrivacyPolicy.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       component: () => import('@/views/NotFound.vue')
     }

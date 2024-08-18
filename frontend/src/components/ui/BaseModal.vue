@@ -32,9 +32,24 @@
               <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
                   <div
-                    class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-red-default sm:mx-0 sm:h-10 sm:w-10"
+                    :class="[
+                      'mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10',
+                      {
+                        'border-vibrantOrange-default': isInformationIcon,
+                        'border-red-default': !isInformationIcon
+                      }
+                    ]"
                   >
-                    <ExclamationTriangleIcon class="h-7 w-7 text-red-default" aria-hidden="true" />
+                    <ExclamationTriangleIcon
+                      v-if="!isInformationIcon"
+                      class="h-7 w-7 text-red-default"
+                      aria-hidden="true"
+                    />
+                    <InformationCircleIcon
+                      v-else
+                      class="h-10 w-10 text-vibrantOrange-default"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <DialogTitle
@@ -42,10 +57,14 @@
                       class="text-base font-semibold leading-6 font-Montserrat"
                       >{{ title }}</DialogTitle
                     >
-                    <div class="mt-2">
+                    <div v-if="!customContent" class="mt-2 text-sm">
                       <p class="text-sm">
                         {{ message }}
                       </p>
+                    </div>
+                    <!-- Custom content for modal -->
+                    <div v-else class="mt-2">
+                      <slot></slot>
                     </div>
                   </div>
                 </div>
@@ -87,7 +106,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
+import { ExclamationTriangleIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 
 const open = ref(true)
 
@@ -101,13 +120,20 @@ defineProps({
   singleButton: {
     type: Boolean,
     default: false
+  },
+  isInformationIcon: {
+    type: Boolean,
+    default: false
+  },
+  customContent: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['close', 'confirmDelete', 'cancelDelete'])
 
 const closeModal = () => {
-  // open.value = false
   emit('close')
 }
 

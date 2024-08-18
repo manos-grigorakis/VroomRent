@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.port || 3000;
 
 const corsOptions = {
-  origin: "https://vroomrent.netlify.app",
+  origin: process.env.CORS_ORIGIN,
   optionsSuccessStatus: 200,
 };
 
