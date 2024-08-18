@@ -6,7 +6,7 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
-const port = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
@@ -43,5 +43,5 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on: http://localhost:${port}`);
+  console.log(`Server listening on: ${PORT}`);
 });
