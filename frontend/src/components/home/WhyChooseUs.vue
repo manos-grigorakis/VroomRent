@@ -6,7 +6,7 @@
           Why Choose Us
         </h2>
         <img
-          src="../../assets/images/pexels-shkrabaanthony-7144226.png"
+          src="../../assets/images/pexels-shkrabaanthony-7144226.webp"
           alt=""
           class="w-[671px] h-[50%]"
         />
