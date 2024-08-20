@@ -129,7 +129,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: listItemThree.value,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
@@ -142,7 +142,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: listItemFour.value,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
