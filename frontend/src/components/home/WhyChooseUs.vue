@@ -161,5 +161,7 @@ onMounted(() => {
       }
     }
   )
+
+  ScrollTrigger.refresh()
 })
 </script>
