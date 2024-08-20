@@ -72,8 +72,7 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: image.value,
-        start: 'top top',
-        end: 'bottom top',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     }
@@ -88,10 +87,8 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: text.value,
-        start: 'top top',
-        end: 'bottom top',
-        toggleActions: 'play none none none',
-        markers: true
+        start: 'top 80%',
+        toggleActions: 'play none none none'
       }
     }
   )
@@ -105,8 +102,7 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: listItemOne.value,
-        start: 'top top',
-        end: 'bottom top',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     }
@@ -119,8 +115,7 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: listItemTwo.value,
-        start: 'top top',
-        end: 'bottom top',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     }
@@ -133,8 +128,7 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: listItemThree.value,
-        start: 'top top',
-        end: 'bottom top',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     }
@@ -147,8 +141,7 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: listItemFour.value,
-        start: 'top top',
-        end: 'bottom top',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     }
@@ -163,8 +156,7 @@ onMounted(() => {
       duration: 1.5,
       scrollTrigger: {
         trigger: button.value.$el,
-        start: 'top top',
-        end: 'bottom top',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     }
