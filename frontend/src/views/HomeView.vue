@@ -1,9 +1,8 @@
 <template>
   <section>
     <TheHero />
-    <!-- class="mb-[200px] mt-[100px]" -->
     <FeaturedVehicles class="py-[200px]" />
-    <WhyChooseUs />
+    <WhyChooseUs class="mb-[520px]" />
   </section>
 </template>
 

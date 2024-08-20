@@ -157,7 +157,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: button.value.$el,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
