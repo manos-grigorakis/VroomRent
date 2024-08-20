@@ -73,7 +73,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: image.value,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
@@ -88,7 +88,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: text.value,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
@@ -103,7 +103,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: listItemOne.value,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
@@ -116,7 +116,7 @@ onMounted(() => {
       scrollTrigger: {
         trigger: listItemTwo.value,
         start: 'top top',
-        toggleActions: 'restart none none none'
+        toggleActions: 'play none none none'
       }
     }
   )
