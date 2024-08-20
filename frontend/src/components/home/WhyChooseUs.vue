@@ -1,6 +1,6 @@
 <template>
   <!-- mb-20 -->
-  <div class="bg-charcoalGray px-4 py-8 min-h-screen content-center">
+  <div class="bg-charcoalGray px-4 py-8 min-h-screen content-center animated-element">
     <div class="flex flex-col justify-center items-center gap-10 xl:gap-20 xl:flex-row">
       <div class="flex flex-col gap-8">
         <h2 class="text-2xl text-white font-Montserrat font-semibold tracking-wide">
@@ -66,13 +66,14 @@ onMounted(() => {
   // Image animation
   gsap.fromTo(
     image.value,
-    { x: -600 },
+    { x: -300 },
     {
       x: 0,
-      duration: 1,
+      duration: 1.5,
       scrollTrigger: {
         trigger: image.value,
         start: 'top top',
+        end: 'bottom top',
         toggleActions: 'play none none none'
       }
     }
@@ -81,14 +82,16 @@ onMounted(() => {
   // Text animation
   gsap.fromTo(
     text.value,
-    { x: 500 },
+    { x: 200 },
     {
       x: 0,
-      duration: 2,
+      duration: 1.5,
       scrollTrigger: {
         trigger: text.value,
         start: 'top top',
-        toggleActions: 'play none none none'
+        end: 'bottom top',
+        toggleActions: 'play none none none',
+        markers: true
       }
     }
   )
@@ -96,52 +99,56 @@ onMounted(() => {
   // List items animation
   gsap.fromTo(
     listItemOne.value,
-    { x: 500 },
+    { x: 300 },
     {
       x: 0,
-      duration: 2,
+      duration: 1.5,
       scrollTrigger: {
         trigger: listItemOne.value,
         start: 'top top',
+        end: 'bottom top',
         toggleActions: 'play none none none'
       }
     }
   )
   gsap.fromTo(
     listItemTwo.value,
-    { x: 530 },
+    { x: 320 },
     {
       x: 0,
-      duration: 2,
+      duration: 1.5,
       scrollTrigger: {
         trigger: listItemTwo.value,
         start: 'top top',
+        end: 'bottom top',
         toggleActions: 'play none none none'
       }
     }
   )
   gsap.fromTo(
     listItemThree.value,
-    { x: 560 },
+    { x: 340 },
     {
       x: 0,
-      duration: 2,
+      duration: 1.5,
       scrollTrigger: {
         trigger: listItemThree.value,
         start: 'top top',
+        end: 'bottom top',
         toggleActions: 'play none none none'
       }
     }
   )
   gsap.fromTo(
     listItemFour.value,
-    { x: 590 },
+    { x: 360 },
     {
       x: 0,
-      duration: 2,
+      duration: 1.5,
       scrollTrigger: {
         trigger: listItemFour.value,
         start: 'top top',
+        end: 'bottom top',
         toggleActions: 'play none none none'
       }
     }
@@ -150,13 +157,14 @@ onMounted(() => {
   // Button animation
   gsap.fromTo(
     button.value.$el,
-    { x: 620 },
+    { x: 380 },
     {
       x: 0,
-      duration: 2,
+      duration: 1.5,
       scrollTrigger: {
         trigger: button.value.$el,
         start: 'top top',
+        end: 'bottom top',
         toggleActions: 'play none none none'
       }
     }
@@ -165,3 +173,9 @@ onMounted(() => {
   ScrollTrigger.refresh()
 })
 </script>
+
+<style scoped>
+.animated-element {
+  will-change: transform;
+}
+</style>
