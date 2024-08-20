@@ -49,7 +49,6 @@ onMounted(() => {
 
 <style scoped>
 .animated-element {
-  overflow-x: hidden;
   will-change: transform;
 }
 </style>

@@ -19,6 +19,10 @@
   font-weight: normal;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   min-height: 100vh;
   background: #faf9f6;
