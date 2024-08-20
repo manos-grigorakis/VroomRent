@@ -1,6 +1,6 @@
 <template>
   <BaseWrapper heading="Featured Vehicles">
-    <Carousel class="w-full lg:max-w-7xl min-h-full" ref="carousel">
+    <Carousel class="w-full lg:max-w-7xl min-h-full animated-element" ref="carousel">
       <CarouselContent class="-ml-1">
         <CarouselItem
           v-for="vehicle in vehicles"
@@ -37,7 +37,7 @@ const vehicles = computed(() => store.getters['vehicles/allVehicles'])
 onMounted(() => {
   gsap.from(carousel.value.$el, {
     scale: 0.8,
-    duration: 1.5,
+    duration: 1,
     scrollTrigger: {
       trigger: carousel.value.$el,
       start: 'top 80%'
@@ -46,3 +46,10 @@ onMounted(() => {
   fetchVehicle()
 })
 </script>
+
+<style scoped>
+.animated-element {
+  overflow-x: hidden;
+  will-change: transform;
+}
+</style>
