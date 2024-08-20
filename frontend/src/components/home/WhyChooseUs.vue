@@ -1,6 +1,6 @@
 <template>
   <!-- mb-20 -->
-  <div class="bg-charcoalGray py-16 px-4 min-h-full">
+  <div class="bg-charcoalGray px-4 py-8 min-h-screen content-center">
     <div class="flex flex-col justify-center items-center gap-10 xl:gap-20 xl:flex-row">
       <div class="flex flex-col gap-8">
         <h2 class="text-2xl text-white font-Montserrat font-semibold tracking-wide">
