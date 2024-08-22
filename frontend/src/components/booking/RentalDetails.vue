@@ -11,36 +11,44 @@
       <div>
         <p class="mb-2">Pick Up:</p>
         <p
-          class="flex items-center justify-between px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
+          class="flex items-center pl-2 py-2 max-w-md bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
         >
-          {{ pickupLocation
-          }}<box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon>
+          <span class="flex items-center mr-2"
+            ><box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon
+          ></span>
+          {{ pickupLocation }}
         </p>
       </div>
       <div v-if="dropoffLocation">
         <p class="mb-2">Drop Off:</p>
         <p
-          class="flex items-center justify-between px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
+          class="flex items-center pl-2 py-2 max-w-md bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
         >
+          <span class="flex-shrink-0 flex items-center mr-2"
+            ><box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon
+          ></span>
           {{ dropoffLocation }}
-          <box-icon name="current-location" color="#000" class="w-5 h-5"></box-icon>
         </p>
       </div>
       <div class="flex justify-between gap-4">
         <div>
           <p class="mb-2">Pick Up:</p>
           <p
-            class="flex items-center justify-between gap-2 sm:gap-6 px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
+            class="flex items-center justify-between gap-2 px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
           >
-            {{ pickupDate }}<box-icon name="calendar" color="#000" class="w-5 h-5"></box-icon>
+            <span class="flex items-center"
+              ><box-icon name="calendar" color="#000" class="w-5 h-5"></box-icon
+            ></span>
+            {{ pickupDate }}
           </p>
         </div>
         <div>
           <p class="mb-2">Drop Off:</p>
           <p
-            class="flex items-center justify-between gap-6 px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
+            class="flex items-center justify-between gap-2 px-4 py-2 bg-white border-2 border-lightGray rounded-md drop-shadow-sm"
           >
-            {{ dropoffDate }}<box-icon name="calendar" color="#000" class="w-5 h-5"></box-icon>
+            <box-icon name="calendar" color="#000" class="w-5 h-5"></box-icon>
+            {{ dropoffDate }}
           </p>
         </div>
       </div>

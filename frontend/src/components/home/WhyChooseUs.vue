@@ -1,9 +1,11 @@
 <template>
-  <!-- mb-20 -->
-  <div class="bg-charcoalGray px-4 py-8 min-h-screen content-center animated-element">
-    <div class="flex flex-col justify-center items-center gap-10 xl:gap-20 xl:flex-row">
+  <!-- min-h-screen md:min-h-min -->
+  <div class="bg-charcoalGray px-4 py-8 content-center">
+    <div
+      class="flex flex-col justify-center items-center min-h-screen md:min-h-min gap-10 xl:gap-20 xl:flex-row"
+    >
       <div class="flex flex-col gap-8">
-        <h2 class="text-2xl text-white font-Montserrat font-semibold tracking-wide">
+        <h2 ref="title" class="text-2xl text-white font-Montserrat font-semibold tracking-wide">
           Why Choose Us
         </h2>
         <img
@@ -19,7 +21,7 @@
             <span class="text-vibrantOrange-default font-semibold">Discover</span> the VroomRent
             Advantage
           </h3>
-          <p class="max-w-[650px] text-lg leading-7">
+          <p class="max-w-[650px] text-lg leading-7 font-medium">
             At VroomRent, we're dedicated to providing you with not just a car rental, but a
             complete travel solution tailored to your needs. Whether you're exploring the city for
             business or embarking on a scenic road trip, we ensure a seamless, satisfying, and
@@ -28,16 +30,16 @@
           </p>
         </div>
         <ul class="flex flex-col gap-1 mb-4">
-          <li ref="listItemOne" class="flex items-center gap-2 font-medium text-lg">
+          <li ref="listItemOne" class="flex items-center gap-2 text-lg">
             <box-icon name="check" color="#fff"></box-icon>Competitive Pricing
           </li>
-          <li ref="listItemTwo" class="flex items-center gap-2 font-medium text-lg">
+          <li ref="listItemTwo" class="flex items-center gap-2 text-lg">
             <box-icon name="check" color="#fff"></box-icon>Unmatched Support
           </li>
-          <li ref="listItemThree" class="flex items-center gap-2 font-medium text-lg">
+          <li ref="listItemThree" class="flex items-center gap-2 text-lg">
             <box-icon name="check" color="#fff"></box-icon>Environmentally Friendly
           </li>
-          <li ref="listItemFour" class="flex items-center gap-2 font-medium text-lg">
+          <li ref="listItemFour" class="flex items-center gap-2 text-lg">
             <box-icon name="check" color="#fff"></box-icon>Brand New Fleet
           </li>
         </ul>
@@ -54,6 +56,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const title = ref(null)
 const image = ref(null)
 const text = ref(null)
 const listItemOne = ref(null)
@@ -63,17 +66,35 @@ const listItemFour = ref(null)
 const button = ref(null)
 
 onMounted(() => {
-  // Image animation
+  // Title
+  gsap.fromTo(
+    title.value,
+    { y: -80, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'bounce.out',
+      scrollTrigger: {
+        trigger: title.value,
+        start: 'top 90%',
+        toggleActions: 'play none play reverse'
+      }
+    }
+  )
+  // Image
   gsap.fromTo(
     image.value,
-    { x: -300 },
+    { x: '-100%', opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.out',
       scrollTrigger: {
         trigger: image.value,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+        start: 'top 90%',
+        toggleActions: 'play none play reverse'
       }
     }
   )
@@ -81,14 +102,16 @@ onMounted(() => {
   // Text animation
   gsap.fromTo(
     text.value,
-    { x: 200 },
+    { x: 200, opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.out',
       scrollTrigger: {
         trigger: text.value,
         start: 'top 80%',
-        toggleActions: 'play none none none'
+        toggleActions: 'play none play reverse'
       }
     }
   )
@@ -96,53 +119,61 @@ onMounted(() => {
   // List items animation
   gsap.fromTo(
     listItemOne.value,
-    { x: 300 },
+    { x: 300, opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.inOut',
       scrollTrigger: {
         trigger: listItemOne.value,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+        start: 'top 90%',
+        toggleActions: 'play none play reverse'
       }
     }
   )
   gsap.fromTo(
     listItemTwo.value,
-    { x: 320 },
+    { x: 320, opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.inOut',
       scrollTrigger: {
         trigger: listItemTwo.value,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+        start: 'top 90%',
+        toggleActions: 'play none play reverse'
       }
     }
   )
   gsap.fromTo(
     listItemThree.value,
-    { x: 340 },
+    { x: 340, opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.inOut',
       scrollTrigger: {
         trigger: listItemThree.value,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+        start: 'top 90%',
+        toggleActions: 'play none play reverse'
       }
     }
   )
   gsap.fromTo(
     listItemFour.value,
-    { x: 360 },
+    { x: 360, opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.inOut',
       scrollTrigger: {
         trigger: listItemFour.value,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+        start: 'top 90%',
+        toggleActions: 'play none play reverse'
       }
     }
   )
@@ -150,14 +181,16 @@ onMounted(() => {
   // Button animation
   gsap.fromTo(
     button.value.$el,
-    { x: 380 },
+    { x: 380, opacity: 0 },
     {
       x: 0,
-      duration: 1.5,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.in',
       scrollTrigger: {
         trigger: button.value.$el,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+        start: 'top 100%',
+        toggleActions: 'play none play reverse'
       }
     }
   )
@@ -165,9 +198,3 @@ onMounted(() => {
   ScrollTrigger.refresh()
 })
 </script>
-
-<style scoped>
-.animated-element {
-  will-change: transform;
-}
-</style>

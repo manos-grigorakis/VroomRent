@@ -15,37 +15,24 @@
         <label for="different-location">I will drop off, in a different location: </label>
         <input type="checkbox" id="different-location" @click="handleCheckbox" />
       </div>
-      <div class="flex flex-col lg:flex-row items-strech lg:items-center gap-6 lg:gap-10">
-        <div class="flex flex-col">
-          <label for="pickup-location">Pick Up:</label>
-          <multiselect
-            id="pickup-location"
-            v-model="userData.selectedPickupAirport"
-            :options="filteredAirports"
-            :custom-label="nameWithLang"
-            placeholder="Select airport"
-            searchable="true"
-            selectLabel=""
-            deselectLabel=""
-            selectedLabel=""
-            label="name"
-            track-by="name"
-            open-direction="bottom"
-            optionsLimit="100"
-            maxHeight="300"
-            class="border-2 border-lightGray rounded-md multiselect-custom"
-          ></multiselect>
-        </div>
-        <Transition>
-          <div
-            v-if="isCheckboxActive"
-            class="flex flex-col"
-            :class="{ hidden: !isCheckboxActive, flex: isCheckboxActive }"
-          >
-            <label for="dropoff-location">Drop Off:</label>
+
+      <div
+        class="flex flex-col xl:flex-row gap-6 lg:gap-4 lg:items-center lg:flex-row"
+        :class="{ 'lg:flex-col': isCheckboxActive }"
+      >
+        <div
+          :class="[
+            'flex',
+            'flex-col',
+            'gap-4',
+            { 'md:flex-row': isCheckboxActive, 'lg:flex-col': !isCheckboxActive }
+          ]"
+        >
+          <div class="flex flex-col">
+            <label for="pickup-location">Pick Up:</label>
             <multiselect
-              id="dropoff-location"
-              v-model="userData.selectedDropoffAirport"
+              id="pickup-location"
+              v-model="userData.selectedPickupAirport"
               :options="filteredAirports"
               :custom-label="nameWithLang"
               placeholder="Select airport"
@@ -58,34 +45,63 @@
               open-direction="bottom"
               optionsLimit="100"
               maxHeight="300"
-              class="border-2 border-lightGray rounded-md"
+              class="border-2 border-lightGray rounded-md multiselect-custom"
             ></multiselect>
           </div>
-        </Transition>
-        <div class="flex flex-col">
-          <label for="pickup-date">Pick Up:</label>
-          <input
-            type="date"
-            id="pickup-date"
-            v-model="userData.selectedPickupDate"
-            class="border-2 rounded-md px-2 py-2 border-lightGray"
-            :class="userData.selectedPickupDate ? 'text-black' : 'text-lightGray'"
-          />
-        </div>
-        <div class="flex flex-col">
-          <label for="dropoff-date">Drop Off:</label>
-          <input
-            type="date"
-            id="dropoff-date"
-            v-model="userData.selectedDropoffDate"
-            :min="userData.selectedPickupDate"
-            class="border-2 rounded-md px-2 py-2 border-lightGray"
-            :class="userData.selectedDropoffDate ? 'text-black  border-black' : 'text-lightGray'"
-          />
+          <Transition @before-leave="beforeLeave" @after-leave="afterLeave" name="fade-scale">
+            <div
+              v-if="isCheckboxActive"
+              class="flex flex-col"
+              :class="{ hidden: !isCheckboxActive, flex: isCheckboxActive }"
+            >
+              <label for="dropoff-location">Drop Off:</label>
+              <multiselect
+                id="dropoff-location"
+                v-model="userData.selectedDropoffAirport"
+                :options="filteredAirports"
+                :custom-label="nameWithLang"
+                placeholder="Select airport"
+                searchable="true"
+                selectLabel=""
+                deselectLabel=""
+                selectedLabel=""
+                label="name"
+                track-by="name"
+                open-direction="bottom"
+                optionsLimit="100"
+                maxHeight="300"
+                class="border-2 border-lightGray rounded-md"
+              ></multiselect>
+            </div>
+          </Transition>
         </div>
 
-        <div class="flex items-center mt-6">
-          <AccentButton widthClass="w-full sm:w-auto">Find Car</AccentButton>
+        <!-- Dates -->
+        <div class="flex flex-row items-center gap-4 w-full">
+          <div class="flex flex-col w-1/2">
+            <label for="pickup-date">Pick Up:</label>
+            <input
+              type="date"
+              id="pickup-date"
+              v-model="userData.selectedPickupDate"
+              class="border-2 rounded-md px-2 py-2 border-lightGray"
+              :class="userData.selectedPickupDate ? 'text-black' : 'text-lightGray'"
+            />
+          </div>
+          <div class="flex flex-col w-1/2">
+            <label for="dropoff-date">Drop Off:</label>
+            <input
+              type="date"
+              id="dropoff-date"
+              v-model="userData.selectedDropoffDate"
+              :min="userData.selectedPickupDate"
+              class="border-2 rounded-md px-2 py-2 border-lightGray"
+              :class="userData.selectedDropoffDate ? 'text-black  border-black' : 'text-lightGray'"
+            />
+          </div>
+        </div>
+        <div class="flex items-center w-full lg:mt-5">
+          <AccentButton widthClass="w-full ">Find Car</AccentButton>
         </div>
       </div>
     </form>
@@ -170,11 +186,17 @@ const handleForm = () => {
 </script>
 
 <style>
+.multiselect__single {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .multiselect-custom {
   width: 200px !important;
 }
 .multiselect {
-  width: 300px !important;
+  width: 325px !important;
   min-height: auto !important;
   padding: 0 !important;
 }
@@ -183,32 +205,30 @@ const handleForm = () => {
   background: #e9a402 !important;
 }
 
-/* Προσαρμογή του στυλ για επιλεγμένα στοιχεία */
 .multiselect__option--selected {
   background-color: #ccaa00 !important;
   color: white !important;
 }
 
-/* Προσαρμογή του dropdown */
 .multiselect__content {
-  /* max-height: 500px !important; */
   overflow-y: auto !important;
 }
 
-.v-enter-from,
-.v-leave-to {
-  transform: translateX(-300px) scale(0.5);
+.fade-scale-enter-active {
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
 }
 
-.v-enter-active {
-  transition: all 0.5s ease-out;
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
 }
 
-.v-enter-to,
-.v-leave-from {
-  transform: translateX(0) scale(1);
-}
-.v-leave-active {
-  transition: all 0.3s ease-in;
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>

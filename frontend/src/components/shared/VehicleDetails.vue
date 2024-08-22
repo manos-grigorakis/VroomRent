@@ -1,7 +1,7 @@
 <template>
   <!-- Car details -->
   <div class="flex flex-col gap-2 tracking-wide">
-    <img :src="getImageUrl(image)" :alt="image" />
+    <img :src="getImageUrl(image)" :alt="image" class="w-30" />
 
     <h2 class="text-lg font-medium">{{ name }} or similar</h2>
     <small class="text-sm font-light">{{ category.join(' | ') }}</small>

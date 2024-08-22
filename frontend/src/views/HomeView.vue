@@ -1,8 +1,9 @@
 <template>
   <section>
     <TheHero />
-    <FeaturedVehicles class="py-[200px]" />
-    <WhyChooseUs class="mb-[520px]" />
+    <FeaturedVehicles />
+    <WhyChooseUs />
+    <OurOffers />
   </section>
 </template>
 
@@ -14,4 +15,5 @@ const FeaturedVehicles = defineAsyncComponent(
   () => import('@/components/home/FeaturedVehicles.vue')
 )
 const WhyChooseUs = defineAsyncComponent(() => import('@/components/home/WhyChooseUs.vue'))
+const OurOffers = defineAsyncComponent(() => import('@/components/home/OurOffers.vue'))
 </script>
