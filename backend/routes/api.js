@@ -7,9 +7,8 @@ const {
   getVehicleById,
   createBooking,
   createPaymentIntent,
-  cancelPaymentIntent,
   sendReceiptEmail,
-  getPaymentIntentStatus,
+  getOffers,
 } = require("../controllers/apiController");
 
 router.get("/bookingExtras", getBookingExtras);
@@ -18,5 +17,6 @@ router.get("/vehicle/:id", getVehicleById);
 router.post("/create-booking", createBooking);
 router.post("/create-payment-intent", createPaymentIntent);
 router.post("/send-receipt-email", sendReceiptEmail);
+router.get("/offers", getOffers);
 
 module.exports = router;

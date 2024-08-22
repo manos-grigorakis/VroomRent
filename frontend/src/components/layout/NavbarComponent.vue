@@ -1,7 +1,7 @@
 <template>
   <div class="relative p-2 z-50">
     <header class="inset-x-0">
-      <nav class="flex items-center justify-between xl:justify-evenly gap-10 px-2">
+      <nav ref="desktopNav" class="flex items-center justify-between xl:justify-evenly gap-10 px-2">
         <!-- Company Logo -->
         <div>
           <RouterLink to="/"
@@ -121,9 +121,10 @@
               </svg>
             </button>
           </div>
+
           <!-- Mobile links -->
           <transition name="mobileNav">
-            <div v-show="isNavbarOpen" class="mt-6 flow-root">
+            <div v-if="isNavbarOpen" class="mt-6 flow-root">
               <div class="-my-6">
                 <div class="py-6">
                   <ul
@@ -188,12 +189,17 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const store = useStore()
 const router = useRouter()
 
 const isNavbarOpen = ref(false)
 const isDropDownOpen = ref(false)
+const desktopNav = ref(null)
 
 // close navbar
 const closeNavbar = () => {
@@ -242,10 +248,9 @@ const user = computed(() => store.getters.user)
 
 const avatar = computed(() => {
   if (user.value && user.value.avatar) {
-    console.log('Avatar computed:', user.value.avatar)
-    return `http://localhost:3000/uploads/${user.value.avatar}`
+    return `${import.meta.env.VITE_API_URL}/uploads/${user.value.avatar}`
   } else {
-    return 'http://localhost:3000/uploads/default-avatar.png'
+    return `${import.meta.env.VITE_API_URL}/uploads/default-avatar.png`
   }
 })
 
@@ -254,6 +259,22 @@ onMounted(async () => {
   store.dispatch('fetchUser')
   document.addEventListener('click', handleClickOutside)
   window.addEventListener('scroll', handleScroll)
+
+  gsap.fromTo(
+    desktopNav.value,
+    { y: '-100%' },
+    {
+      y: 0,
+      duration: 1,
+      ease: 'back.out',
+      scrollTrigger: {
+        trigger: desktopNav.value,
+        toggleActions: 'play none none none',
+        once: true
+      }
+    }
+  )
+  ScrollTrigger.refresh()
 })
 
 onUnmounted(() => {
@@ -264,6 +285,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* Navbar transition */
 .mobileNav-enter-from,
 .mobileNav-leave-to {
   transform: translateY(-80px);
@@ -282,6 +304,7 @@ onUnmounted(() => {
   transition: all 0.4s ease-in;
 }
 
+/* Dropdown animation when user is logged in */
 .dropdown-enter-from,
 .dropdown-leave-to {
   opacity: 0;

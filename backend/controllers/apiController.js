@@ -1,6 +1,7 @@
 const bookingExtrasModel = require("../models/bookingExtras");
 const vehicleModel = require("../models/vehicle");
 const bookingModel = require("../models/booking");
+const offerModel = require("../models/offer");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const transporter = require("../config/nodemailer");
 
@@ -205,5 +206,21 @@ exports.sendReceiptEmail = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to send email" });
+  }
+};
+
+exports.getOffers = async (req, res) => {
+  try {
+    const offers = await offerModel.find({});
+
+    if (!offers) {
+      return res.status(404).send({ message: "There are not offers" });
+    }
+    res.status(200).send(offers);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ message: "Server error getting offers", error: error.message });
   }
 };

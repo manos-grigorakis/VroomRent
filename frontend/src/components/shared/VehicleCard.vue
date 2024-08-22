@@ -1,6 +1,6 @@
 <template>
   <!-- Card -->
-  <div class="relative bg-white max-w-sm drop-shadow-md rounded-md pt-14 pb-8">
+  <div class="relative bg-white max-w-sm drop-shadow-md rounded-md pt-14 pb-8 mx-auto">
     <VehiclePremiumTag v-if="vehicle.premiumDelivery" />
     <VehicleDetails
       :image="vehicle.image"
