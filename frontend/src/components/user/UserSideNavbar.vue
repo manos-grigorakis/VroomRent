@@ -1,6 +1,6 @@
 <template>
   <section class="w-full min-h-screen mb-20 px-4 sm:px-8 mt-20">
-    <div class="flex justify-center gap-20 flex-col md:flex-row">
+    <div class="flex justify-center gap-20 flex-col lg:flex-row">
       <!-- Sidebar -->
       <aside class="basis-1/4 max-w-[220px] text-lg font-Montserrat">
         <ul class="flex flex-col gap-4 rounded-md px-4 py-8">

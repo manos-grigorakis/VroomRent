@@ -1,6 +1,6 @@
 <template>
   <BaseWrapper heading="Featured Vehicles" class="min-h-screen justify-center">
-    <Carousel class="w-full lg:max-w-7xl min-h-full px-4" ref="carousel">
+    <Carousel class="w-full lg:max-w-7xl min-h-full" ref="carousel">
       <CarouselContent class="-ml-1">
         <CarouselItem
           v-for="vehicle in vehicles"
