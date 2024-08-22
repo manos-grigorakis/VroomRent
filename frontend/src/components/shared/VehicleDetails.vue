@@ -1,11 +1,11 @@
 <template>
   <!-- Car details -->
   <div class="flex flex-col gap-2 tracking-wide">
-    <img :src="getImageUrl(image)" :alt="image" class="w-30" />
+    <img :src="getImageUrl(image)" :alt="image" />
 
     <h2 class="text-lg font-medium">{{ name }} or similar</h2>
     <small class="text-sm font-light">{{ category.join(' | ') }}</small>
-    <div class="flex justify-between gap-8">
+    <div class="flex justify-between items-center gap-2">
       <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
           <box-icon name="user"></box-icon>

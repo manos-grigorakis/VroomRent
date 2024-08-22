@@ -2,7 +2,7 @@
   <section>
     <BaseSpinner v-if="isLoading" />
     <UserUploadAvatar />
-    <div>
+    <div class="relative">
       <BaseModal
         :show="open"
         title="Delete your account"
@@ -12,7 +12,7 @@
         @cancelDelete="handleModalClose"
       />
       <button
-        class="absolute right-10 bottom-20 py-1 px-4 rounded-md transition duration-200 drop-shadow-md hover:hover:drop-shadow-lg hover:cursor-pointer bg-red-default text-white hover:bg-red-700"
+        class="absolute right-6 top-40 py-1 px-4 rounded-md transition duration-200 drop-shadow-md hover:hover:drop-shadow-lg hover:cursor-pointer bg-red-default text-white hover:bg-red-700"
         @click="openModal"
       >
         Delete Account
