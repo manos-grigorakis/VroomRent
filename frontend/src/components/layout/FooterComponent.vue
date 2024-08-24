@@ -10,8 +10,9 @@
           <RouterLink to="/">
             <img
               src="../../assets/images/logo.svg"
-              class="w-[250px] h-auto mx-auto lg:mx-0"
               alt="VroomRent Logo"
+              loading="lazy"
+              class="w-[250px] h-auto mx-auto lg:mx-0"
           /></RouterLink>
           <p
             class="max-w-lg md:max-w-sm text-sm mt-4 mx-auto text-center md:text-left tracking-wider leading-relaxed"

@@ -7,7 +7,12 @@
         :key="offer._id"
         class="offer-item flex flex-col justify-between gap-6 max-w-md bg-white rounded-lg px-4 py-8 shadow-md drop-shadow-sm"
       >
-        <img :src="getImageUrl(offer.img)" :alt="offer.title" class="w-38 h-auto" />
+        <img
+          :src="getImageUrl(offer.img)"
+          :alt="offer.title"
+          loading="lazy"
+          class="w-full h-auto"
+        />
         <div>
           <h3 class="text-xl font-Montserrat font-semibold mb-2">{{ offer.title }}</h3>
           <p class="max-w-md mb-4">

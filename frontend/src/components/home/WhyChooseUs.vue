@@ -11,7 +11,8 @@
         <img
           ref="image"
           src="../../assets/images/pexels-shkrabaanthony-7144226.webp"
-          alt=""
+          alt="Why choose us image"
+          loading="lazy"
           class="w-[671px] h-[50%]"
         />
       </div>
@@ -43,7 +44,7 @@
             <box-icon name="check" color="#fff"></box-icon>Brand New Fleet
           </li>
         </ul>
-        <BaseButton ref="button" link="/about">Learn More</BaseButton>
+        <BaseButton ref="button" link="/about-us">Learn more</BaseButton>
       </div>
     </div>
   </div>

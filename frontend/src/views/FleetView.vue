@@ -1,5 +1,5 @@
 <template>
-  <BaseWrapper heading="Our Fleet">
+  <BaseWrapper heading="Our Fleet" class="mt-16">
     <FleetComponent />
   </BaseWrapper>
 </template>
