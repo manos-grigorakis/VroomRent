@@ -304,7 +304,7 @@ const handleForm = async () => {
             }
           }
         },
-        return_url: 'http://localhost:5173/booking/receipt'
+        return_url: `${import.meta.env.VITE_BASE_URL}/booking/receipt`
       },
       redirect: 'if_required'
     })
