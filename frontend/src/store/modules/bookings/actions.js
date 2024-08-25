@@ -59,11 +59,9 @@ export default {
     }
 
     // If there is fuelCharge as extra
-    if (fuelCharge.length > 0) {
-      fuelCharge.forEach((fuel) => {
-        let fuelDetail = `<li><strong>${fuel.title}</strong>: $${fuel.price} / once </li>`
-        extrasList += fuelDetail
-      })
+    if (fuelCharge && fuelCharge.price > 0) {
+      let fuelDetail = `<li><strong>${fuelCharge.title}</strong>: $${fuelCharge.price} / once </li>`
+      extrasList += fuelDetail
     }
 
     try {

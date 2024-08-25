@@ -9,6 +9,7 @@ const {
   createPaymentIntent,
   sendReceiptEmail,
   getOffers,
+  contactMail,
 } = require("../controllers/apiController");
 
 router.get("/bookingExtras", getBookingExtras);
@@ -18,5 +19,6 @@ router.post("/create-booking", createBooking);
 router.post("/create-payment-intent", createPaymentIntent);
 router.post("/send-receipt-email", sendReceiptEmail);
 router.get("/offers", getOffers);
+router.post("/contact-mail", contactMail);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const animate = require('tailwindcss-animate')
+// const animate = require('tailwindcss-animate')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -52,25 +52,8 @@ export default {
     extend: {
       backgroundImage: {
         'hero-image': "url('/maksim-tarasov-bFTVxTo266E-unsplash2.webp')"
-      },
-
-      // shacn-vue
-      keyframes: {
-        'accordion-down': {
-          from: { height: 0 },
-          to: { height: 'var(--radix-accordion-content-height)' }
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 }
-        }
-      },
-
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
       }
     }
-  },
-  plugins: [animate]
+  }
+  // plugins: [animate]
 }

@@ -344,8 +344,7 @@ const handleForm = async () => {
       vehicleId: vehicleId.value,
       bookingExtras: {
         selectedExtrasId: selectedExtras.value.map((extra) => extra._id),
-        // error
-        fuelExtra: fuelExtraCharge.value > 0,
+        fuelExtra: fuelExtraCharge.value && fuelExtraCharge.value.price > 0,
         childSeatCount: childSeatCount.value
       }
     }

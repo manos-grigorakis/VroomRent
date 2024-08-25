@@ -47,9 +47,6 @@ export default {
       return total + extra.price * numberOfDays
     }, 0)
 
-    // old
-    // const fuelCharge = state.fuelExtraCharge.reduce((total, extra) => total + extra.price, 0)
-
     // new
     const fuelCharge = state.fuelExtraCharge ? state.fuelExtraCharge.price : 0
 
