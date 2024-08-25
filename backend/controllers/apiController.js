@@ -224,3 +224,23 @@ exports.getOffers = async (req, res) => {
       .send({ message: "Server error getting offers", error: error.message });
   }
 };
+
+// handles contact mail
+exports.contactMail = async (req, res) => {
+  const { firstName, lastName, email, subject, message } = req.body;
+  try {
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
+      subject: subject,
+      text: `Name: ${firstName} ${lastName}\n\nMessage:\n${message}`,
+      replyTo: email,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Server error", error: error.message });
+  }
+};
