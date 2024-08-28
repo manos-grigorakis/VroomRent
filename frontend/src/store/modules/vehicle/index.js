@@ -6,7 +6,13 @@ export default {
   namespaced: true,
   state() {
     return {
-      vehicle: []
+      vehicles: [],
+      filters: {
+        category: '',
+        transmission: '',
+        fuel: '',
+        sortOrder: ''
+      }
     }
   },
   mutations,

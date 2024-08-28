@@ -1,14 +1,22 @@
 <template>
   <BaseWrapper>
     <BaseSpinner v-if="isLoading" />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div
+      v-if="filteredVehicles.length > 0"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+    >
       <VehicleCard
-        v-for="vehicle in vehicles"
+        v-for="vehicle in filteredVehicles"
         :key="vehicle._id"
         :vehicle="vehicle"
         :calculatePrice="true"
         showVehicleButtton
       />
+    </div>
+    <div v-else>
+      <h2 class="text-lg font-Montserrat font-semibold">
+        No vehicles available, with the selected filters.
+      </h2>
     </div>
   </BaseWrapper>
 </template>
@@ -34,18 +42,9 @@ const fetchVehicle = async () => {
   }
 }
 
-const vehicles = computed(() => store.getters['vehicles/allVehicles'])
+const filteredVehicles = computed(() => store.getters['vehicles/filteredVehicles'])
 
 onMounted(() => {
   fetchVehicle()
 })
-
-// Check this before removing them!!!!
-// const updatePickupDate = (date) => {
-//   store.commit('bookings/setPickupDate', date)
-// }
-
-// const updateDropoffDate = (date) => {
-//   store.commit('bookings/setDropoffDate', date)
-// }
 </script>
