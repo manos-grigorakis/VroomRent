@@ -12,6 +12,7 @@ node_modules
 coverage
 *.local
 .env
+.env.production
 
 /cypress/videos/
 /cypress/screenshots/

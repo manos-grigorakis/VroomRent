@@ -1,35 +1,69 @@
 # VroomRent
 
-This template should help get you started developing with Vue 3 in Vite.
+VroomRent is a modern car rental web application that allows users to browse, filter, and rent vehicles from various providers. Built using Vue.js for the frontend and Node.js with Express.js for the backend.
 
-## Recommended IDE Setup
+# Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Browse and filter for available cars
+- Book a rental with a simple and intuitive process
+- Secure user authentication
+- Secure transactions with Stripe
+- Responsive design
 
-## Customize configuration
+# Tech Stack
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Frontend: Vue.js
+- Backend: Node.js, Express.js
+- Database: MongoDB
 
-## Project Setup
+# Installation & Setup
 
-```sh
+To run this project locally, follow these steps:
+
+### Prerequisites
+
+- Node.js (v16+)
+- MongoDB (Cloud)
+- Stripe API Key
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/manos-grigorakis/VroomRent.git
+```
+
+### Navigate to project directory
+
+```bash
+cd path/to/your/directory/VroomRent
+```
+
+### Install Dependecies
+
+#### Install backend dependecies
+
+```bash
+cd backend
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### Install frontend dependecies
 
-```sh
+```bash
+cd ../frontend
+npm install
+```
+
+# Start backend
+
+```bash
+cd backend
+node server.js
+```
+
+# Start frontend
+
+```bash
+cd ../frontend
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
