@@ -2,7 +2,7 @@
 
 VroomRent is a modern car rental web application that allows users to browse, filter, and rent vehicles from various providers. Built using Vue.js for the frontend and Node.js with Express.js for the backend.
 
-# Features
+## Features
 
 - Browse and filter for available cars
 - Book a rental with a simple and intuitive process
@@ -10,13 +10,13 @@ VroomRent is a modern car rental web application that allows users to browse, fi
 - Secure transactions with Stripe
 - Responsive design
 
-# Tech Stack
+## Tech Stack
 
-- Frontend: Vue.js
-- Backend: Node.js, Express.js
-- Database: MongoDB
+- **Frontend:** Vue.js
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
 
-# Installation & Setup
+## Installation & Setup
 
 To run this project locally, follow these steps:
 
@@ -30,40 +30,46 @@ To run this project locally, follow these steps:
 
 ```bash
 git clone https://github.com/manos-grigorakis/VroomRent.git
+cd VroomRent
 ```
 
-### Navigate to project directory
+## Install Dependecies
 
-```bash
-cd path/to/your/directory/VroomRent
-```
-
-### Install Dependecies
-
-#### Install backend dependecies
+### Install backend dependecies
 
 ```bash
 cd backend
 npm install
 ```
 
-#### Install frontend dependecies
+### Install frontend dependecies
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-# Start backend
+## Start the Application
+
+### Start backend
 
 ```bash
 cd backend
 node server.js
 ```
 
-# Start frontend
+### Start frontend
 
 ```bash
 cd ../frontend
 npm run dev
 ```
+
+## Environment Variables
+
+To configure the project, you need to create two `.env` files:
+
+- One for the **backend** inside the `backend` directory.
+- One for the **frontend** inside the `frontend` directory.
+
+You can use the provided `.env.example` files as a reference.
