@@ -89,18 +89,25 @@
       <div
         class="flex flex-col items-center gap-2 text-sm text-center lg:flex-row lg:justify-between"
       >
-        <span class="text-center"
-          >© {{ currentYear }} | All rights reserved by
-          <RouterLink to="/" class="hover:underline">VroomRent</RouterLink></span
-        >
+        <span class="text-center">
+          © {{ currentYear }} | All rights reserved by
+          <RouterLink to="/" class="hover:underline">VroomRent</RouterLink>
+        </span>
         <div class="flex gap-2">
           <RouterLink to="/terms-of-service" class="hover:underline">Terms of Service</RouterLink>
           <span>|</span>
           <RouterLink to="/privacy-policy" class="hover:underline">Privacy Policy</RouterLink>
         </div>
       </div>
+
+      <p class="text-center text-sm mt-4">
+        Created by
+        <a href="https://manosgrigorakis.com" target="_blank" class="hover:underline"
+          >Manos Grigorakis</a
+        >
+      </p>
     </div>
-    <div class="w-full bg-blue h-2"></div>
+    <div class="w-full bg-vibrantOrange-default h-1.5"></div>
   </footer>
 </template>
 
