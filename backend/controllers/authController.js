@@ -146,7 +146,7 @@ exports.requestResetPassword = async (req, res) => {
 };
 
 exports.resetPassword = async (req, res) => {
-  const { token, oldPassword, newPassword } = req.body;
+  const { token, newPassword } = req.body;
 
   try {
     const user = await userModel.findOne({ resetToken: token });
@@ -157,13 +157,6 @@ exports.resetPassword = async (req, res) => {
 
     if (user.resetTokenExpiration < Date.now()) {
       return res.status(400).send({ message: "Token has expired" });
-    }
-
-    // Compares password in database with entered value of oldpassword
-    const match = await bcrypt.compare(oldPassword, user.password);
-
-    if (!match) {
-      return res.status(400).send({ message: "Old password doesn't match" });
     }
 
     // Validation of token
