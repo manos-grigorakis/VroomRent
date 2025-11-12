@@ -7,6 +7,7 @@ const path = require("path");
 
 require("dotenv").config();
 const secretKey = process.env.SECRET_KEY;
+const frontendUrl = process.env.CORS_ORIGIN;
 
 exports.register = async (req, res) => {
   try {
@@ -115,10 +116,9 @@ exports.requestResetPassword = async (req, res) => {
     // save token to db
     user.resetToken = token;
     user.resetTokenExpiration = Date.now() + 3600000; // 1 hour from now
-    // user.resetTokenExpiration = Date.now() + 60000; // 1 hour from now
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
+    const resetUrl = `${frontendUrl}/reset-password?token=${token}`;
 
     // Read HTML file
     const filePath = path.join(__dirname, "../config/resetPasswordMail.html");
