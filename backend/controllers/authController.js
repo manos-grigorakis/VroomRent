@@ -7,6 +7,7 @@ const path = require("path");
 
 require("dotenv").config();
 const secretKey = process.env.SECRET_KEY;
+const frontendUrl = process.env.CORS_ORIGIN;
 
 exports.register = async (req, res) => {
   try {
@@ -115,10 +116,9 @@ exports.requestResetPassword = async (req, res) => {
     // save token to db
     user.resetToken = token;
     user.resetTokenExpiration = Date.now() + 3600000; // 1 hour from now
-    // user.resetTokenExpiration = Date.now() + 60000; // 1 hour from now
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
+    const resetUrl = `${frontendUrl}/reset-password?token=${token}`;
 
     // Read HTML file
     const filePath = path.join(__dirname, "../config/resetPasswordMail.html");
@@ -146,7 +146,7 @@ exports.requestResetPassword = async (req, res) => {
 };
 
 exports.resetPassword = async (req, res) => {
-  const { token, oldPassword, newPassword } = req.body;
+  const { token, newPassword } = req.body;
 
   try {
     const user = await userModel.findOne({ resetToken: token });
@@ -157,13 +157,6 @@ exports.resetPassword = async (req, res) => {
 
     if (user.resetTokenExpiration < Date.now()) {
       return res.status(400).send({ message: "Token has expired" });
-    }
-
-    // Compares password in database with entered value of oldpassword
-    const match = await bcrypt.compare(oldPassword, user.password);
-
-    if (!match) {
-      return res.status(400).send({ message: "Old password doesn't match" });
     }
 
     // Validation of token
