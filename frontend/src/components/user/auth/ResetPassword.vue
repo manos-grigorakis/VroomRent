@@ -2,11 +2,11 @@
   <BaseSpinner v-if="isLoadingToken" />
   <FormWrapper v-else-if="isTokenValid">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2 class="text-center text-2xl font-semibold">Change Password</h2>
+      <h2 class="text-2xl font-semibold text-center">Change Password</h2>
     </div>
     <span
       v-if="message"
-      class="text-center mt-8 rounded bg-transparent text-white font-medium py-2 sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm bg-red-default"
+      class="py-2 mt-8 font-medium text-center text-white bg-transparent rounded sm:mx-auto sm:w-full sm:max-w-sm drop-shadow-sm bg-red-default"
       >{{ message }}</span
     >
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -15,23 +15,12 @@
       <form @submit.prevent="changePassword" class="space-y-6">
         <div class="">
           <BaseInput
-            labelValue="Current Password"
-            inputType="password"
-            inputId="oldPassword"
-            v-model.trim="oldPassword"
-            :errorInput="invalidInput.oldPassword"
-          /><span v-if="errorMessage.oldPassword" class="text-red-default text-sm">{{
-            errorMessage.oldPassword
-          }}</span>
-        </div>
-        <div class="">
-          <BaseInput
             labelValue="New Password"
             inputType="password"
             inputId="newPassword"
             v-model.trim="newPassword"
             :errorInput="invalidInput.newPassword"
-          /><span v-if="errorMessage.newPassword" class="text-red-default text-sm">{{
+          /><span v-if="errorMessage.newPassword" class="text-sm text-red-default">{{
             errorMessage.newPassword
           }}</span>
         </div>
@@ -41,7 +30,7 @@
   </FormWrapper>
   <div
     v-else
-    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-16 lg:px-8 bg-white drop-shadow-md rounded-lg max-w-sm md:max-w-lg mx-auto text-center"
+    class="flex flex-col justify-center flex-1 max-w-sm min-h-full px-6 py-12 mx-auto mt-16 text-center bg-white rounded-lg lg:px-8 drop-shadow-md md:max-w-lg"
   >
     <h2 class="text-2xl font-semibold text-red-default">Token has expired!</h2>
   </div>
@@ -88,19 +77,8 @@ const validation = () => {
     invalidInput[key] = false
   })
 
-  if (!oldPassword.value) {
-    errorMessage.oldPassword = 'Old password is being required'
-    invalidInput.oldPassword = true
-    isValid = false
-  }
   if (!newPassword.value) {
     errorMessage.newPassword = 'New password is being required'
-    invalidInput.newPassword = true
-    isValid = false
-  }
-  if (oldPassword.value && newPassword.value && oldPassword.value === newPassword.value) {
-    message.value = 'You cant set the new password to the previous password'
-    invalidInput.oldPassword = true
     invalidInput.newPassword = true
     isValid = false
   }
@@ -119,7 +97,6 @@ const changePassword = async () => {
   try {
     await axios.post(`${import.meta.env.VITE_API_URL}/auth/reset-password`, {
       token: token,
-      oldPassword: oldPassword.value,
       newPassword: newPassword.value
     })
 
