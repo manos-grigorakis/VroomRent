@@ -1,10 +1,10 @@
 <template>
   <footer>
-    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-      <hr class="my-6 border-lightGray mx-auto lg:my-8" />
+    <div class="w-full max-w-screen-xl p-4 py-6 mx-auto lg:py-8">
+      <hr class="mx-auto my-6 border-lightGray lg:my-8" />
 
       <div
-        class="flex flex-col gap-8 justify-center md:items-center lg:flex-row lg:justify-between lg:gap-20"
+        class="flex flex-col justify-center gap-8 md:items-center lg:flex-row lg:justify-between lg:gap-20"
       >
         <div class="flex-col mb-6">
           <RouterLink to="/">
@@ -15,7 +15,7 @@
               class="w-[250px] h-auto mx-auto lg:mx-0"
           /></RouterLink>
           <p
-            class="max-w-lg md:max-w-sm text-sm mt-4 mx-auto text-center md:text-left tracking-wider leading-relaxed"
+            class="max-w-lg mx-auto mt-4 text-sm leading-relaxed tracking-wider text-center md:max-w-sm md:text-left"
           >
             VroomRent is dedicated to fueling journeys that matter. With a wide selection of
             vehicles and a commitment to exceptional service, we're here to ensure your rental
@@ -24,7 +24,7 @@
         </div>
 
         <div>
-          <div class="flex flex-wrap gap-12 text-sm md:pb-4 md:gap-12 md:flex-row justify-center">
+          <div class="flex flex-wrap justify-center gap-12 text-sm md:pb-4 md:gap-12 md:flex-row">
             <div>
               <h2 class="mb-6 font-medium font-Montserrat">Quick Links</h2>
               <ul class="flex flex-col gap-4">
@@ -75,7 +75,7 @@
                 <li>
                   <a
                     href="mailto:vroomrentcomp@gmail.com"
-                    class="cursor-pointertext-sm hover:underline flex items-center gap-4"
+                    class="flex items-center gap-4 cursor-pointertext-sm hover:underline"
                     >vroomrentcomp@gmail.com</a
                   >
                 </li>
@@ -100,8 +100,8 @@
         </div>
       </div>
 
-      <p class="text-center text-sm mt-4">
-        Created by
+      <p class="mt-4 text-sm text-center">
+        Built by
         <a href="https://manosgrigorakis.com" target="_blank" class="hover:underline"
           >Manos Grigorakis</a
         >
