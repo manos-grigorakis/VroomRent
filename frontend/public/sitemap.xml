@@ -2,56 +2,56 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://vroomrent.netlify.app/home</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/home</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/fleet</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/fleet</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/contact</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/contact</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/about-us</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/about-us</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/login</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/login</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/register</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/register</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/privacy-policy</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/privacy-policy</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://vroomrent.netlify.app/terms-of-service</loc>
+    <loc>https://vroomrent.manosgrigorakis.com/terms-of-service</loc>
     <lastmod>2024-08-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
