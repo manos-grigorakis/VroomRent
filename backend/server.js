@@ -42,6 +42,9 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection:", reason);
 });
 
+// Health check endpoint
+app.get("/health", (req, res) => res.sendStatus(200));
+
 app.listen(PORT, () => {
   console.log(`Server listening on: ${PORT}`);
 });
