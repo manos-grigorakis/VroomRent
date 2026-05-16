@@ -1,6 +1,8 @@
 # VroomRent
 
-VroomRent is a modern car rental web application that allows users to browse, filter, and rent vehicles from various providers. Built using Vue.js for the frontend and Node.js with Express.js for the backend.
+VroomRent is a modern car rental web application that allows users to browse, filter, and rent vehicles from various providers. Built using Vue 3 for the frontend and Node.js with Express.js for the backend.
+
+**[Live Demo](https://vroomrent.manosgrigorakis.com)**
 
 ## Features
 
@@ -12,64 +14,70 @@ VroomRent is a modern car rental web application that allows users to browse, fi
 
 ## Tech Stack
 
-- **Frontend:** Vue.js
+- **Frontend:** Vue 3, JavaScript, Tailwind CSS, Vuex Store
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 
-## Installation & Setup
-
-To run this project locally, follow these steps:
-
-### Prerequisites
+## Prerequisites
 
 - Node.js (v16+)
-- MongoDB (Cloud)
+- MongoDB
 - Stripe API Key
+- (Optional) Stripe CLI
 
-### Clone the Repository
+## Setup
 
-```bash
-git clone https://github.com/manos-grigorakis/VroomRent.git
-cd VroomRent
-```
+1. Clone the repository
 
-## Install Dependecies
+   ```bash
+   git clone https://github.com/manos-grigorakis/VroomRent.git
+   ```
 
-### Install backend dependecies
+2. Copy and configure environment variables
 
-```bash
-cd backend
-npm install
-```
+   ```bash
+   cp frontend/.env.example frontend/.env
+   cp backend/.env.example backend/.env
+   ```
 
-### Install frontend dependecies
+3. Install backend dependencies
 
-```bash
-cd ../frontend
-npm install
-```
+   ```bash
+   cd backend && npm install
+   ```
 
-## Start the Application
+4. Install frontend dependencies
 
-### Start backend
+   ```bash
+   cd frontend && npm install
+   ```
 
-```bash
-cd backend
-node server.js
-```
+5. Start backend server
 
-### Start frontend
+   ```bash
+   cd backend && node server.js
+   ```
 
-```bash
-cd ../frontend
-npm run dev
-```
+6. Start frontend
 
-## Environment Variables
+   ```bash
+   cd frontend && npm run dev
+   ```
 
-To configure the project, you need to create two `.env` files:
+## Screenshots
 
-- One for the **backend** inside the `backend` directory.
-- One for the **frontend** inside the `frontend` directory.
+### Hero Section
 
-You can use the provided `.env.example` files as a reference.
+![Hero Section](/docs/screenshots/hero-section.webp)
+
+### Vehicle Selection Page
+
+![Vehicle Selection Page](/docs/screenshots/vehicle-selection-page.webp)
+
+### Extras Page
+
+![Extras Page](/docs/screenshots/extras-page.webp)
+
+### Checkout Form Page
+
+![Checkout Form Page](/docs/screenshots/checkout-form-page.webp)
